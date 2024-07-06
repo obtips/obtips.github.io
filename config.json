@@ -2,5 +2,9 @@
     "title":"237号牢房",
     "subTitle":"希望或许是最好的东西",
     "avatarUrl":"https://github.githubassets.com/favicons/favicon.svg",
-    "GMEEK_VERSION":"last"
+    "GMEEK_VERSION":"last",
+    "startSite":"07/05/2024",
+    "onePageListNum":20,
+    "singlePage":["about"],
+    
 }
