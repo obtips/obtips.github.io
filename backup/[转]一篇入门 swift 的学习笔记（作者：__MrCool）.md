@@ -1,4 +1,4 @@
-> 原文地址 [blog.csdn.net](https://blog.csdn.net/Void_leng/article/details/114254504#24__171)
+> 原文地址 ["一篇入门swift的学习笔记" by __MrCool](https://blog.csdn.net/Void_leng/article/details/114254504#24__171)
 
 #### 文章目录
 
