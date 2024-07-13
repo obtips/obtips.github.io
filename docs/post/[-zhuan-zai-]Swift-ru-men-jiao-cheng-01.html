@@ -415,7 +415,8 @@ var mathFunction: (Int, Int) -&gt; Int = addTwoInts
 
 </code></pre>
 <p>函数类型可以作为参数类型，返回值类型等。</p>
-<h5>2.6 闭包</h5>
+<p><a id="user-content-2.7"></a></p>
+<h5>2.7 闭包</h5>
 <p><strong>1) 闭包简介</strong></p>
 <p>OC 有 Block，C++ 有 lambda 表达式，swift 则有闭包。</p>
 <p>闭包采用如下三种形式之一：</p>
@@ -473,7 +474,8 @@ func mySug() {
 
 
 </code></pre>
-<h5>2.7 枚举、结构体、类</h5>
+<p><a id="user-content-2.8"></a></p>
+<h5>2.8 枚举、结构体、类</h5>
 <p><strong>1）枚举</strong></p>
 <p>Swift 中的枚举更加灵活，不必给每一个枚举成员提供一个值。如果给枚举成员提供一个值（称为原始值），则该值的类型可以是字符串、字符，或是一个整型值或浮点数。</p>
 <pre class="notranslate"><code class="notranslate">// 枚举的定义
@@ -586,7 +588,8 @@ class SomeClass {
 <p>b）方法</p>
 <p>实例方法同普通方法一样，方法体可以使用<code class="notranslate">self</code>关键字</p>
 <p>类方法在方法的 <code class="notranslate">func</code> 关键字之前加上关键字 <code class="notranslate">static</code>，来指定类型方法。类还可以用关键字 <code class="notranslate">class</code> 来指定，从而允许子类重写父类该方法的实现。</p>
-<h5>2.8 类的构造与析构</h5>
+<p><a id="user-content-2.9"></a></p>
+<h5>2.9 类的构造与析构</h5>
 <p><strong>1）基础说明</strong><br>
 类的构造与析构和 C++ 的构造与析构类似，唯一不同的可能就是在语法上不同了。<br>
 比如：全缺省构造，默认构造等等。<br>
@@ -707,7 +710,8 @@ class SomeSubclass: SomeClass {
 }
 
 </code></pre>
-<h5>2.9 属性监听器</h5>
+<p><a id="user-content-2.10"></a></p>
+<h5>2.10 属性监听器</h5>
 <pre class="notranslate"><code class="notranslate">class SomeClass : NSObject {
   var name : String {
     // 属性即将改变
@@ -725,7 +729,8 @@ class SomeSubclass: SomeClass {
 // 
 
 </code></pre>
-<h5>2.10 类的继承</h5>
+<p><a id="user-content-2.11"></a></p>
+<h5>2.11 类的继承</h5>
 <p>面向对象语言的三大特性之一继承，作为复用代码的一种手段，在 swift 中也是一样。swift 和 OC 不一样，OC 中所有的类都是都是基于 NSObject 的。但是 Swift 中的类并不是从一个通用的基类继承而来的。如果你不为自己定义的类指定一个超类的话，这个类就会自动成为基类。<br>
 继承的基础语法：</p>
 <pre class="notranslate"><code class="notranslate">class SomeClass: SomeSuperclass {
@@ -768,7 +773,8 @@ class Train: Vehicle {
 你可以通过把方法，属性或下标标记为 final 来防止它们被重写，只需要在声明关键字前加上 final 修饰符即可（例如：final var、final func、final class func 以及 final subscript）。<br>
 任何试图对带有 final 标记的方法、属性或下标进行重写的代码，都会在编译时会报错。在类扩展中的方法，属性或下标也可以在扩展的定义里标记为 final。<br>
 可以通过在关键字 class 前添加 final 修饰符（final class）来将整个类标记为 final 。这样的类是不可被继承的，试图继承这样的类会导致编译报错。</p>
-<h5>2.11 扩展</h5>
+<p><a id="user-content-2.12"></a></p>
+<h5>2.12 扩展</h5>
 <p>扩展可以给一个现有的类，结构体，枚举，还有协议添加新的功能。它还拥有不需要访问被扩展类型源代码就能完成扩展的能力（即逆向建模）</p>
 <ul>
 <li>Swift 中的扩展可以：</li>
@@ -789,6 +795,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
 }
 
 </code></pre>
+<p><a id="user-content-2.13"></a></p>
 <h5>2.13 协议</h5>
 <p>关键字 protocol 定义协议。</p>
 <pre class="notranslate"><code class="notranslate">protocol SomeProtocol {
@@ -816,7 +823,8 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 }
 
 </code></pre>
-<h5>2.10 泛型</h5>
+<p><a id="user-content-2.14"></a></p>
+<h5>2.14 泛型</h5>
 <p><strong>1）基础语法</strong><br>
 对于泛型可以类比 C++ 的模板，C++ 的标准模板库 STL 就是泛型编程的经典。</p>
 <p>swift 的泛型语法也和模板类似——<code class="notranslate">&lt;T&gt;</code>。</p>
@@ -848,6 +856,7 @@ T _someClass;
 };
 
 </code></pre>
+<p><a id="user-content-3"></a></p>
 <h4>3. 总结</h4>
 <p>由于时间关系，总结的比较草率，还有很多需要补充的地方。对于 swift 语言，只是对语法进行了简单的学习。其核心思想还需进一步的深入学习——实践 + 概念。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;">❤️ 转载文章请注明出处，谢谢！❤️</div>
