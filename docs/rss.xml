@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>237号房间</title><link>https://cell.237927.xyz</link><description>希望，或许是最好的东西。</description><copyright>237号房间</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://cell.237927.xyz</link></image><lastBuildDate>Sat, 13 Jul 2024 14:56:46 +0000</lastBuildDate><managingEditor>237号房间</managingEditor><ttl>60</ttl><webMaster>237号房间</webMaster><item><title>[转载]Swift入门教程01</title><link>https://cell.237927.xyz/post/%5B-zhuan-zai-%5DSwift-ru-men-jiao-cheng-01.html</link><description>&gt; 原文地址 ['一篇入门swift的学习笔记' by __MrCool](https://blog.csdn.net/Void_leng/article/details/114254504#24__171)&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>237号房间</title><link>https://cell.237927.xyz</link><description>希望，或许是最好的东西。</description><copyright>237号房间</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://cell.237927.xyz</link></image><lastBuildDate>Sat, 13 Jul 2024 15:05:00 +0000</lastBuildDate><managingEditor>237号房间</managingEditor><ttl>60</ttl><webMaster>237号房间</webMaster><item><title>[转载]Swift入门教程01</title><link>https://cell.237927.xyz/post/%5B-zhuan-zai-%5DSwift-ru-men-jiao-cheng-01.html</link><description>&gt; 原文地址 ['一篇入门swift的学习笔记' by __MrCool](https://blog.csdn.net/Void_leng/article/details/114254504#24__171)&#13;
 &#13;
 #### 文章目录&#13;
 &#13;
@@ -21,7 +21,7 @@
             *   [2.14 泛型](#2.14)&#13;
         *   [3. 总结](#3)&#13;
 &#13;
-&lt;a id='1'&gt;&lt;/span&gt;&#13;
+&lt;a href='1'&gt;&lt;/span&gt;&#13;
 #### 1. 读后概述&#13;
 &#13;
 阅读完[《the swift programming language 中文版》](https://swiftgg.gitbook.io/swift/)，对 swift 语言有了初步的认识。</description><guid isPermaLink="true">https://cell.237927.xyz/post/%5B-zhuan-zai-%5DSwift-ru-men-jiao-cheng-01.html</guid><pubDate>Sat, 13 Jul 2024 14:35:31 +0000</pubDate></item><item><title>Andy留给Red的信</title><link>https://cell.237927.xyz/post/Andy-liu-gei-Red-de-xin.html</link><description>Dear Red,&#13;
