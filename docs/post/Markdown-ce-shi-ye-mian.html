@@ -463,6 +463,635 @@ if t || f {
 
 可以使用 `()` 改变优先级或者语法美观
 
+建议: 重点理解一下字符串的底层表示, 相应部分从 **Unicode** 开始看起
+## [字符串字面量 (String Literals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Literals)
+---
+```swift
+let s = 'hello'
+```
+### [多行字符串字面量 (Multiline String Literals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Multiline-String-Literals)
+
+🕐 多行字符串表示法, :
+```swift
+let s = '''
+hear me now and bear witness to my vow
+night gathers and now my watch begins
+'''
+```
+
+🕑 使用 `\` 在代码层面换行, 实际文字不换行:
+```swift
+let s = '''
+hear me now and bear witness\
+to my vow
+night gathers and now my watch begins
+'''
+```
+
+🕒 首行缩进以末尾 `'''` 所在行的缩进为基准:
+
+![[Pasted image 20240107172813.png]]
+### [特殊字符 (Special Characters in String Literals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Special-Characters-in-String-Literals)
+
+转义字符有:
+- `\0` (空字符), `\\` (反斜杠), `\t` (水平制表符), `\n` (换行), `\r` (回车), `\'` (双引号), `\'` (单引号)
+- `\u{`_n_`}`, 其中 n 是 1-8 位的十六进制数, 即 Unicode 标量值
+
+```swift
+let a = '\u{24}'        // $,  Unicode scalar U+0024
+let b = '\u{2665}'      // ♥,  Unicode scalar U+2665
+let c = '\u{1F496}' // 💖, Unicode scalar U+1F496
+```
+### [扩展的字符串界定符 (Extended String Delimiters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Extended-String-Delimiters)
+
+通过在字符串外层使用 `#` (任意个数)达到在原生字符串的效果
+
+🕐 以下是等价的:
+```swift
+let s1 = #'Here are : \n'#
+let s2 = ##'Here are : \n'##
+let s3 = ###'Here are : \n'###
+```
+
+🕑 在 `\` 后添加界定符以恢复特殊字符的效果:
+```swift
+let s1 = #'Here are : \#n'#
+let s2 = ##'Here are : \##n'##
+let s3 = ###'Here are : \##n'###
+```
+## [初始化空字符串 (Initializing an Empty String)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Initializing-an-Empty-String)
+---
+🕐 初始化空字符串:
+```swift
+var s1 = ''
+var s2 = String() 
+```
+
+🕑 判断是否为空:
+```swift
+if s.isEmpty {
+	...
+}
+```
+## [字符串的可变性 (String Mutability)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Mutability)
+---
+是否可变取决于是 `var` 还是 `let`
+## [字符串是值类型 (Strings Are Value Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Strings-Are-Value-Types)
+---
+值类型意味着是值存储和传递, 而不是指针
+## [使用字符 (Working with Characters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Working-with-Characters)
+---
+🕐 字符串是字符数组:
+```swift
+for c in 'Dog!🐶' {
+    print(c)
+}
+```
+
+🕑 定义字符:
+```swift
+let c: Character = '!'
+```
+
+🕒 将字符数组转换为字符串:
+```swift
+let c: [Character] = ['C', 'a', 't', '!', '🐱']
+let s = String(c)
+```
+## [拼接字符和字符串 (Concatenating Strings and Characters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Concatenating-Strings-and-Characters)
+---
+🕐 拼接:
+```swift
+let a = 'hello'
+let b = ' world'
+let s = a + b
+```
+
+🕑 复合拼接:
+```swift
+var s = 'hello'
+s += ' world'
+```
+
+🕒 末尾添加字符:
+```swift
+var s = 'hello'
+s.append('!')
+```
+## [字符串插值 (String Interpolation)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Interpolation)
+---
+🕐 使用 `\()` 在字符串中进行插值:
+```swift
+var a = 'root'
+let b = 'hello \(a)'
+```
+
+🕑 在扩展的字符串界定符中进行插值:
+```swift
+print(#'6 times 7 is \#(6 * 7).'#)
+```
+## [Unicode](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode)
+---
+`String` 完全符合 *Unicode 标准*, 组成字符串的基本单位不再是'字符'
+### [Unicode 标量值 (Unicode Scalar Values)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode-Scalar-Values)
+
+`String` 由 *Unicode 标量值*组成
+### [扩展字素簇 (Extended Grapheme Clusters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Extended-Grapheme-Clusters)
+
+`Character` 表示一个单独的'扩展字素簇', 即可由多个 *Unicode 标量值*组成的序列
+
+🕐 如二者都表示 `é`:
+```swift
+let a: Character = '\u{E9}'
+let b: Character = '\u{65}\u{301}' 
+print(a == b) // true
+```
+
+🕑 扩展字素簇可通过组合或拆解的形式表示:
+```swift
+let a: Character = '\u{D55C}' // 한 
+let b: Character = '\u{1112}\u{1161}\u{11AB}' // ᄒ, ᅡ, ᆫ
+print(a == b) // true
+```
+
+🕒 可以给 Unicode 标量进行字符修饰; 如给它添加某个符号:
+```swift
+let a: Character = '\u{E9}\u{20DD}'
+```
+但是其仍然被视为 `Character`
+
+🕔 组合地区指示符:
+```swift
+let a: Character = '\u{1F1FA}\u{1F1F8}'
+print(a) // 🇺🇸
+```
+## [计算字符数量 (Counting Characters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Counting-Characters)
+---
+```swift
+var s = 'root'
+print(s.count) // 4
+```
+
+> 计算字符数量需要遍历最底层 *Unicode 标量值*, 因而字符串越长性能也越差
+## [访问和修改字符串 (Accessing and Modifying a String)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Accessing-and-Modifying-a-String)
+---
+### [字符串索引 (String Indices)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Indices)
+
+每个字符串值都有其对应的索引类型 *String.Index* 来标识每个字符所在的位置, 由于字符串的特殊组成, 需要遍历 *Unicode 标量值*来决定每个字符的位置, 因而不能直接使用数值索引
+
+```swift
+let s = 'abcdefg'
+```
+
+🕐 获取首字符:
+```swift
+s[s.startIndex] // a
+```
+
+🕑 获取指定字符前或后的字符:
+```swift
+s[s.index(before: s.endIndex)] // g
+s[s.index(after: s.startIndex)] // b
+```
+其中 *endIndex* 指向最后一个字符的下一位置
+
+🕒 获取指定偏移位置的索引:
+```swift
+let index = s.index(s.startIndex, offsetBy: 3)
+print(s[index]) // d
+```
+
+🕓 通过索引遍历字符串:
+```swift
+for i in s.indices {
+    print(s[i])
+}
+```
+
+> 这种索引类型适用于任何遵循 *Collection* 协议的类型, 比如 *Array*, *Dictionary* 和 *Set*
+### [插入和移除 (Inserting and Removing)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Inserting-and-Removing)
+
+```swift
+var s = 'abcdefg'
+```
+
+🕐 在指定索引处插入字符:
+```swift
+s.insert('h', at: s.endIndex)
+```
+
+🕑 移除指定索引处的字符:
+```swift
+s.remove(at: s.index(before: s.endIndex))
+```
+
+🕒 移除指定索引范围内的字符:
+```swift
+let range = s.index(s.endIndex, offsetBy: -2) ..< s.endIndex
+s.removeSubrange(range)
+```
+
+> 上述方法适用于任何遵循 *Collection* 协议的类型, 比如 *Array*, *Dictionary* 和 *Set*
+## [子串 (Substrings)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Substrings)
+---
+子串是一个类型 `Substring`, 相当于是字符串的视图, 当你对子串进行修改时, 其会被转换为字符串
+![[Pasted image 20240221154649.png|350]]
+
+🕐 通过索引获取子串:
+```swift
+var s = 'abc,def,g'
+let index = s.firstIndex(of: ',') ?? s.endIndex
+let a = s[..<index]
+```
+
+🕑 将字串转换为字符串:
+```swift
+let b = String(a)
+```
+## [字符串比较 (Comparing Strings)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Comparing-Strings)
+---
+🕐 比较字符串的值是否相等:
+```swift
+let a = 'I'm root'
+let b = 'I'm root'
+if a == b {
+    print('equal')
+}
+```
+
+🕑 需要注意扩展字素簇的情况:
+```swift
+let a = 'Voulez-vous un caf\u{E9}?'
+let b = 'Voulez-vous un caf\u{65}\u{301}?'
+if a == b {
+    print('equal')
+}
+```
+因为 *\\\u{65}\\\u{301}* 为 *\\\u{E9}* 的扩展表示
+### [前缀与后缀 (Prefix and Suffix Equality)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Prefix-and-Suffix-Equality)
+
+```swift
+let list = [
+    'Act 1 Scene 1: Verona, A public place',
+    'Act 1 Scene 2: Capulet's mansion',
+    'Act 1 Scene 3: A room in Capulet's mansion',
+    'Act 1 Scene 4: A street outside Capulet's mansion',
+    'Act 1 Scene 5: The Great Hall in Capulet's mansion',
+    'Act 2 Scene 1: Outside Capulet's mansion',
+    'Act 2 Scene 2: Capulet's orchard',
+    'Act 2 Scene 3: Outside Friar Lawrence's cell',
+    'Act 2 Scene 4: A street in Verona',
+    'Act 2 Scene 5: Capulet's mansion',
+    'Act 2 Scene 6: Friar Lawrence's cell'
+]
+```
+
+判断 `String` 是否拥有指定的前缀或后缀:
+```swift
+for i in list {
+    if i.hasPrefix('Act 1') { // 是否拥有前缀
+        print('prefix')
+    }
+    
+    if i.hasSuffix('cell') { // 是否拥有后缀
+        print('suffix')
+    }
+}
+```
+## [字符串的 Unicode 表示形式 (Unicode Representations of Strings)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode-Representations-of-Strings)
+---
+获取 `String` 的不同表示方式
+
+```swift
+let dogString = 'Dog‼🐶'
+```
+### [UTF-8 形式 (UTF-8 Representation)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#UTF-8-Representation)
+![[Pasted image 20240226165335.png]]
+```swift
+for codeUnit in dogString.utf8 {
+    print('\(codeUnit) ', terminator: '')
+}
+// 68 111 103 226 128 188 240 159 144 182
+```
+### [UTF-16 形式 (UTF-16 Representation)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#UTF-16-Representation)
+![[Pasted image 20240226165345.png|550]]
+```swift
+for codeUnit in dogString.utf16 {
+    print('\(codeUnit) ', terminator: '')
+}
+// 68 111 103 8252 55357 56374 
+```
+### [Unicode 标量值形式 (Unicode Scalar Representation)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode-Scalar-Representation)
+![[Pasted image 20240226165504.png|500]]
+```swift
+for scalar in dogString.unicodeScalars {
+    print('\(scalar.value) ', terminator: '')
+}
+// 68 111 103 8252 128054 
+```
+
+🕐 可以直接将该标量值转换为 `String`:
+```swift
+for scalar in dogString.unicodeScalars {
+    print('\(scalar) ')
+}
+// D
+// o
+// g
+// ‼
+// 🐶
+```
+
+建议: 这部分没什么难点, 了解下各个类型的操作就行
+## [集合的可变性 (Mutability of Collections)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Mutability-of-Collections)
+---
+是否可变取决于是 `var` 还是 `let`
+## [数组 (Arrays)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Arrays)
+---
+同一类型值的顺序集合
+### [数组类型简记法 (Array Type Shorthand Syntax)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Array-Type-Shorthand-Syntax)
+
+数组的完整写法为: `Array<Element>`, 但通常简写为: `[Element]`
+### [创建空数组 (Creating an Empty Array)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Empty-Array)
+
+```swift
+var a: [Int] = []
+a.append(3)
+a = []
+```
+### [创建有默认值的数组 (Creating an Array with a Default Value)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-with-a-Default-Value)
+
+具有 3 个相同值的数组:
+```swift
+var a = Array(repeating: 0.0, count: 3)
+```
+### [合并两个数组 (Creating an Array by Adding Two Arrays Together)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-by-Adding-Two-Arrays-Together)
+
+```swift
+var a = Array(repeating: 0.0, count: 3)
+var b = Array(repeating: 2.5, count: 4)
+var c = a + b
+```
+### [通过数组字面量创建数组 (Creating an Array with an Array Literal)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-with-an-Array-Literal)
+
+```swift
+var a: [String] = ['Eggs', 'Milk']
+```
+### [访问和修改数组 (Accessing and Modifying an Array)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Accessing-and-Modifying-an-Array)
+
+```swift
+var a = [1, 2, 3, 4, 5]
+```
+
+🕐 获取的元素个数:
+```swift
+a.count
+```
+
+🕑 判断数组是否为空:
+```swift
+a.isEmpty
+```
+
+🕒 在'数组'末尾添加元素:
+```swift
+a.append(6)
+```
+
+🕓 通过索引获取和修改数组:
+```swift
+let e = array[0]
+array[0] = 'root'
+array[4...6] = ['a', 'b']
+```
+
+🕔 插入或移除指定位置的元素:
+```swift
+a.insert(88, at: 0)
+a.remove(at: 1)
+```
+
+🕕 弹出最后一位元素:
+```swift
+let p = a.removeLast()
+```
+### [遍历数组 (Iterating Over an Array)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-an-Array)
+
+🕐 遍历数组中的元素:
+```swift
+for v in array {
+}
+```
+
+🕑 遍历数组的索引和元素:
+```swift
+for (i, v) in array.enumerated() {
+}
+```
+## [集合 (Sets)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Sets)
+---
+同一类型的唯一值的无序集合
+### [集合的哈希值 (Hash Values for Set Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Hash-Values-for-Set-Types)
+
+集合类型必须是可哈希的, 因为要进行值比较
+### [集合类型语法 (Set Type Syntax)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Set-Type-Syntax)
+
+集合类型写作: `Set<Element>`
+### [创建和初始化空集合 (Creating and Initializing an Empty Set)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-and-Initializing-an-Empty-Set)
+
+```swift
+var s = Set<Character>()
+s.insert('a')
+s = []
+```
+### [通过数组字面量创建集合 (Creating a Set with an Array Literal)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-a-Set-with-an-Array-Literal)
+
+```swift
+var s: Set<String> = ['Rock', 'Classical', 'Hip hop']
+```
+
+可以简写为:
+```swift
+var s: Set = ['Rock', 'Classical', 'Hip hop']
+```
+### [访问和修改集合 (Accessing and Modifying a Set)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Accessing-and-Modifying-a-Set)
+
+🕐 获取个数:
+```swift
+s.count
+
+```
+
+🕑 判断否为空:
+```swift
+s.isEmpty
+```
+
+🕒 插入元素:
+```swift
+s.insert('a')
+
+```
+
+🕓 移除元素:
+```swift
+s.remove('a')
+```
+ 
+ 🕓 是否包含某元素:
+```
+s.contains('a')
+```
+### [遍历集合 (Iterating Over a Set)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-a-Set)
+
+🕐 遍历集合元素:
+```swift
+for i in s {
+}
+```
+
+🕑 排序后遍历:
+```swift
+for i in s.sorted() {
+}
+```
+## [执行集合操作 (Performing Set Operations)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Performing-Set-Operations)
+---
+数学中的集合操作
+### [基础集合操作 (Fundamental Set Operations)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Fundamental-Set-Operations)
+
+![[Pasted image 20240107203713.png|550]]
+### [集合的成员资格和等价性 (Set Membership and Equality)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Set-Membership-and-Equality)
+
+```swift
+let a: Set = ['🐶', '🐱']
+let b: Set = ['🐮', '🐔', '🐑', '🐶', '🐱']
+let c: Set = ['🐦', '🐭']
+```
+
+🕐 判断集合是否相等:
+```swift
+a == b
+```
+
+🕑 集合操作:
+
+```swift
+a.isSubset(of: b) // 子集
+a.isStrictSubset(of: b) // 严格子集
+b.isSuperset(of: a) // 超集
+b.isDisjoint(with: c) // 无交集
+```
+## [字典 (Dictionaries)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Dictionaries)
+---
+无序的, key 类型相同, value 类型相同
+### [字典类型简记法 (Dictionary Type Shorthand Syntax)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Dictionary-Type-Shorthand-Syntax)
+
+字典定义为: `Dictionary<Key, Value>`, 可以简写为: `[Key: Value]`
+### [创建空字典 (Creating an Empty Dictionary)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Empty-Dictionary)
+
+```swift
+var d: [Int: String] = [:]
+```
+
+🕐 赋值:
+```swift
+d[16] = 'sixteen'
+```
+### [通过字典字面量创建字典 (Creating a Dictionary with a Dictionary Literal)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-a-Dictionary-with-a-Dictionary-Literal)
+
+```swift
+var d: [String: Int] = ['a': 18, 'b': 28]
+```
+
+🕐 可以简写为:
+```swift
+var d = ['a': 18, 'b': 28]
+```
+### [访问和修改字典 (Accessing and Modifying a Dictionary)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Accessing-and-Modifying-a-Dictionary)
+
+🕐 获取元素个数,
+```swift
+d.count
+```
+
+🕑 判断是否为空:
+ ```swift
+d.isEmpty
+```
+
+🕒 通过 key 添加或修改 value:
+```swift
+d['c'] = 19
+```
+
+🕓 更新并返回旧 value (可选类型):
+```swift
+var d  = ['a': 18, 'b': 28]
+if let v = d.updateValue(19, forKey: 'a') {
+    print(v)
+}
+```
+
+🕔 获取 value (可选类型):
+```swift
+var d  = ['a': 18, 'b': 28]
+if let v = d['b'] {
+    print(v)
+}
+```
+
+🕕 通过赋值方式删除元素:
+```swift
+dict[key] = nil
+```
+
+🕖 通过 key 删除并返回对应的 value (可选类型):
+```swift
+var d  = ['a': 18, 'b': 28]
+if let v = d.removeValue(forKey: 'a') {
+    print(v)
+}
+```
+### [遍历字典 (Iterating Over a Dictionary)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-a-Dictionary)
+
+🕐 遍历 key 和 value:
+```swift
+var d  = ['a': 18, 'b': 28]
+for (k, v) in d {
+}
+```
+
+🕑 遍历 key :
+```swift
+for k in d.keys {
+}
+```
+
+🕒 遍历 value:
+```swift
+for v in d.values {
+}
+```
+
+🕓 将 key 或 value 转换为数组:
+```swift
+var d  = ['a': 18, 'b': 28]
+let a = [String](d.keys)
+let b = [Int](d.values)
+```
+
+🕔 原地排序 key:
+```swift
+d.keys.sorted()
+```
+
+🕕 原地排序 value:
+```swift
+d.values.sorted()
+```
+
+
 
 
 <!-- ##{'script':'<script src='https://blog.meekdai.com/assets/GmeekTOC.js'></script>'}## -->。">
@@ -920,6 +1549,635 @@ if t || f {
 
 可以使用 `()` 改变优先级或者语法美观
 
+建议: 重点理解一下字符串的底层表示, 相应部分从 **Unicode** 开始看起
+## [字符串字面量 (String Literals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Literals)
+---
+```swift
+let s = 'hello'
+```
+### [多行字符串字面量 (Multiline String Literals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Multiline-String-Literals)
+
+🕐 多行字符串表示法, :
+```swift
+let s = '''
+hear me now and bear witness to my vow
+night gathers and now my watch begins
+'''
+```
+
+🕑 使用 `\` 在代码层面换行, 实际文字不换行:
+```swift
+let s = '''
+hear me now and bear witness\
+to my vow
+night gathers and now my watch begins
+'''
+```
+
+🕒 首行缩进以末尾 `'''` 所在行的缩进为基准:
+
+![[Pasted image 20240107172813.png]]
+### [特殊字符 (Special Characters in String Literals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Special-Characters-in-String-Literals)
+
+转义字符有:
+- `\0` (空字符), `\\` (反斜杠), `\t` (水平制表符), `\n` (换行), `\r` (回车), `\'` (双引号), `\'` (单引号)
+- `\u{`_n_`}`, 其中 n 是 1-8 位的十六进制数, 即 Unicode 标量值
+
+```swift
+let a = '\u{24}'        // $,  Unicode scalar U+0024
+let b = '\u{2665}'      // ♥,  Unicode scalar U+2665
+let c = '\u{1F496}' // 💖, Unicode scalar U+1F496
+```
+### [扩展的字符串界定符 (Extended String Delimiters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Extended-String-Delimiters)
+
+通过在字符串外层使用 `#` (任意个数)达到在原生字符串的效果
+
+🕐 以下是等价的:
+```swift
+let s1 = #'Here are : \n'#
+let s2 = ##'Here are : \n'##
+let s3 = ###'Here are : \n'###
+```
+
+🕑 在 `\` 后添加界定符以恢复特殊字符的效果:
+```swift
+let s1 = #'Here are : \#n'#
+let s2 = ##'Here are : \##n'##
+let s3 = ###'Here are : \##n'###
+```
+## [初始化空字符串 (Initializing an Empty String)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Initializing-an-Empty-String)
+---
+🕐 初始化空字符串:
+```swift
+var s1 = ''
+var s2 = String() 
+```
+
+🕑 判断是否为空:
+```swift
+if s.isEmpty {
+	...
+}
+```
+## [字符串的可变性 (String Mutability)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Mutability)
+---
+是否可变取决于是 `var` 还是 `let`
+## [字符串是值类型 (Strings Are Value Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Strings-Are-Value-Types)
+---
+值类型意味着是值存储和传递, 而不是指针
+## [使用字符 (Working with Characters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Working-with-Characters)
+---
+🕐 字符串是字符数组:
+```swift
+for c in 'Dog!🐶' {
+    print(c)
+}
+```
+
+🕑 定义字符:
+```swift
+let c: Character = '!'
+```
+
+🕒 将字符数组转换为字符串:
+```swift
+let c: [Character] = ['C', 'a', 't', '!', '🐱']
+let s = String(c)
+```
+## [拼接字符和字符串 (Concatenating Strings and Characters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Concatenating-Strings-and-Characters)
+---
+🕐 拼接:
+```swift
+let a = 'hello'
+let b = ' world'
+let s = a + b
+```
+
+🕑 复合拼接:
+```swift
+var s = 'hello'
+s += ' world'
+```
+
+🕒 末尾添加字符:
+```swift
+var s = 'hello'
+s.append('!')
+```
+## [字符串插值 (String Interpolation)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Interpolation)
+---
+🕐 使用 `\()` 在字符串中进行插值:
+```swift
+var a = 'root'
+let b = 'hello \(a)'
+```
+
+🕑 在扩展的字符串界定符中进行插值:
+```swift
+print(#'6 times 7 is \#(6 * 7).'#)
+```
+## [Unicode](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode)
+---
+`String` 完全符合 *Unicode 标准*, 组成字符串的基本单位不再是'字符'
+### [Unicode 标量值 (Unicode Scalar Values)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode-Scalar-Values)
+
+`String` 由 *Unicode 标量值*组成
+### [扩展字素簇 (Extended Grapheme Clusters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Extended-Grapheme-Clusters)
+
+`Character` 表示一个单独的'扩展字素簇', 即可由多个 *Unicode 标量值*组成的序列
+
+🕐 如二者都表示 `é`:
+```swift
+let a: Character = '\u{E9}'
+let b: Character = '\u{65}\u{301}' 
+print(a == b) // true
+```
+
+🕑 扩展字素簇可通过组合或拆解的形式表示:
+```swift
+let a: Character = '\u{D55C}' // 한 
+let b: Character = '\u{1112}\u{1161}\u{11AB}' // ᄒ, ᅡ, ᆫ
+print(a == b) // true
+```
+
+🕒 可以给 Unicode 标量进行字符修饰; 如给它添加某个符号:
+```swift
+let a: Character = '\u{E9}\u{20DD}'
+```
+但是其仍然被视为 `Character`
+
+🕔 组合地区指示符:
+```swift
+let a: Character = '\u{1F1FA}\u{1F1F8}'
+print(a) // 🇺🇸
+```
+## [计算字符数量 (Counting Characters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Counting-Characters)
+---
+```swift
+var s = 'root'
+print(s.count) // 4
+```
+
+> 计算字符数量需要遍历最底层 *Unicode 标量值*, 因而字符串越长性能也越差
+## [访问和修改字符串 (Accessing and Modifying a String)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Accessing-and-Modifying-a-String)
+---
+### [字符串索引 (String Indices)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Indices)
+
+每个字符串值都有其对应的索引类型 *String.Index* 来标识每个字符所在的位置, 由于字符串的特殊组成, 需要遍历 *Unicode 标量值*来决定每个字符的位置, 因而不能直接使用数值索引
+
+```swift
+let s = 'abcdefg'
+```
+
+🕐 获取首字符:
+```swift
+s[s.startIndex] // a
+```
+
+🕑 获取指定字符前或后的字符:
+```swift
+s[s.index(before: s.endIndex)] // g
+s[s.index(after: s.startIndex)] // b
+```
+其中 *endIndex* 指向最后一个字符的下一位置
+
+🕒 获取指定偏移位置的索引:
+```swift
+let index = s.index(s.startIndex, offsetBy: 3)
+print(s[index]) // d
+```
+
+🕓 通过索引遍历字符串:
+```swift
+for i in s.indices {
+    print(s[i])
+}
+```
+
+> 这种索引类型适用于任何遵循 *Collection* 协议的类型, 比如 *Array*, *Dictionary* 和 *Set*
+### [插入和移除 (Inserting and Removing)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Inserting-and-Removing)
+
+```swift
+var s = 'abcdefg'
+```
+
+🕐 在指定索引处插入字符:
+```swift
+s.insert('h', at: s.endIndex)
+```
+
+🕑 移除指定索引处的字符:
+```swift
+s.remove(at: s.index(before: s.endIndex))
+```
+
+🕒 移除指定索引范围内的字符:
+```swift
+let range = s.index(s.endIndex, offsetBy: -2) ..< s.endIndex
+s.removeSubrange(range)
+```
+
+> 上述方法适用于任何遵循 *Collection* 协议的类型, 比如 *Array*, *Dictionary* 和 *Set*
+## [子串 (Substrings)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Substrings)
+---
+子串是一个类型 `Substring`, 相当于是字符串的视图, 当你对子串进行修改时, 其会被转换为字符串
+![[Pasted image 20240221154649.png|350]]
+
+🕐 通过索引获取子串:
+```swift
+var s = 'abc,def,g'
+let index = s.firstIndex(of: ',') ?? s.endIndex
+let a = s[..<index]
+```
+
+🕑 将字串转换为字符串:
+```swift
+let b = String(a)
+```
+## [字符串比较 (Comparing Strings)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Comparing-Strings)
+---
+🕐 比较字符串的值是否相等:
+```swift
+let a = 'I'm root'
+let b = 'I'm root'
+if a == b {
+    print('equal')
+}
+```
+
+🕑 需要注意扩展字素簇的情况:
+```swift
+let a = 'Voulez-vous un caf\u{E9}?'
+let b = 'Voulez-vous un caf\u{65}\u{301}?'
+if a == b {
+    print('equal')
+}
+```
+因为 *\\\u{65}\\\u{301}* 为 *\\\u{E9}* 的扩展表示
+### [前缀与后缀 (Prefix and Suffix Equality)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Prefix-and-Suffix-Equality)
+
+```swift
+let list = [
+    'Act 1 Scene 1: Verona, A public place',
+    'Act 1 Scene 2: Capulet's mansion',
+    'Act 1 Scene 3: A room in Capulet's mansion',
+    'Act 1 Scene 4: A street outside Capulet's mansion',
+    'Act 1 Scene 5: The Great Hall in Capulet's mansion',
+    'Act 2 Scene 1: Outside Capulet's mansion',
+    'Act 2 Scene 2: Capulet's orchard',
+    'Act 2 Scene 3: Outside Friar Lawrence's cell',
+    'Act 2 Scene 4: A street in Verona',
+    'Act 2 Scene 5: Capulet's mansion',
+    'Act 2 Scene 6: Friar Lawrence's cell'
+]
+```
+
+判断 `String` 是否拥有指定的前缀或后缀:
+```swift
+for i in list {
+    if i.hasPrefix('Act 1') { // 是否拥有前缀
+        print('prefix')
+    }
+    
+    if i.hasSuffix('cell') { // 是否拥有后缀
+        print('suffix')
+    }
+}
+```
+## [字符串的 Unicode 表示形式 (Unicode Representations of Strings)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode-Representations-of-Strings)
+---
+获取 `String` 的不同表示方式
+
+```swift
+let dogString = 'Dog‼🐶'
+```
+### [UTF-8 形式 (UTF-8 Representation)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#UTF-8-Representation)
+![[Pasted image 20240226165335.png]]
+```swift
+for codeUnit in dogString.utf8 {
+    print('\(codeUnit) ', terminator: '')
+}
+// 68 111 103 226 128 188 240 159 144 182
+```
+### [UTF-16 形式 (UTF-16 Representation)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#UTF-16-Representation)
+![[Pasted image 20240226165345.png|550]]
+```swift
+for codeUnit in dogString.utf16 {
+    print('\(codeUnit) ', terminator: '')
+}
+// 68 111 103 8252 55357 56374 
+```
+### [Unicode 标量值形式 (Unicode Scalar Representation)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode-Scalar-Representation)
+![[Pasted image 20240226165504.png|500]]
+```swift
+for scalar in dogString.unicodeScalars {
+    print('\(scalar.value) ', terminator: '')
+}
+// 68 111 103 8252 128054 
+```
+
+🕐 可以直接将该标量值转换为 `String`:
+```swift
+for scalar in dogString.unicodeScalars {
+    print('\(scalar) ')
+}
+// D
+// o
+// g
+// ‼
+// 🐶
+```
+
+建议: 这部分没什么难点, 了解下各个类型的操作就行
+## [集合的可变性 (Mutability of Collections)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Mutability-of-Collections)
+---
+是否可变取决于是 `var` 还是 `let`
+## [数组 (Arrays)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Arrays)
+---
+同一类型值的顺序集合
+### [数组类型简记法 (Array Type Shorthand Syntax)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Array-Type-Shorthand-Syntax)
+
+数组的完整写法为: `Array<Element>`, 但通常简写为: `[Element]`
+### [创建空数组 (Creating an Empty Array)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Empty-Array)
+
+```swift
+var a: [Int] = []
+a.append(3)
+a = []
+```
+### [创建有默认值的数组 (Creating an Array with a Default Value)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-with-a-Default-Value)
+
+具有 3 个相同值的数组:
+```swift
+var a = Array(repeating: 0.0, count: 3)
+```
+### [合并两个数组 (Creating an Array by Adding Two Arrays Together)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-by-Adding-Two-Arrays-Together)
+
+```swift
+var a = Array(repeating: 0.0, count: 3)
+var b = Array(repeating: 2.5, count: 4)
+var c = a + b
+```
+### [通过数组字面量创建数组 (Creating an Array with an Array Literal)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-with-an-Array-Literal)
+
+```swift
+var a: [String] = ['Eggs', 'Milk']
+```
+### [访问和修改数组 (Accessing and Modifying an Array)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Accessing-and-Modifying-an-Array)
+
+```swift
+var a = [1, 2, 3, 4, 5]
+```
+
+🕐 获取的元素个数:
+```swift
+a.count
+```
+
+🕑 判断数组是否为空:
+```swift
+a.isEmpty
+```
+
+🕒 在'数组'末尾添加元素:
+```swift
+a.append(6)
+```
+
+🕓 通过索引获取和修改数组:
+```swift
+let e = array[0]
+array[0] = 'root'
+array[4...6] = ['a', 'b']
+```
+
+🕔 插入或移除指定位置的元素:
+```swift
+a.insert(88, at: 0)
+a.remove(at: 1)
+```
+
+🕕 弹出最后一位元素:
+```swift
+let p = a.removeLast()
+```
+### [遍历数组 (Iterating Over an Array)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-an-Array)
+
+🕐 遍历数组中的元素:
+```swift
+for v in array {
+}
+```
+
+🕑 遍历数组的索引和元素:
+```swift
+for (i, v) in array.enumerated() {
+}
+```
+## [集合 (Sets)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Sets)
+---
+同一类型的唯一值的无序集合
+### [集合的哈希值 (Hash Values for Set Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Hash-Values-for-Set-Types)
+
+集合类型必须是可哈希的, 因为要进行值比较
+### [集合类型语法 (Set Type Syntax)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Set-Type-Syntax)
+
+集合类型写作: `Set<Element>`
+### [创建和初始化空集合 (Creating and Initializing an Empty Set)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-and-Initializing-an-Empty-Set)
+
+```swift
+var s = Set<Character>()
+s.insert('a')
+s = []
+```
+### [通过数组字面量创建集合 (Creating a Set with an Array Literal)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-a-Set-with-an-Array-Literal)
+
+```swift
+var s: Set<String> = ['Rock', 'Classical', 'Hip hop']
+```
+
+可以简写为:
+```swift
+var s: Set = ['Rock', 'Classical', 'Hip hop']
+```
+### [访问和修改集合 (Accessing and Modifying a Set)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Accessing-and-Modifying-a-Set)
+
+🕐 获取个数:
+```swift
+s.count
+
+```
+
+🕑 判断否为空:
+```swift
+s.isEmpty
+```
+
+🕒 插入元素:
+```swift
+s.insert('a')
+
+```
+
+🕓 移除元素:
+```swift
+s.remove('a')
+```
+ 
+ 🕓 是否包含某元素:
+```
+s.contains('a')
+```
+### [遍历集合 (Iterating Over a Set)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-a-Set)
+
+🕐 遍历集合元素:
+```swift
+for i in s {
+}
+```
+
+🕑 排序后遍历:
+```swift
+for i in s.sorted() {
+}
+```
+## [执行集合操作 (Performing Set Operations)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Performing-Set-Operations)
+---
+数学中的集合操作
+### [基础集合操作 (Fundamental Set Operations)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Fundamental-Set-Operations)
+
+![[Pasted image 20240107203713.png|550]]
+### [集合的成员资格和等价性 (Set Membership and Equality)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Set-Membership-and-Equality)
+
+```swift
+let a: Set = ['🐶', '🐱']
+let b: Set = ['🐮', '🐔', '🐑', '🐶', '🐱']
+let c: Set = ['🐦', '🐭']
+```
+
+🕐 判断集合是否相等:
+```swift
+a == b
+```
+
+🕑 集合操作:
+
+```swift
+a.isSubset(of: b) // 子集
+a.isStrictSubset(of: b) // 严格子集
+b.isSuperset(of: a) // 超集
+b.isDisjoint(with: c) // 无交集
+```
+## [字典 (Dictionaries)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Dictionaries)
+---
+无序的, key 类型相同, value 类型相同
+### [字典类型简记法 (Dictionary Type Shorthand Syntax)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Dictionary-Type-Shorthand-Syntax)
+
+字典定义为: `Dictionary<Key, Value>`, 可以简写为: `[Key: Value]`
+### [创建空字典 (Creating an Empty Dictionary)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Empty-Dictionary)
+
+```swift
+var d: [Int: String] = [:]
+```
+
+🕐 赋值:
+```swift
+d[16] = 'sixteen'
+```
+### [通过字典字面量创建字典 (Creating a Dictionary with a Dictionary Literal)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-a-Dictionary-with-a-Dictionary-Literal)
+
+```swift
+var d: [String: Int] = ['a': 18, 'b': 28]
+```
+
+🕐 可以简写为:
+```swift
+var d = ['a': 18, 'b': 28]
+```
+### [访问和修改字典 (Accessing and Modifying a Dictionary)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Accessing-and-Modifying-a-Dictionary)
+
+🕐 获取元素个数,
+```swift
+d.count
+```
+
+🕑 判断是否为空:
+ ```swift
+d.isEmpty
+```
+
+🕒 通过 key 添加或修改 value:
+```swift
+d['c'] = 19
+```
+
+🕓 更新并返回旧 value (可选类型):
+```swift
+var d  = ['a': 18, 'b': 28]
+if let v = d.updateValue(19, forKey: 'a') {
+    print(v)
+}
+```
+
+🕔 获取 value (可选类型):
+```swift
+var d  = ['a': 18, 'b': 28]
+if let v = d['b'] {
+    print(v)
+}
+```
+
+🕕 通过赋值方式删除元素:
+```swift
+dict[key] = nil
+```
+
+🕖 通过 key 删除并返回对应的 value (可选类型):
+```swift
+var d  = ['a': 18, 'b': 28]
+if let v = d.removeValue(forKey: 'a') {
+    print(v)
+}
+```
+### [遍历字典 (Iterating Over a Dictionary)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-a-Dictionary)
+
+🕐 遍历 key 和 value:
+```swift
+var d  = ['a': 18, 'b': 28]
+for (k, v) in d {
+}
+```
+
+🕑 遍历 key :
+```swift
+for k in d.keys {
+}
+```
+
+🕒 遍历 value:
+```swift
+for v in d.values {
+}
+```
+
+🕓 将 key 或 value 转换为数组:
+```swift
+var d  = ['a': 18, 'b': 28]
+let a = [String](d.keys)
+let b = [Int](d.values)
+```
+
+🕔 原地排序 key:
+```swift
+d.keys.sorted()
+```
+
+🕕 原地排序 value:
+```swift
+d.values.sorted()
+```
+
+
 
 
 <!-- ##{'script':'<script src='https://blog.meekdai.com/assets/GmeekTOC.js'></script>'}## -->。">
@@ -1299,6 +2557,381 @@ if t || f <span class="pl-kos">{</span>
 <p>上述逻辑运算符可以组合使用</p>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Explicit-Parentheses" rel="nofollow">显式使用括号 (Explicit Parentheses)</a></h3>
 <p>可以使用 <code class="notranslate">()</code> 改变优先级或者语法美观</p>
+<p>建议: 重点理解一下字符串的底层表示, 相应部分从 <strong>Unicode</strong> 开始看起</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Literals" rel="nofollow">字符串字面量 (String Literals)</a></h2>
+<hr>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">hello</span><span class="pl-s">"</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Multiline-String-Literals" rel="nofollow">多行字符串字面量 (Multiline String Literals)</a></h3>
+<p>🕐 多行字符串表示法, :</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"""</span><span class="pl-s"></span>
+<span class="pl-s">hear me now and bear witness to my vow</span>
+<span class="pl-s">night gathers and now my watch begins</span>
+<span class="pl-s"></span><span class="pl-s">"""</span></pre></div>
+<p>🕑 使用 <code class="notranslate">\</code> 在代码层面换行, 实际文字不换行:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"""</span><span class="pl-s"></span>
+<span class="pl-s">hear me now and bear witness</span><span class="pl-s">\</span>
+<span class="pl-s"></span><span class="pl-s">to my vow</span>
+<span class="pl-s">night gathers and now my watch begins</span>
+<span class="pl-s"></span><span class="pl-s">"""</span></pre></div>
+<p>🕒 首行缩进以末尾 <code class="notranslate">"""</code> 所在行的缩进为基准:</p>
+<p>![[Pasted image 20240107172813.png]]</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Special-Characters-in-String-Literals" rel="nofollow">特殊字符 (Special Characters in String Literals)</a></h3>
+<p>转义字符有:</p>
+<ul>
+<li><code class="notranslate">\0</code> (空字符), <code class="notranslate">\\</code> (反斜杠), <code class="notranslate">\t</code> (水平制表符), <code class="notranslate">\n</code> (换行), <code class="notranslate">\r</code> (回车), <code class="notranslate">\"</code> (双引号), <code class="notranslate">\'</code> (单引号)</li>
+<li><code class="notranslate">\u{</code><em>n</em><code class="notranslate">}</code>, 其中 n 是 1-8 位的十六进制数, 即 Unicode 标量值</li>
+</ul>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{24}</span><span class="pl-s">"</span>        <span class="pl-c">// $,  Unicode scalar U+0024</span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{2665}</span><span class="pl-s">"</span>      <span class="pl-c">// ♥,  Unicode scalar U+2665</span>
+<span class="pl-k">let</span> <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{1F496}</span><span class="pl-s">"</span> <span class="pl-c">// 💖, Unicode scalar U+1F496</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Extended-String-Delimiters" rel="nofollow">扩展的字符串界定符 (Extended String Delimiters)</a></h3>
+<p>通过在字符串外层使用 <code class="notranslate">#</code> (任意个数)达到在原生字符串的效果</p>
+<p>🕐 以下是等价的:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">s1</span> <span class="pl-c1">=</span> <span class="pl-s">#"Here are : \n"#</span>
+<span class="pl-k">let</span> <span class="pl-s1">s2</span> <span class="pl-c1">=</span> <span class="pl-s">##"Here are : \n"##</span>
+<span class="pl-k">let</span> <span class="pl-s1">s3</span> <span class="pl-c1">=</span> <span class="pl-s">###"Here are : \n"###</span></pre></div>
+<p>🕑 在 <code class="notranslate">\</code> 后添加界定符以恢复特殊字符的效果:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">s1</span> <span class="pl-c1">=</span> <span class="pl-s">#"Here are : \#n"#</span>
+<span class="pl-k">let</span> <span class="pl-s1">s2</span> <span class="pl-c1">=</span> <span class="pl-s">##"Here are : \##n"##</span>
+<span class="pl-k">let</span> <span class="pl-s1">s3</span> <span class="pl-c1">=</span> <span class="pl-s">###"Here are : \##n"###</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Initializing-an-Empty-String" rel="nofollow">初始化空字符串 (Initializing an Empty String)</a></h2>
+<hr>
+<p>🕐 初始化空字符串:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s1</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">"</span>
+<span class="pl-k">var</span> <span class="pl-s1">s2</span> <span class="pl-c1">=</span> <span class="pl-en">String</span><span class="pl-kos">(</span><span class="pl-kos">)</span> </pre></div>
+<p>🕑 判断是否为空:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">if s<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span>
+	<span class="pl-c1">...</span>
+<span class="pl-kos">}</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Mutability" rel="nofollow">字符串的可变性 (String Mutability)</a></h2>
+<hr>
+<p>是否可变取决于是 <code class="notranslate">var</code> 还是 <code class="notranslate">let</code></p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Strings-Are-Value-Types" rel="nofollow">字符串是值类型 (Strings Are Value Types)</a></h2>
+<hr>
+<p>值类型意味着是值存储和传递, 而不是指针</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Working-with-Characters" rel="nofollow">使用字符 (Working with Characters)</a></h2>
+<hr>
+<p>🕐 字符串是字符数组:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">c</span> in <span class="pl-s">"</span><span class="pl-s">Dog!🐶</span><span class="pl-s">"</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>c<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 定义字符:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">c</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">!</span><span class="pl-s">"</span></pre></div>
+<p>🕒 将字符数组转换为字符串:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">c</span><span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-smi">Character</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">C</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">t</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">!</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">🐱</span><span class="pl-s">"</span><span class="pl-kos">]</span>
+<span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-en">String</span><span class="pl-kos">(</span>c<span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Concatenating-Strings-and-Characters" rel="nofollow">拼接字符和字符串 (Concatenating Strings and Characters)</a></h2>
+<hr>
+<p>🕐 拼接:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">hello</span><span class="pl-s">"</span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s"> world</span><span class="pl-s">"</span>
+<span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> a <span class="pl-c1">+</span> b</pre></div>
+<p>🕑 复合拼接:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">hello</span><span class="pl-s">"</span>
+s <span class="pl-c1">+=</span> <span class="pl-s">"</span><span class="pl-s"> world</span><span class="pl-s">"</span></pre></div>
+<p>🕒 末尾添加字符:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">hello</span><span class="pl-s">"</span>
+s<span class="pl-kos">.</span><span class="pl-en">append</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">!</span><span class="pl-s">"</span><span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Interpolation" rel="nofollow">字符串插值 (String Interpolation)</a></h2>
+<hr>
+<p>🕐 使用 <code class="notranslate">\()</code> 在字符串中进行插值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">hello </span><span class="pl-kos">\(</span>a<span class="pl-kos">)</span><span class="pl-s">"</span></pre></div>
+<p>🕑 在扩展的字符串界定符中进行插值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">#"6 times 7 is </span><span class="pl-kos">\#(</span><span class="pl-c1">6</span> <span class="pl-c1">*</span> <span class="pl-c1">7</span><span class="pl-kos">)</span><span class="pl-s">."#</span><span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode" rel="nofollow">Unicode</a></h2>
+<hr>
+<p><code class="notranslate">String</code> 完全符合 <em>Unicode 标准</em>, 组成字符串的基本单位不再是"字符"</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode-Scalar-Values" rel="nofollow">Unicode 标量值 (Unicode Scalar Values)</a></h3>
+<p><code class="notranslate">String</code> 由 <em>Unicode 标量值</em>组成</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Extended-Grapheme-Clusters" rel="nofollow">扩展字素簇 (Extended Grapheme Clusters)</a></h3>
+<p><code class="notranslate">Character</code> 表示一个单独的"扩展字素簇", 即可由多个 <em>Unicode 标量值</em>组成的序列</p>
+<p>🕐 如二者都表示 <code class="notranslate">é</code>:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{E9}</span><span class="pl-s">"</span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{65}</span><span class="pl-s">\u{301}</span><span class="pl-s">"</span> 
+<span class="pl-en">print</span><span class="pl-kos">(</span>a <span class="pl-c1">==</span> b<span class="pl-kos">)</span> <span class="pl-c">// true</span></pre></div>
+<p>🕑 扩展字素簇可通过组合或拆解的形式表示:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{D55C}</span><span class="pl-s">"</span> <span class="pl-c">// 한 </span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{1112}</span><span class="pl-s">\u{1161}</span><span class="pl-s">\u{11AB}</span><span class="pl-s">"</span> <span class="pl-c">// ᄒ, ᅡ, ᆫ</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>a <span class="pl-c1">==</span> b<span class="pl-kos">)</span> <span class="pl-c">// true</span></pre></div>
+<p>🕒 可以给 Unicode 标量进行字符修饰; 如给它添加某个符号:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{E9}</span><span class="pl-s">\u{20DD}</span><span class="pl-s">"</span></pre></div>
+<p>但是其仍然被视为 <code class="notranslate">Character</code></p>
+<p>🕔 组合地区指示符:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{1F1FA}</span><span class="pl-s">\u{1F1F8}</span><span class="pl-s">"</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">)</span> <span class="pl-c">// 🇺🇸</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Counting-Characters" rel="nofollow">计算字符数量 (Counting Characters)</a></h2>
+<hr>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>s<span class="pl-kos">.</span>count<span class="pl-kos">)</span> <span class="pl-c">// 4</span></pre></div>
+<blockquote>
+<p>计算字符数量需要遍历最底层 <em>Unicode 标量值</em>, 因而字符串越长性能也越差</p>
+</blockquote>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Accessing-and-Modifying-a-String" rel="nofollow">访问和修改字符串 (Accessing and Modifying a String)</a></h2>
+<hr>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Indices" rel="nofollow">字符串索引 (String Indices)</a></h3>
+<p>每个字符串值都有其对应的索引类型 <em>String.Index</em> 来标识每个字符所在的位置, 由于字符串的特殊组成, 需要遍历 <em>Unicode 标量值</em>来决定每个字符的位置, 因而不能直接使用数值索引</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">abcdefg</span><span class="pl-s">"</span></pre></div>
+<p>🕐 获取首字符:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">s</span><span class="pl-kos">[</span>s<span class="pl-kos">.</span>startIndex<span class="pl-kos">]</span> <span class="pl-c">// a</span></pre></div>
+<p>🕑 获取指定字符前或后的字符:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">s</span><span class="pl-kos">[</span>s<span class="pl-kos">.</span><span class="pl-en">index</span><span class="pl-kos">(</span>before<span class="pl-kos">:</span> s<span class="pl-kos">.</span>endIndex<span class="pl-kos">)</span><span class="pl-kos">]</span> <span class="pl-c">// g</span>
+<span class="pl-en">s</span><span class="pl-kos">[</span>s<span class="pl-kos">.</span><span class="pl-en">index</span><span class="pl-kos">(</span>after<span class="pl-kos">:</span> s<span class="pl-kos">.</span>startIndex<span class="pl-kos">)</span><span class="pl-kos">]</span> <span class="pl-c">// b</span></pre></div>
+<p>其中 <em>endIndex</em> 指向最后一个字符的下一位置</p>
+<p>🕒 获取指定偏移位置的索引:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">index</span> <span class="pl-c1">=</span> s<span class="pl-kos">.</span><span class="pl-en">index</span><span class="pl-kos">(</span>s<span class="pl-kos">.</span>startIndex<span class="pl-kos">,</span> offsetBy<span class="pl-kos">:</span> <span class="pl-c1">3</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-en">s</span><span class="pl-kos">[</span>index<span class="pl-kos">]</span><span class="pl-kos">)</span> <span class="pl-c">// d</span></pre></div>
+<p>🕓 通过索引遍历字符串:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in s<span class="pl-kos">.</span>indices <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-en">s</span><span class="pl-kos">[</span>i<span class="pl-kos">]</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<blockquote>
+<p>这种索引类型适用于任何遵循 <em>Collection</em> 协议的类型, 比如 <em>Array</em>, <em>Dictionary</em> 和 <em>Set</em></p>
+</blockquote>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Inserting-and-Removing" rel="nofollow">插入和移除 (Inserting and Removing)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">abcdefg</span><span class="pl-s">"</span></pre></div>
+<p>🕐 在指定索引处插入字符:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">s<span class="pl-kos">.</span><span class="pl-en">insert</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">h</span><span class="pl-s">"</span><span class="pl-kos">,</span> at<span class="pl-kos">:</span> s<span class="pl-kos">.</span>endIndex<span class="pl-kos">)</span></pre></div>
+<p>🕑 移除指定索引处的字符:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">s<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span>at<span class="pl-kos">:</span> s<span class="pl-kos">.</span><span class="pl-en">index</span><span class="pl-kos">(</span>before<span class="pl-kos">:</span> s<span class="pl-kos">.</span>endIndex<span class="pl-kos">)</span><span class="pl-kos">)</span></pre></div>
+<p>🕒 移除指定索引范围内的字符:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">range</span> <span class="pl-c1">=</span> s<span class="pl-kos">.</span><span class="pl-en">index</span><span class="pl-kos">(</span>s<span class="pl-kos">.</span>endIndex<span class="pl-kos">,</span> offsetBy<span class="pl-kos">:</span> <span class="pl-c1">-</span><span class="pl-c1">2</span><span class="pl-kos">)</span> <span class="pl-c1">..&lt;</span> s<span class="pl-kos">.</span>endIndex
+s<span class="pl-kos">.</span><span class="pl-en">removeSubrange</span><span class="pl-kos">(</span>range<span class="pl-kos">)</span></pre></div>
+<blockquote>
+<p>上述方法适用于任何遵循 <em>Collection</em> 协议的类型, 比如 <em>Array</em>, <em>Dictionary</em> 和 <em>Set</em></p>
+</blockquote>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Substrings" rel="nofollow">子串 (Substrings)</a></h2>
+<hr>
+<p>子串是一个类型 <code class="notranslate">Substring</code>, 相当于是字符串的视图, 当你对子串进行修改时, 其会被转换为字符串<br>
+![[Pasted image 20240221154649.png|350]]</p>
+<p>🕐 通过索引获取子串:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">abc,def,g</span><span class="pl-s">"</span>
+<span class="pl-k">let</span> <span class="pl-s1">index</span> <span class="pl-c1">=</span> s<span class="pl-kos">.</span><span class="pl-en">firstIndex</span><span class="pl-kos">(</span>of<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">,</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-c1">??</span> s<span class="pl-kos">.</span>endIndex
+<span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-en">s</span><span class="pl-kos">[</span><span class="pl-c1">..&lt;</span>index<span class="pl-kos">]</span></pre></div>
+<p>🕑 将字串转换为字符串:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-en">String</span><span class="pl-kos">(</span>a<span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Comparing-Strings" rel="nofollow">字符串比较 (Comparing Strings)</a></h2>
+<hr>
+<p>🕐 比较字符串的值是否相等:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">I'm root</span><span class="pl-s">"</span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">I'm root</span><span class="pl-s">"</span>
+if a <span class="pl-c1">==</span> b <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">equal</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 需要注意扩展字素簇的情况:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">Voulez-vous un caf</span><span class="pl-s">\u{E9}</span><span class="pl-s">?</span><span class="pl-s">"</span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">Voulez-vous un caf</span><span class="pl-s">\u{65}</span><span class="pl-s">\u{301}</span><span class="pl-s">?</span><span class="pl-s">"</span>
+if a <span class="pl-c1">==</span> b <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">equal</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>因为 <em>\\u{65}\\u{301}</em> 为 <em>\\u{E9}</em> 的扩展表示</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Prefix-and-Suffix-Equality" rel="nofollow">前缀与后缀 (Prefix and Suffix Equality)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">list</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span>
+    <span class="pl-s">"</span><span class="pl-s">Act 1 Scene 1: Verona, A public place</span><span class="pl-s">"</span><span class="pl-kos">,</span>
+    <span class="pl-s">"</span><span class="pl-s">Act 1 Scene 2: Capulet's mansion</span><span class="pl-s">"</span><span class="pl-kos">,</span>
+    <span class="pl-s">"</span><span class="pl-s">Act 1 Scene 3: A room in Capulet's mansion</span><span class="pl-s">"</span><span class="pl-kos">,</span>
+    <span class="pl-s">"</span><span class="pl-s">Act 1 Scene 4: A street outside Capulet's mansion</span><span class="pl-s">"</span><span class="pl-kos">,</span>
+    <span class="pl-s">"</span><span class="pl-s">Act 1 Scene 5: The Great Hall in Capulet's mansion</span><span class="pl-s">"</span><span class="pl-kos">,</span>
+    <span class="pl-s">"</span><span class="pl-s">Act 2 Scene 1: Outside Capulet's mansion</span><span class="pl-s">"</span><span class="pl-kos">,</span>
+    <span class="pl-s">"</span><span class="pl-s">Act 2 Scene 2: Capulet's orchard</span><span class="pl-s">"</span><span class="pl-kos">,</span>
+    <span class="pl-s">"</span><span class="pl-s">Act 2 Scene 3: Outside Friar Lawrence's cell</span><span class="pl-s">"</span><span class="pl-kos">,</span>
+    <span class="pl-s">"</span><span class="pl-s">Act 2 Scene 4: A street in Verona</span><span class="pl-s">"</span><span class="pl-kos">,</span>
+    <span class="pl-s">"</span><span class="pl-s">Act 2 Scene 5: Capulet's mansion</span><span class="pl-s">"</span><span class="pl-kos">,</span>
+    <span class="pl-s">"</span><span class="pl-s">Act 2 Scene 6: Friar Lawrence's cell</span><span class="pl-s">"</span>
+<span class="pl-kos">]</span></pre></div>
+<p>判断 <code class="notranslate">String</code> 是否拥有指定的前缀或后缀:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in list <span class="pl-kos">{</span>
+    if i<span class="pl-kos">.</span><span class="pl-en">hasPrefix</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Act 1</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> <span class="pl-c">// 是否拥有前缀</span>
+        <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">prefix</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+    <span class="pl-kos">}</span>
+    
+    if i<span class="pl-kos">.</span><span class="pl-en">hasSuffix</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">cell</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> <span class="pl-c">// 是否拥有后缀</span>
+        <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">suffix</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode-Representations-of-Strings" rel="nofollow">字符串的 Unicode 表示形式 (Unicode Representations of Strings)</a></h2>
+<hr>
+<p>获取 <code class="notranslate">String</code> 的不同表示方式</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">dogString</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">Dog‼🐶</span><span class="pl-s">"</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#UTF-8-Representation" rel="nofollow">UTF-8 形式 (UTF-8 Representation)</a></h3>
+<p>![[Pasted image 20240226165335.png]]</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">codeUnit</span> in dogString<span class="pl-kos">.</span>utf8 <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>codeUnit<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">,</span> terminator<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span>
+<span class="pl-c">// 68 111 103 226 128 188 240 159 144 182</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#UTF-16-Representation" rel="nofollow">UTF-16 形式 (UTF-16 Representation)</a></h3>
+<p>![[Pasted image 20240226165345.png|550]]</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">codeUnit</span> in dogString<span class="pl-kos">.</span>utf16 <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>codeUnit<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">,</span> terminator<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span>
+<span class="pl-c">// 68 111 103 8252 55357 56374 </span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode-Scalar-Representation" rel="nofollow">Unicode 标量值形式 (Unicode Scalar Representation)</a></h3>
+<p>![[Pasted image 20240226165504.png|500]]</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">scalar</span> in dogString<span class="pl-kos">.</span>unicodeScalars <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>scalar<span class="pl-kos">.</span>value<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">,</span> terminator<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span>
+<span class="pl-c">// 68 111 103 8252 128054 </span></pre></div>
+<p>🕐 可以直接将该标量值转换为 <code class="notranslate">String</code>:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">scalar</span> in dogString<span class="pl-kos">.</span>unicodeScalars <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>scalar<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span>
+<span class="pl-c">// D</span>
+<span class="pl-c">// o</span>
+<span class="pl-c">// g</span>
+<span class="pl-c">// ‼</span>
+<span class="pl-c">// 🐶</span></pre></div>
+<p>建议: 这部分没什么难点, 了解下各个类型的操作就行</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Mutability-of-Collections" rel="nofollow">集合的可变性 (Mutability of Collections)</a></h2>
+<hr>
+<p>是否可变取决于是 <code class="notranslate">var</code> 还是 <code class="notranslate">let</code></p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Arrays" rel="nofollow">数组 (Arrays)</a></h2>
+<hr>
+<p>同一类型值的顺序集合</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Array-Type-Shorthand-Syntax" rel="nofollow">数组类型简记法 (Array Type Shorthand Syntax)</a></h3>
+<p>数组的完整写法为: <code class="notranslate">Array&lt;Element&gt;</code>, 但通常简写为: <code class="notranslate">[Element]</code></p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Empty-Array" rel="nofollow">创建空数组 (Creating an Empty Array)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-smi">Int</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-kos">]</span>
+a<span class="pl-kos">.</span><span class="pl-en">append</span><span class="pl-kos">(</span><span class="pl-c1">3</span><span class="pl-kos">)</span>
+a <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-kos">]</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-with-a-Default-Value" rel="nofollow">创建有默认值的数组 (Creating an Array with a Default Value)</a></h3>
+<p>具有 3 个相同值的数组:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-en">Array</span><span class="pl-kos">(</span>repeating<span class="pl-kos">:</span> 0.0<span class="pl-kos">,</span> count<span class="pl-kos">:</span> <span class="pl-c1">3</span><span class="pl-kos">)</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-by-Adding-Two-Arrays-Together" rel="nofollow">合并两个数组 (Creating an Array by Adding Two Arrays Together)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-en">Array</span><span class="pl-kos">(</span>repeating<span class="pl-kos">:</span> 0.0<span class="pl-kos">,</span> count<span class="pl-kos">:</span> <span class="pl-c1">3</span><span class="pl-kos">)</span>
+<span class="pl-k">var</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-en">Array</span><span class="pl-kos">(</span>repeating<span class="pl-kos">:</span> 2.5<span class="pl-kos">,</span> count<span class="pl-kos">:</span> <span class="pl-c1">4</span><span class="pl-kos">)</span>
+<span class="pl-k">var</span> <span class="pl-s1">c</span> <span class="pl-c1">=</span> a <span class="pl-c1">+</span> b</pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-with-an-Array-Literal" rel="nofollow">通过数组字面量创建数组 (Creating an Array with an Array Literal)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-smi">String</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">Eggs</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Milk</span><span class="pl-s">"</span><span class="pl-kos">]</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Accessing-and-Modifying-an-Array" rel="nofollow">访问和修改数组 (Accessing and Modifying an Array)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-c1">1</span><span class="pl-kos">,</span> <span class="pl-c1">2</span><span class="pl-kos">,</span> <span class="pl-c1">3</span><span class="pl-kos">,</span> <span class="pl-c1">4</span><span class="pl-kos">,</span> <span class="pl-c1">5</span><span class="pl-kos">]</span></pre></div>
+<p>🕐 获取的元素个数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">a<span class="pl-kos">.</span>count</pre></div>
+<p>🕑 判断数组是否为空:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">a<span class="pl-kos">.</span>isEmpty</pre></div>
+<p>🕒 在"数组"末尾添加元素:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">a<span class="pl-kos">.</span><span class="pl-en">append</span><span class="pl-kos">(</span><span class="pl-c1">6</span><span class="pl-kos">)</span></pre></div>
+<p>🕓 通过索引获取和修改数组:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">e</span> <span class="pl-c1">=</span> <span class="pl-en">array</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span>
+<span class="pl-en">array</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span>
+<span class="pl-en">array</span><span class="pl-kos">[</span><span class="pl-c1">4</span><span class="pl-c1">...</span><span class="pl-c1">6</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">]</span></pre></div>
+<p>🕔 插入或移除指定位置的元素:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">a<span class="pl-kos">.</span><span class="pl-en">insert</span><span class="pl-kos">(</span><span class="pl-c1">88</span><span class="pl-kos">,</span> at<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">)</span>
+a<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span>at<span class="pl-kos">:</span> <span class="pl-c1">1</span><span class="pl-kos">)</span></pre></div>
+<p>🕕 弹出最后一位元素:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">p</span> <span class="pl-c1">=</span> a<span class="pl-kos">.</span><span class="pl-en">removeLast</span><span class="pl-kos">(</span><span class="pl-kos">)</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-an-Array" rel="nofollow">遍历数组 (Iterating Over an Array)</a></h3>
+<p>🕐 遍历数组中的元素:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">v</span> in array <span class="pl-kos">{</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 遍历数组的索引和元素:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-kos"><span class="pl-s1">(i<span class="pl-kos">,</span> v<span class="pl-kos">)</span></span></span> in array<span class="pl-kos">.</span><span class="pl-en">enumerated</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+<span class="pl-kos">}</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Sets" rel="nofollow">集合 (Sets)</a></h2>
+<hr>
+<p>同一类型的唯一值的无序集合</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Hash-Values-for-Set-Types" rel="nofollow">集合的哈希值 (Hash Values for Set Types)</a></h3>
+<p>集合类型必须是可哈希的, 因为要进行值比较</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Set-Type-Syntax" rel="nofollow">集合类型语法 (Set Type Syntax)</a></h3>
+<p>集合类型写作: <code class="notranslate">Set&lt;Element&gt;</code></p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-and-Initializing-an-Empty-Set" rel="nofollow">创建和初始化空集合 (Creating and Initializing an Empty Set)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-smi">Set</span><span class="pl-c1">&lt;</span><span class="pl-smi">Character</span><span class="pl-c1">&gt;</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+s<span class="pl-kos">.</span><span class="pl-en">insert</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+s <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-kos">]</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-a-Set-with-an-Array-Literal" rel="nofollow">通过数组字面量创建集合 (Creating a Set with an Array Literal)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s</span><span class="pl-kos">:</span> <span class="pl-smi">Set</span><span class="pl-c1">&lt;</span><span class="pl-smi">String</span><span class="pl-c1">&gt;</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">Rock</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Classical</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Hip hop</span><span class="pl-s">"</span><span class="pl-kos">]</span></pre></div>
+<p>可以简写为:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s</span><span class="pl-kos">:</span> <span class="pl-smi">Set</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">Rock</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Classical</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Hip hop</span><span class="pl-s">"</span><span class="pl-kos">]</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Accessing-and-Modifying-a-Set" rel="nofollow">访问和修改集合 (Accessing and Modifying a Set)</a></h3>
+<p>🕐 获取个数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">s<span class="pl-kos">.</span>count</pre></div>
+<p>🕑 判断否为空:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">s<span class="pl-kos">.</span>isEmpty</pre></div>
+<p>🕒 插入元素:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">s<span class="pl-kos">.</span><span class="pl-en">insert</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span></pre></div>
+<p>🕓 移除元素:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">s<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span></pre></div>
+<p>🕓 是否包含某元素:</p>
+<pre class="notranslate"><code class="notranslate">s.contains("a")
+</code></pre>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-a-Set" rel="nofollow">遍历集合 (Iterating Over a Set)</a></h3>
+<p>🕐 遍历集合元素:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in s <span class="pl-kos">{</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 排序后遍历:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in s<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+<span class="pl-kos">}</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Performing-Set-Operations" rel="nofollow">执行集合操作 (Performing Set Operations)</a></h2>
+<hr>
+<p>数学中的集合操作</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Fundamental-Set-Operations" rel="nofollow">基础集合操作 (Fundamental Set Operations)</a></h3>
+<p>![[Pasted image 20240107203713.png|550]]</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Set-Membership-and-Equality" rel="nofollow">集合的成员资格和等价性 (Set Membership and Equality)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">Set</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">🐶</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">🐱</span><span class="pl-s">"</span><span class="pl-kos">]</span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span><span class="pl-kos">:</span> <span class="pl-smi">Set</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">🐮</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">🐔</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">🐑</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">🐶</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">🐱</span><span class="pl-s">"</span><span class="pl-kos">]</span>
+<span class="pl-k">let</span> <span class="pl-s1">c</span><span class="pl-kos">:</span> <span class="pl-smi">Set</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">🐦</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">🐭</span><span class="pl-s">"</span><span class="pl-kos">]</span></pre></div>
+<p>🕐 判断集合是否相等:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">a <span class="pl-c1">==</span> b</pre></div>
+<p>🕑 集合操作:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">a<span class="pl-kos">.</span><span class="pl-en">isSubset</span><span class="pl-kos">(</span>of<span class="pl-kos">:</span> b<span class="pl-kos">)</span> <span class="pl-c">// 子集</span>
+a<span class="pl-kos">.</span><span class="pl-en">isStrictSubset</span><span class="pl-kos">(</span>of<span class="pl-kos">:</span> b<span class="pl-kos">)</span> <span class="pl-c">// 严格子集</span>
+b<span class="pl-kos">.</span><span class="pl-en">isSuperset</span><span class="pl-kos">(</span>of<span class="pl-kos">:</span> a<span class="pl-kos">)</span> <span class="pl-c">// 超集</span>
+b<span class="pl-kos">.</span><span class="pl-en">isDisjoint</span><span class="pl-kos">(</span>with<span class="pl-kos">:</span> c<span class="pl-kos">)</span> <span class="pl-c">// 无交集</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Dictionaries" rel="nofollow">字典 (Dictionaries)</a></h2>
+<hr>
+<p>无序的, key 类型相同, value 类型相同</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Dictionary-Type-Shorthand-Syntax" rel="nofollow">字典类型简记法 (Dictionary Type Shorthand Syntax)</a></h3>
+<p>字典定义为: <code class="notranslate">Dictionary&lt;Key, Value&gt;</code>, 可以简写为: <code class="notranslate">[Key: Value]</code></p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Empty-Dictionary" rel="nofollow">创建空字典 (Creating an Empty Dictionary)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span><span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-smi">Int</span><span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-kos">:</span><span class="pl-kos">]</span></pre></div>
+<p>🕐 赋值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">d</span><span class="pl-kos">[</span><span class="pl-c1">16</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">sixteen</span><span class="pl-s">"</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-a-Dictionary-with-a-Dictionary-Literal" rel="nofollow">通过字典字面量创建字典 (Creating a Dictionary with a Dictionary Literal)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span><span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-smi">String</span><span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span></pre></div>
+<p>🕐 可以简写为:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Accessing-and-Modifying-a-Dictionary" rel="nofollow">访问和修改字典 (Accessing and Modifying a Dictionary)</a></h3>
+<p>🕐 获取元素个数,</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">d<span class="pl-kos">.</span>count</pre></div>
+<p>🕑 判断是否为空:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">d<span class="pl-kos">.</span>isEmpty</pre></div>
+<p>🕒 通过 key 添加或修改 value:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">d</span><span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-c1">19</span></pre></div>
+<p>🕓 更新并返回旧 value (可选类型):</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span>  <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span>
+if <span class="pl-k">let</span> v <span class="pl-c1">=</span> d<span class="pl-kos">.</span><span class="pl-en">updateValue</span><span class="pl-kos">(</span><span class="pl-c1">19</span><span class="pl-kos">,</span> forKey<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>v<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕔 获取 value (可选类型):</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span>  <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span>
+if <span class="pl-k">let</span> v <span class="pl-c1">=</span> <span class="pl-en">d</span><span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>v<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕕 通过赋值方式删除元素:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">dict</span><span class="pl-kos">[</span>key<span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-smi">nil</span></pre></div>
+<p>🕖 通过 key 删除并返回对应的 value (可选类型):</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span>  <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span>
+if <span class="pl-k">let</span> v <span class="pl-c1">=</span> d<span class="pl-kos">.</span><span class="pl-en">removeValue</span><span class="pl-kos">(</span>forKey<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>v<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-a-Dictionary" rel="nofollow">遍历字典 (Iterating Over a Dictionary)</a></h3>
+<p>🕐 遍历 key 和 value:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span>  <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span>
+for <span class="pl-kos"><span class="pl-s1">(k<span class="pl-kos">,</span> v<span class="pl-kos">)</span></span></span> in d <span class="pl-kos">{</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 遍历 key :</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">k</span> in d<span class="pl-kos">.</span>keys <span class="pl-kos">{</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕒 遍历 value:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">v</span> in d<span class="pl-kos">.</span>values <span class="pl-kos">{</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕓 将 key 或 value 转换为数组:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span>  <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span>
+<span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span>String<span class="pl-kos">]</span><span class="pl-kos">(</span>d<span class="pl-kos">.</span>keys<span class="pl-kos">)</span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span>Int<span class="pl-kos">]</span><span class="pl-kos">(</span>d<span class="pl-kos">.</span>values<span class="pl-kos">)</span></pre></div>
+<p>🕔 原地排序 key:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">d<span class="pl-kos">.</span>keys<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span><span class="pl-kos">)</span></pre></div>
+<p>🕕 原地排序 value:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">d<span class="pl-kos">.</span>values<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span><span class="pl-kos">)</span></pre></div>
 </div>
 <div style="font-size:small;margin-top:8px;float:right;">❤️ 转载文章请注明出处，谢谢！❤️</div>
 
