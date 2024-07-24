@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark_colorblind" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://cell.237927.xyz/avatar.svg"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="[Swift官方文档同步的中文快速入门教程](https://github.com/YugenFring/swift-tutorial-quickstart/wiki)
+
+构造是一个实例被创建前的准备工作, 其通过构造函数实现
+## [为存储值设置初始值 (Setting Initial Values for Stored Properties)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization#Setting-Initial-Values-for-Stored-Properties)
+---
+### [构造函数 (Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializers)
+
+🕐 使用 `init` 创建构造函数:
+```swift
+struct Db {
+    var rows: Int
+    init() {
+        rows = 10
+    }
+}
+```
+
+🕑 调用构造函数:
+```swift
+var db = Db()
+print(db.rows) // 10
+```
+### [默认属性值 (Default Property Values)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Default-Property-Values)
+
+上述也可以直接通过属性赋默认值实现:
+```swift
+struct Db {
+    var rows = 10
+}
+```
+
+> 如果实例中的属性的默认值总是固定的, 那么最好使用'默认属性值'; 从语法和性能上都更佳
+## [定制构造函数 (Customizing Initialization)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Customizing-Initialization)
+---
+### [初始化参数 (Initialization Parameters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initialization-Parameters)
+
+可以给构造函数添加参数:
+```swift
+struct Exchange {
+    var n: Double
+    init(fromUS x: Double) {
+        n = x * 7.12
+    }
+    init(fromJP y: Double) {
+        n = y * 0.0048
+    }
+}
+
+let s1 = Exchange(fromUS: 100)
+let s2 = Exchange(fromJP: 100)
+print(s1.n, s2.n)
+```
+### [参数名和实参标签 (Parameter Names and Argument Labels)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Parameter-Names-and-Argument-Labels)
+
+🕐 通过参数名和类型来区分多个构造函数:
+```swift
+struct Point {
+    let x, y, z: Double
+    init(x: Double, y: Double, z: Double) {
+        self.x = x
+        self.y = y
+        self.z = z
+    }
+    init(s: Double) {
+        x = s
+        y = s
+        z = s
+    }
+}
+```
+
+🕑 调用时必须指明实参标签:
+```swift
+let a = Point(x: 1.0, y: 2.1, z: 3.2)
+let b = Point(s: 1.8)
+```
+如果没有设置实参标签, 则会自动将参数名设置为实参标签
+### [忽略实参标签 (Initializer Parameters Without Argument Labels)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Parameters-Without-Argument-Labels)
+
+使用 `_` 忽略实参标签:
+```swift
+struct Db {
+    var rows: Int
+    init(_ num: Int) {
+        rows = num
+    }
+}
+
+var db = Db(10)
+```
+### [可选值类型 (Optional Property Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Optional-Property-Types)
+
+可选值类型在初始化时会自动赋值为 `nil`
+### [初始化时访问常量值 (Assigning Constant Properties During Initialization)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Assigning-Constant-Properties-During-Initialization)
+
+常量一旦赋值后就不能再修改
+## [默认构造函数 (Default Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Default-Initializers)
+---
+`struct` 或 `class` 会自动提供构造函数来完成属性值赋值的过程 (当没有自定义构造函数时)
+### [结构体的成员式构造函数 (Memberwise Initializers for Structure Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Memberwise-Initializers-for-Structure-Types)
+🕐 没有其他初构造函数时, 结构体会自动为每个属性提供构造函数:
+```swift
+struct Point {
+    var x = 0.0, y = 0.0
+}
+```
+
+🕑 调用其构造函数:
+```swift
+let point1 = Point(y: 20.0)
+let point2 = Point(x: 10.0)
+let point3 = Point(x: 3.0, y: 4.0)
+```
+## [值类型的初始化委派 (Initializer Delegation for Value Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Delegation-for-Value-Types)
+---
+🕐 构造函数中可以调用其他构造函数, 使用 `self.init()`
+
+🕑 如果自定义了构造函数, 则默认构造函数或成员式构造函数将不可用
+### 示例
+
+🕐 定义一个包含 3 个构造函数的值类型:
+```swift
+struct Point {
+    var x = 0.0
+    var y = 0.0
+    var z = 0.0
+    init() {}
+    init(x: Double, y: Double, z: Double) {
+        self.x = x
+        self.y = y
+        self.z = z
+    }
+    init(x: Double, y: Double) {
+        let newX = x * 10
+        let newY = y * 5
+        let newZ = (newX * newY) / 2
+        self.init(x: newX, y: newY, z: newZ)
+    }
+}
+```
+
+🕐 调用其无参构造函数 (行为同默认构造函数):
+```swift
+var p1 = Point()
+```
+
+🕑 调用其有参构造函数 (行为同成员式构造函数):
+```swift
+var p2 = Point(x: 1.2, y: 1.6, z: 2.8)
+```
+
+🕒 调用具有初始化委派行为的构造函数:
+```swift
+var p3 = Point(x: 3.2, y: 2.1)
+```
+## [类的继承和构造 (Class Inheritance and Initialization)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Class-Inheritance-and-Initialization)
+---
+要确保本身定义的值和继承来的值在构造后都具有初始值
+### [设计构造函数和便利构造函数 (Designated Initializers and Convenience Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Designated-Initializers-and-Convenience-Initializers)
+
+- 设计构造函数: 确保所有属性被构造化 (必须要有一个)
+- 便利构造函数: 调用设计构造函数, 对构造过程进行简化, (按情况添加)
+### [设计构造函数和便利构造函数的语法 (Syntax for Designated and Convenience Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Syntax-for-Designated-and-Convenience-Initializers)
+
+🕐 设计构造函数:
+```swift
+init(<#parameters#>) {
+   <#statements#>
+}
+```
+
+🕑 便利构造函数:
+```swift
+convenience init(<#parameters#>) {
+   <#statements#>
+}
+```
+### [类的构造委托 (Initializer Delegation for Class Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Delegation-for-Class-Types)
+
+🕐 设计构造函数和便利构造函数符合以下 3 条规则:
+- 设计构造函数必须从其直接父类中调用一个设计构造函数
+- 便利构造函数只能调用当前类中其他的构造函数
+- 便利构造函数最终一定会调用一个设计构造函数
+
+🕑 如下图所示:
+![[Pasted image 20240122133125.png|400]]
+
+🕒 更复杂的形式:
+![[Pasted image 20240125110357.png|400]]
+### [构造的两个阶段 (Two-Phase Initialization)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Two-Phase-Initialization)
+
+🕐 构造分为两个阶段:
+1. 给所有存储属性值赋值
+2. 对实例中的属性进行修改 (定制操作)
+
+🕑 为了确保构造的安全, 编译器会进行以下 4 个检查:
+- 在调用父类的设计构造函数前, 必须确保通过自身的设计构造函数将为所有属性设定初始化值
+- 在给继承属性赋值之前必须先调用父类的设计构造函数, 否则会被父类的设计构造函数覆盖掉
+- 便利构造函数在给任何属性赋值前必须先调用其他构造函数, 否则会被自身的设计构造函数覆盖
+- 只有构造的第一阶段结束后, 才能调用实例中的方法, 访问实例中的属性值等
+
+🕒 这是一个构造第一阶段的调用链图示, 确保所有属性值都有初始值:
+![[Pasted image 20240125140333.png|400]]
+
+随后第二阶段的定制操作开始执行:
+![[Pasted image 20240125140508.png|400]]
+### [构造函数的继承与重写 (Initializer Inheritance and Overriding)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Inheritance-and-Overriding)
+
+- 默认子类不会继承超类的构造函数, 因为超类的构造函数不一定能够满足子类的要求
+- 如果子类的设计构造函数与超类的设计构造函数相同, 要加上 `override`
+- 如果子类的构造函数与父类的便利构造函数相同, 不需要加 `override`, 因为按照之前的规则, 子类是无法直接调用父类的便利构造函数
+#### 示例
+
+🕐 定义一个基类并调用:
+```swift
+class Pet {
+    var age = 0
+    var say: String {
+        return 'I'm \(age) years old.'
+    }
+}
+
+var p = Pet()
+print(p.say) // I'm 0 years old.
+```
+这里自动提供了设计构造函数
+
+🕑 创建一个子类并重写基类的设计构造函数:
+```swift
+class Cat: Pet {
+    override init() {
+        super.init()
+        age = 2
+    }
+}
+
+var c = Cat()
+print(c.say) // I'm 2 years old.
+```
+因为重写了基类的设计构造函数, 因而需要 `override`
+
+🕒 创建一个子类隐式调用基类的设计构造函数:
+```swift
+class Dog: Pet {
+    var name: String
+    init(name: String) {
+        self.name = name
+        // super.init() 隐式调用
+    }
+    override var say: String {
+        return '\(super.say) And call me \(name)'
+    }
+}
+
+var d = Dog(name: 'Chichi')
+print(d.say) // I'm 0 years old. And call me Chichi
+```
+因为子类没有进行定制操作, 所以基类的设计构造函数会被隐式调用
+### [构造函数的自动继承 (Automatic Initializer Inheritance)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Automatic-Initializer-Inheritance)
+
+如果子类中新增的属性都提供了默认值, 则:
+- 子类没有提供设计构造函数, 则超类的设计构造函数会被自动继承
+- 子类实现或继承了其超类的所有的设计构造函数, 则自动继承超类的所有便利构造函数
+### [设计构造函数和便利构造函数的应用 (Designated and Convenience Initializers in Action)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Designated-and-Convenience-Initializers-in-Action)
+
+🕐 基类:
+```swift
+class Food {
+    var name: String
+    init(name: String) {
+        self.name = name
+    }
+    convenience init() {
+        self.init(name: '[Unnamed]')
+    }
+}
+```
+
+![[Pasted image 20240122171918.png|400]]
+
+🕑 创建 `Food` 的子类, 重写 `init` 为便利构造函数:
+```swift
+class RecipeIngredient: Food {
+    var quantity: Int
+    init(name: String, quantity: Int) {
+        self.quantity = quantity
+        super.init(name: name)
+    }
+    override convenience init(name: String) {
+        self.init(name: name, quantity: 1)
+    }
+}
+```
+
+![[Pasted image 20240122172017.png|400]]
+
+🕒 创建 `RecipeIngredient` 的子类:
+```swift
+class ShoppingListItem: RecipeIngredient {
+    var purchased = false
+    var description: String {
+        var output = '\(quantity) x \(name)'
+        output += purchased ? ' ✔' : ' ✘'
+        return output
+    }
+}
+```
+因为其所有属性都具有默认值, 并且没有自定义任何构造函数, 因而自动继承超类的构造函数
+
+![[Pasted image 20240122172224.png|400]]
+## [可失败的构造函数 (Failable Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers)
+
+🕐 使用 `?` 标记该构造函数可能会失败, 此时将返回该实例类型的可选值:
+```swift
+struct Pet {
+    let name: String
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
+}
+```
+使用 `retrun nil` 表示构造失败
+
+🕑 调用并解包可选值:
+```swift
+let c = Pet(name: 'mimi')
+
+if let cat = c {
+    print(cat.name)
+}
+```
+
+🕒 可选值为空可直接判断:
+```swift
+let d = Pet(name: '')
+
+if d == nil {
+    print('error')
+}
+```
+### [枚举类的可失败构造函数 (Failable Initializers for Enumerations)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers-for-Enumerations)
+
+🕐 基础示例:
+```swift
+enum Pet {
+    case cat, dog, rabbit
+    init?(type: Character) {
+        switch type {
+        case 'c':
+            self = .cat
+        case 'd':
+            self = .dog
+        case 'r':
+            self = .rabbit
+        default:
+            return nil
+        }
+    }
+}
+```
+
+🕑 调用示例:
+```swift
+let p = Pet(type: 'c')
+if p != nil {
+    print('cat')
+}
+```
+### [带原始值的枚举类的可失败构造函数 (Failable Initializers for Enumerations with Raw Values)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers-for-Enumerations-with-Raw-Values)
+
+带有原始值的枚举类会自动接受 `init?(rawValue: )`
+
+🕐 采用这种方式对上面的枚举类重写:
+```swift
+enum Pet: Character {
+    case cat = 'c', dog = 'd', rabbit = 'r'
+}
+```
+
+🕑 调用示例:
+```swift
+let p = Pet(rawValue: 'c')
+if p != nil {
+    print('cat')
+}
+```
+### [初始化失败的传播 (Propagation of Initialization Failure)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Propagation-of-Initialization-Failure)
+
+简单的说就是通过继承链或调用链进行传播
+
+🕐 创建一个基类:
+```swift
+class Pet {
+    let name: String
+    init?(name: String) {
+        if name.isEmpty {return nil}
+        self.name = name
+    }
+}
+```
+
+🕑 一个子类调用基类的可失败构造函数:
+```swift
+class Cat: Pet {
+    let age: Int
+    init?(name: String, age: Int) {
+        if age < 2 { return nil }
+        self.age = age
+        super.init(name: name)
+    }
+}
+```
+因为子类的构造函数是可失败的, 其才能够调用基类的可失败构造函数, 并且不需要加 `?`
+
+🕒 调用示例:
+```swift
+if let c = Cat(name: 'mimi', age: 10) {
+    print(c.name, c.age)
+}
+```
+### [重写可失败的构造函数 (Overriding a Failable Initializer)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Overriding-a-Failable-Initializer)
+
+子类可以重写父类的可失败构造函数为普通构造函数, 反之不行
+
+🕐 简单示例, 创建一个基类:
+```swift
+class Pet {
+    var name: String?
+    init() {}
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
+}
+```
+
+🕑 创建一个子类重写基类的构造函数:
+```swift
+class Cat: Pet {
+    override init() {
+        super.init()
+        self.name = '[Unknown]'
+    }
+    override init(name: String) {
+        super.init()
+        if name.isEmpty {
+            self.name = '[Unknown]'
+        } else {
+            self.name = name
+        }
+    }
+}
+```
+
+🕒 创建一个子类重写基类的构造函数, 并调用基类的可失败构造函数:
+```swift
+class Dog: Pet {
+    override init() {
+        super.init(name: '[Unknown]')!
+    }
+}
+```
+此时要加上 `!`, 这表示你认为这样已经绝对安全了
+### [隐式解包的可失败构造函数 (The init! Failable Initializer)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#The-init-Failable-Initializer)
+
+也就是 `init!()`
+## [必要的构造函数 (Required Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Required-Initializers)
+
+🕐 在构造函数前使用 `required` 关键字标明子类都必须要实现该构造函数:
+```swift
+class SomeClass {
+    required init() {
+        // initializer implementation goes here
+    }
+}
+```
+
+🕑 在子类中实现该构造函数也必须加上 `required`, 此时不必使用 `override`
+```swift
+class SomeSubclass: SomeClass {
+    required init() {
+        // subclass implementation of the required initializer goes here
+    }
+}
+```
+## [使用闭包或函数设置一个默认值 (Setting a Default Property Value with a Closure or Function)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Setting-a-Default-Property-Value-with-a-Closure-or-Function)
+
+🕐 基本结构:
+```swift
+class SomeClass {
+    let someProperty: SomeType = {
+        return someValue
+    }()
+}
+```
+
+🕑 闭包是在构造的过程中执行的, 这意味着此时其他属性不一定都构造完成了, 因而不能在其中调用其它属性或使用 `self`
+
+
+<!-- ##{'script':'<script src='https://blog.meekdai.com/assets/GmeekTOC.js'></script>'}## -->。">
+<meta property="og:title" content="[Swift 官方教程]14 构造函数">
+<meta property="og:description" content="[Swift官方文档同步的中文快速入门教程](https://github.com/YugenFring/swift-tutorial-quickstart/wiki)
+
+构造是一个实例被创建前的准备工作, 其通过构造函数实现
+## [为存储值设置初始值 (Setting Initial Values for Stored Properties)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization#Setting-Initial-Values-for-Stored-Properties)
+---
+### [构造函数 (Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializers)
+
+🕐 使用 `init` 创建构造函数:
+```swift
+struct Db {
+    var rows: Int
+    init() {
+        rows = 10
+    }
+}
+```
+
+🕑 调用构造函数:
+```swift
+var db = Db()
+print(db.rows) // 10
+```
+### [默认属性值 (Default Property Values)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Default-Property-Values)
+
+上述也可以直接通过属性赋默认值实现:
+```swift
+struct Db {
+    var rows = 10
+}
+```
+
+> 如果实例中的属性的默认值总是固定的, 那么最好使用'默认属性值'; 从语法和性能上都更佳
+## [定制构造函数 (Customizing Initialization)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Customizing-Initialization)
+---
+### [初始化参数 (Initialization Parameters)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initialization-Parameters)
+
+可以给构造函数添加参数:
+```swift
+struct Exchange {
+    var n: Double
+    init(fromUS x: Double) {
+        n = x * 7.12
+    }
+    init(fromJP y: Double) {
+        n = y * 0.0048
+    }
+}
+
+let s1 = Exchange(fromUS: 100)
+let s2 = Exchange(fromJP: 100)
+print(s1.n, s2.n)
+```
+### [参数名和实参标签 (Parameter Names and Argument Labels)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Parameter-Names-and-Argument-Labels)
+
+🕐 通过参数名和类型来区分多个构造函数:
+```swift
+struct Point {
+    let x, y, z: Double
+    init(x: Double, y: Double, z: Double) {
+        self.x = x
+        self.y = y
+        self.z = z
+    }
+    init(s: Double) {
+        x = s
+        y = s
+        z = s
+    }
+}
+```
+
+🕑 调用时必须指明实参标签:
+```swift
+let a = Point(x: 1.0, y: 2.1, z: 3.2)
+let b = Point(s: 1.8)
+```
+如果没有设置实参标签, 则会自动将参数名设置为实参标签
+### [忽略实参标签 (Initializer Parameters Without Argument Labels)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Parameters-Without-Argument-Labels)
+
+使用 `_` 忽略实参标签:
+```swift
+struct Db {
+    var rows: Int
+    init(_ num: Int) {
+        rows = num
+    }
+}
+
+var db = Db(10)
+```
+### [可选值类型 (Optional Property Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Optional-Property-Types)
+
+可选值类型在初始化时会自动赋值为 `nil`
+### [初始化时访问常量值 (Assigning Constant Properties During Initialization)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Assigning-Constant-Properties-During-Initialization)
+
+常量一旦赋值后就不能再修改
+## [默认构造函数 (Default Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Default-Initializers)
+---
+`struct` 或 `class` 会自动提供构造函数来完成属性值赋值的过程 (当没有自定义构造函数时)
+### [结构体的成员式构造函数 (Memberwise Initializers for Structure Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Memberwise-Initializers-for-Structure-Types)
+🕐 没有其他初构造函数时, 结构体会自动为每个属性提供构造函数:
+```swift
+struct Point {
+    var x = 0.0, y = 0.0
+}
+```
+
+🕑 调用其构造函数:
+```swift
+let point1 = Point(y: 20.0)
+let point2 = Point(x: 10.0)
+let point3 = Point(x: 3.0, y: 4.0)
+```
+## [值类型的初始化委派 (Initializer Delegation for Value Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Delegation-for-Value-Types)
+---
+🕐 构造函数中可以调用其他构造函数, 使用 `self.init()`
+
+🕑 如果自定义了构造函数, 则默认构造函数或成员式构造函数将不可用
+### 示例
+
+🕐 定义一个包含 3 个构造函数的值类型:
+```swift
+struct Point {
+    var x = 0.0
+    var y = 0.0
+    var z = 0.0
+    init() {}
+    init(x: Double, y: Double, z: Double) {
+        self.x = x
+        self.y = y
+        self.z = z
+    }
+    init(x: Double, y: Double) {
+        let newX = x * 10
+        let newY = y * 5
+        let newZ = (newX * newY) / 2
+        self.init(x: newX, y: newY, z: newZ)
+    }
+}
+```
+
+🕐 调用其无参构造函数 (行为同默认构造函数):
+```swift
+var p1 = Point()
+```
+
+🕑 调用其有参构造函数 (行为同成员式构造函数):
+```swift
+var p2 = Point(x: 1.2, y: 1.6, z: 2.8)
+```
+
+🕒 调用具有初始化委派行为的构造函数:
+```swift
+var p3 = Point(x: 3.2, y: 2.1)
+```
+## [类的继承和构造 (Class Inheritance and Initialization)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Class-Inheritance-and-Initialization)
+---
+要确保本身定义的值和继承来的值在构造后都具有初始值
+### [设计构造函数和便利构造函数 (Designated Initializers and Convenience Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Designated-Initializers-and-Convenience-Initializers)
+
+- 设计构造函数: 确保所有属性被构造化 (必须要有一个)
+- 便利构造函数: 调用设计构造函数, 对构造过程进行简化, (按情况添加)
+### [设计构造函数和便利构造函数的语法 (Syntax for Designated and Convenience Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Syntax-for-Designated-and-Convenience-Initializers)
+
+🕐 设计构造函数:
+```swift
+init(<#parameters#>) {
+   <#statements#>
+}
+```
+
+🕑 便利构造函数:
+```swift
+convenience init(<#parameters#>) {
+   <#statements#>
+}
+```
+### [类的构造委托 (Initializer Delegation for Class Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Delegation-for-Class-Types)
+
+🕐 设计构造函数和便利构造函数符合以下 3 条规则:
+- 设计构造函数必须从其直接父类中调用一个设计构造函数
+- 便利构造函数只能调用当前类中其他的构造函数
+- 便利构造函数最终一定会调用一个设计构造函数
+
+🕑 如下图所示:
+![[Pasted image 20240122133125.png|400]]
+
+🕒 更复杂的形式:
+![[Pasted image 20240125110357.png|400]]
+### [构造的两个阶段 (Two-Phase Initialization)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Two-Phase-Initialization)
+
+🕐 构造分为两个阶段:
+1. 给所有存储属性值赋值
+2. 对实例中的属性进行修改 (定制操作)
+
+🕑 为了确保构造的安全, 编译器会进行以下 4 个检查:
+- 在调用父类的设计构造函数前, 必须确保通过自身的设计构造函数将为所有属性设定初始化值
+- 在给继承属性赋值之前必须先调用父类的设计构造函数, 否则会被父类的设计构造函数覆盖掉
+- 便利构造函数在给任何属性赋值前必须先调用其他构造函数, 否则会被自身的设计构造函数覆盖
+- 只有构造的第一阶段结束后, 才能调用实例中的方法, 访问实例中的属性值等
+
+🕒 这是一个构造第一阶段的调用链图示, 确保所有属性值都有初始值:
+![[Pasted image 20240125140333.png|400]]
+
+随后第二阶段的定制操作开始执行:
+![[Pasted image 20240125140508.png|400]]
+### [构造函数的继承与重写 (Initializer Inheritance and Overriding)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Inheritance-and-Overriding)
+
+- 默认子类不会继承超类的构造函数, 因为超类的构造函数不一定能够满足子类的要求
+- 如果子类的设计构造函数与超类的设计构造函数相同, 要加上 `override`
+- 如果子类的构造函数与父类的便利构造函数相同, 不需要加 `override`, 因为按照之前的规则, 子类是无法直接调用父类的便利构造函数
+#### 示例
+
+🕐 定义一个基类并调用:
+```swift
+class Pet {
+    var age = 0
+    var say: String {
+        return 'I'm \(age) years old.'
+    }
+}
+
+var p = Pet()
+print(p.say) // I'm 0 years old.
+```
+这里自动提供了设计构造函数
+
+🕑 创建一个子类并重写基类的设计构造函数:
+```swift
+class Cat: Pet {
+    override init() {
+        super.init()
+        age = 2
+    }
+}
+
+var c = Cat()
+print(c.say) // I'm 2 years old.
+```
+因为重写了基类的设计构造函数, 因而需要 `override`
+
+🕒 创建一个子类隐式调用基类的设计构造函数:
+```swift
+class Dog: Pet {
+    var name: String
+    init(name: String) {
+        self.name = name
+        // super.init() 隐式调用
+    }
+    override var say: String {
+        return '\(super.say) And call me \(name)'
+    }
+}
+
+var d = Dog(name: 'Chichi')
+print(d.say) // I'm 0 years old. And call me Chichi
+```
+因为子类没有进行定制操作, 所以基类的设计构造函数会被隐式调用
+### [构造函数的自动继承 (Automatic Initializer Inheritance)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Automatic-Initializer-Inheritance)
+
+如果子类中新增的属性都提供了默认值, 则:
+- 子类没有提供设计构造函数, 则超类的设计构造函数会被自动继承
+- 子类实现或继承了其超类的所有的设计构造函数, 则自动继承超类的所有便利构造函数
+### [设计构造函数和便利构造函数的应用 (Designated and Convenience Initializers in Action)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Designated-and-Convenience-Initializers-in-Action)
+
+🕐 基类:
+```swift
+class Food {
+    var name: String
+    init(name: String) {
+        self.name = name
+    }
+    convenience init() {
+        self.init(name: '[Unnamed]')
+    }
+}
+```
+
+![[Pasted image 20240122171918.png|400]]
+
+🕑 创建 `Food` 的子类, 重写 `init` 为便利构造函数:
+```swift
+class RecipeIngredient: Food {
+    var quantity: Int
+    init(name: String, quantity: Int) {
+        self.quantity = quantity
+        super.init(name: name)
+    }
+    override convenience init(name: String) {
+        self.init(name: name, quantity: 1)
+    }
+}
+```
+
+![[Pasted image 20240122172017.png|400]]
+
+🕒 创建 `RecipeIngredient` 的子类:
+```swift
+class ShoppingListItem: RecipeIngredient {
+    var purchased = false
+    var description: String {
+        var output = '\(quantity) x \(name)'
+        output += purchased ? ' ✔' : ' ✘'
+        return output
+    }
+}
+```
+因为其所有属性都具有默认值, 并且没有自定义任何构造函数, 因而自动继承超类的构造函数
+
+![[Pasted image 20240122172224.png|400]]
+## [可失败的构造函数 (Failable Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers)
+
+🕐 使用 `?` 标记该构造函数可能会失败, 此时将返回该实例类型的可选值:
+```swift
+struct Pet {
+    let name: String
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
+}
+```
+使用 `retrun nil` 表示构造失败
+
+🕑 调用并解包可选值:
+```swift
+let c = Pet(name: 'mimi')
+
+if let cat = c {
+    print(cat.name)
+}
+```
+
+🕒 可选值为空可直接判断:
+```swift
+let d = Pet(name: '')
+
+if d == nil {
+    print('error')
+}
+```
+### [枚举类的可失败构造函数 (Failable Initializers for Enumerations)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers-for-Enumerations)
+
+🕐 基础示例:
+```swift
+enum Pet {
+    case cat, dog, rabbit
+    init?(type: Character) {
+        switch type {
+        case 'c':
+            self = .cat
+        case 'd':
+            self = .dog
+        case 'r':
+            self = .rabbit
+        default:
+            return nil
+        }
+    }
+}
+```
+
+🕑 调用示例:
+```swift
+let p = Pet(type: 'c')
+if p != nil {
+    print('cat')
+}
+```
+### [带原始值的枚举类的可失败构造函数 (Failable Initializers for Enumerations with Raw Values)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers-for-Enumerations-with-Raw-Values)
+
+带有原始值的枚举类会自动接受 `init?(rawValue: )`
+
+🕐 采用这种方式对上面的枚举类重写:
+```swift
+enum Pet: Character {
+    case cat = 'c', dog = 'd', rabbit = 'r'
+}
+```
+
+🕑 调用示例:
+```swift
+let p = Pet(rawValue: 'c')
+if p != nil {
+    print('cat')
+}
+```
+### [初始化失败的传播 (Propagation of Initialization Failure)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Propagation-of-Initialization-Failure)
+
+简单的说就是通过继承链或调用链进行传播
+
+🕐 创建一个基类:
+```swift
+class Pet {
+    let name: String
+    init?(name: String) {
+        if name.isEmpty {return nil}
+        self.name = name
+    }
+}
+```
+
+🕑 一个子类调用基类的可失败构造函数:
+```swift
+class Cat: Pet {
+    let age: Int
+    init?(name: String, age: Int) {
+        if age < 2 { return nil }
+        self.age = age
+        super.init(name: name)
+    }
+}
+```
+因为子类的构造函数是可失败的, 其才能够调用基类的可失败构造函数, 并且不需要加 `?`
+
+🕒 调用示例:
+```swift
+if let c = Cat(name: 'mimi', age: 10) {
+    print(c.name, c.age)
+}
+```
+### [重写可失败的构造函数 (Overriding a Failable Initializer)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Overriding-a-Failable-Initializer)
+
+子类可以重写父类的可失败构造函数为普通构造函数, 反之不行
+
+🕐 简单示例, 创建一个基类:
+```swift
+class Pet {
+    var name: String?
+    init() {}
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
+}
+```
+
+🕑 创建一个子类重写基类的构造函数:
+```swift
+class Cat: Pet {
+    override init() {
+        super.init()
+        self.name = '[Unknown]'
+    }
+    override init(name: String) {
+        super.init()
+        if name.isEmpty {
+            self.name = '[Unknown]'
+        } else {
+            self.name = name
+        }
+    }
+}
+```
+
+🕒 创建一个子类重写基类的构造函数, 并调用基类的可失败构造函数:
+```swift
+class Dog: Pet {
+    override init() {
+        super.init(name: '[Unknown]')!
+    }
+}
+```
+此时要加上 `!`, 这表示你认为这样已经绝对安全了
+### [隐式解包的可失败构造函数 (The init! Failable Initializer)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#The-init-Failable-Initializer)
+
+也就是 `init!()`
+## [必要的构造函数 (Required Initializers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Required-Initializers)
+
+🕐 在构造函数前使用 `required` 关键字标明子类都必须要实现该构造函数:
+```swift
+class SomeClass {
+    required init() {
+        // initializer implementation goes here
+    }
+}
+```
+
+🕑 在子类中实现该构造函数也必须加上 `required`, 此时不必使用 `override`
+```swift
+class SomeSubclass: SomeClass {
+    required init() {
+        // subclass implementation of the required initializer goes here
+    }
+}
+```
+## [使用闭包或函数设置一个默认值 (Setting a Default Property Value with a Closure or Function)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Setting-a-Default-Property-Value-with-a-Closure-or-Function)
+
+🕐 基本结构:
+```swift
+class SomeClass {
+    let someProperty: SomeType = {
+        return someValue
+    }()
+}
+```
+
+🕑 闭包是在构造的过程中执行的, 这意味着此时其他属性不一定都构造完成了, 因而不能在其中调用其它属性或使用 `self`
+
+
+<!-- ##{'script':'<script src='https://blog.meekdai.com/assets/GmeekTOC.js'></script>'}## -->。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cell.237927.xyz/post/%5BSwift%20-guan-fang-jiao-cheng-%5D14%20-gou-zao-han-shu.html">
+<meta property="og:image" content="https://cell.237927.xyz/avatar.svg">
+<title>[Swift 官方教程]14 构造函数</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">[Swift 官方教程]14 构造函数</h1>
+<div class="title-right">
+    <a href="https://cell.237927.xyz" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/obtips/obtips.github.io/issues/26" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p><a href="https://github.com/YugenFring/swift-tutorial-quickstart/wiki">Swift官方文档同步的中文快速入门教程</a></p>
+<p>构造是一个实例被创建前的准备工作, 其通过构造函数实现</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization#Setting-Initial-Values-for-Stored-Properties" rel="nofollow">为存储值设置初始值 (Setting Initial Values for Stored Properties)</a></h2>
+<hr>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializers" rel="nofollow">构造函数 (Initializers)</a></h3>
+<p>🕐 使用 <code class="notranslate">init</code> 创建构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Db</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">rows</span></span><span class="pl-kos">:</span> <span class="pl-smi">Int</span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        rows <span class="pl-c1">=</span> <span class="pl-c1">10</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 调用构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">db</span> <span class="pl-c1">=</span> <span class="pl-en">Db</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>db<span class="pl-kos">.</span>rows<span class="pl-kos">)</span> <span class="pl-c">// 10</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Default-Property-Values" rel="nofollow">默认属性值 (Default Property Values)</a></h3>
+<p>上述也可以直接通过属性赋默认值实现:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Db</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">rows</span></span> <span class="pl-c1">=</span> <span class="pl-c1">10</span>
+<span class="pl-kos">}</span></pre></div>
+<blockquote>
+<p>如果实例中的属性的默认值总是固定的, 那么最好使用"默认属性值"; 从语法和性能上都更佳</p>
+</blockquote>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Customizing-Initialization" rel="nofollow">定制构造函数 (Customizing Initialization)</a></h2>
+<hr>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initialization-Parameters" rel="nofollow">初始化参数 (Initialization Parameters)</a></h3>
+<p>可以给构造函数添加参数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Exchange</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">n</span></span><span class="pl-kos">:</span> <span class="pl-smi">Double</span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span>fromUS x<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        n <span class="pl-c1">=</span> x <span class="pl-c1">*</span> 7.12
+    <span class="pl-kos">}</span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span>fromJP y<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        n <span class="pl-c1">=</span> y <span class="pl-c1">*</span> 0.0048
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-k">let</span> <span class="pl-s1">s1</span> <span class="pl-c1">=</span> <span class="pl-en">Exchange</span><span class="pl-kos">(</span>fromUS<span class="pl-kos">:</span> <span class="pl-c1">100</span><span class="pl-kos">)</span>
+<span class="pl-k">let</span> <span class="pl-s1">s2</span> <span class="pl-c1">=</span> <span class="pl-en">Exchange</span><span class="pl-kos">(</span>fromJP<span class="pl-kos">:</span> <span class="pl-c1">100</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>s1<span class="pl-kos">.</span>n<span class="pl-kos">,</span> s2<span class="pl-kos">.</span>n<span class="pl-kos">)</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Parameter-Names-and-Argument-Labels" rel="nofollow">参数名和实参标签 (Parameter Names and Argument Labels)</a></h3>
+<p>🕐 通过参数名和类型来区分多个构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Point</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> <span class="pl-s1"><span class="pl-c1">x</span></span><span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-c1">y</span></span><span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-c1">z</span></span><span class="pl-kos">:</span> <span class="pl-smi">Double</span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">,</span> y<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">,</span> z<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>x <span class="pl-c1">=</span> x
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>y <span class="pl-c1">=</span> y
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>z <span class="pl-c1">=</span> z
+    <span class="pl-kos">}</span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span>s<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        x <span class="pl-c1">=</span> s
+        y <span class="pl-c1">=</span> s
+        z <span class="pl-c1">=</span> s
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 调用时必须指明实参标签:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 1.0<span class="pl-kos">,</span> y<span class="pl-kos">:</span> 2.1<span class="pl-kos">,</span> z<span class="pl-kos">:</span> 3.2<span class="pl-kos">)</span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>s<span class="pl-kos">:</span> 1.8<span class="pl-kos">)</span></pre></div>
+<p>如果没有设置实参标签, 则会自动将参数名设置为实参标签</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Parameters-Without-Argument-Labels" rel="nofollow">忽略实参标签 (Initializer Parameters Without Argument Labels)</a></h3>
+<p>使用 <code class="notranslate">_</code> 忽略实参标签:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Db</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">rows</span></span><span class="pl-kos">:</span> <span class="pl-smi">Int</span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span>_ num<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        rows <span class="pl-c1">=</span> num
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-k">var</span> <span class="pl-s1">db</span> <span class="pl-c1">=</span> <span class="pl-en">Db</span><span class="pl-kos">(</span><span class="pl-c1">10</span><span class="pl-kos">)</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Optional-Property-Types" rel="nofollow">可选值类型 (Optional Property Types)</a></h3>
+<p>可选值类型在初始化时会自动赋值为 <code class="notranslate">nil</code></p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Assigning-Constant-Properties-During-Initialization" rel="nofollow">初始化时访问常量值 (Assigning Constant Properties During Initialization)</a></h3>
+<p>常量一旦赋值后就不能再修改</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Default-Initializers" rel="nofollow">默认构造函数 (Default Initializers)</a></h2>
+<hr>
+<p><code class="notranslate">struct</code> 或 <code class="notranslate">class</code> 会自动提供构造函数来完成属性值赋值的过程 (当没有自定义构造函数时)</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Memberwise-Initializers-for-Structure-Types" rel="nofollow">结构体的成员式构造函数 (Memberwise Initializers for Structure Types)</a></h3>
+<p>🕐 没有其他初构造函数时, 结构体会自动为每个属性提供构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Point</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> 0.0<span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> 0.0
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 调用其构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">point1</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>y<span class="pl-kos">:</span> 20.0<span class="pl-kos">)</span>
+<span class="pl-k">let</span> <span class="pl-s1">point2</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 10.0<span class="pl-kos">)</span>
+<span class="pl-k">let</span> <span class="pl-s1">point3</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 3.0<span class="pl-kos">,</span> y<span class="pl-kos">:</span> 4.0<span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Delegation-for-Value-Types" rel="nofollow">值类型的初始化委派 (Initializer Delegation for Value Types)</a></h2>
+<hr>
+<p>🕐 构造函数中可以调用其他构造函数, 使用 <code class="notranslate">self.init()</code></p>
+<p>🕑 如果自定义了构造函数, 则默认构造函数或成员式构造函数将不可用</p>
+<h3>示例</h3>
+<p>🕐 定义一个包含 3 个构造函数的值类型:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Point</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> 0.0
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> 0.0
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">z</span></span> <span class="pl-c1">=</span> 0.0
+    <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span><span class="pl-kos">}</span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">,</span> y<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">,</span> z<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>x <span class="pl-c1">=</span> x
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>y <span class="pl-c1">=</span> y
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>z <span class="pl-c1">=</span> z
+    <span class="pl-kos">}</span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">,</span> y<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-k">let</span> <span class="pl-s1">newX</span> <span class="pl-c1">=</span> x <span class="pl-c1">*</span> <span class="pl-c1">10</span>
+        <span class="pl-k">let</span> <span class="pl-s1">newY</span> <span class="pl-c1">=</span> y <span class="pl-c1">*</span> <span class="pl-c1">5</span>
+        <span class="pl-k">let</span> <span class="pl-s1">newZ</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span>newX <span class="pl-c1">*</span> newY<span class="pl-kos">)</span> <span class="pl-c1">/</span> <span class="pl-c1">2</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span><span class="pl-en">init</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> newX<span class="pl-kos">,</span> y<span class="pl-kos">:</span> newY<span class="pl-kos">,</span> z<span class="pl-kos">:</span> newZ<span class="pl-kos">)</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕐 调用其无参构造函数 (行为同默认构造函数):</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">p1</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span><span class="pl-kos">)</span></pre></div>
+<p>🕑 调用其有参构造函数 (行为同成员式构造函数):</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">p2</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 1.2<span class="pl-kos">,</span> y<span class="pl-kos">:</span> 1.6<span class="pl-kos">,</span> z<span class="pl-kos">:</span> 2.8<span class="pl-kos">)</span></pre></div>
+<p>🕒 调用具有初始化委派行为的构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">p3</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 3.2<span class="pl-kos">,</span> y<span class="pl-kos">:</span> 2.1<span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Class-Inheritance-and-Initialization" rel="nofollow">类的继承和构造 (Class Inheritance and Initialization)</a></h2>
+<hr>
+<p>要确保本身定义的值和继承来的值在构造后都具有初始值</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Designated-Initializers-and-Convenience-Initializers" rel="nofollow">设计构造函数和便利构造函数 (Designated Initializers and Convenience Initializers)</a></h3>
+<ul>
+<li>设计构造函数: 确保所有属性被构造化 (必须要有一个)</li>
+<li>便利构造函数: 调用设计构造函数, 对构造过程进行简化, (按情况添加)</li>
+</ul>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Syntax-for-Designated-and-Convenience-Initializers" rel="nofollow">设计构造函数和便利构造函数的语法 (Syntax for Designated and Convenience Initializers)</a></h3>
+<p>🕐 设计构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-c1">&lt;</span>#parameters#<span class="pl-c1">&gt;</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+   <span class="pl-c1">&lt;</span>#statements#<span class="pl-c1">&gt;</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 便利构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k"><span class="pl-k">convenience</span></span> <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-c1">&lt;</span>#parameters#<span class="pl-c1">&gt;</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+   <span class="pl-c1">&lt;</span>#statements#<span class="pl-c1">&gt;</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Delegation-for-Class-Types" rel="nofollow">类的构造委托 (Initializer Delegation for Class Types)</a></h3>
+<p>🕐 设计构造函数和便利构造函数符合以下 3 条规则:</p>
+<ul>
+<li>设计构造函数必须从其直接父类中调用一个设计构造函数</li>
+<li>便利构造函数只能调用当前类中其他的构造函数</li>
+<li>便利构造函数最终一定会调用一个设计构造函数</li>
+</ul>
+<p>🕑 如下图所示:<br>
+![[Pasted image 20240122133125.png|400]]</p>
+<p>🕒 更复杂的形式:<br>
+![[Pasted image 20240125110357.png|400]]</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Two-Phase-Initialization" rel="nofollow">构造的两个阶段 (Two-Phase Initialization)</a></h3>
+<p>🕐 构造分为两个阶段:</p>
+<ol>
+<li>给所有存储属性值赋值</li>
+<li>对实例中的属性进行修改 (定制操作)</li>
+</ol>
+<p>🕑 为了确保构造的安全, 编译器会进行以下 4 个检查:</p>
+<ul>
+<li>在调用父类的设计构造函数前, 必须确保通过自身的设计构造函数将为所有属性设定初始化值</li>
+<li>在给继承属性赋值之前必须先调用父类的设计构造函数, 否则会被父类的设计构造函数覆盖掉</li>
+<li>便利构造函数在给任何属性赋值前必须先调用其他构造函数, 否则会被自身的设计构造函数覆盖</li>
+<li>只有构造的第一阶段结束后, 才能调用实例中的方法, 访问实例中的属性值等</li>
+</ul>
+<p>🕒 这是一个构造第一阶段的调用链图示, 确保所有属性值都有初始值:<br>
+![[Pasted image 20240125140333.png|400]]</p>
+<p>随后第二阶段的定制操作开始执行:<br>
+![[Pasted image 20240125140508.png|400]]</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Inheritance-and-Overriding" rel="nofollow">构造函数的继承与重写 (Initializer Inheritance and Overriding)</a></h3>
+<ul>
+<li>默认子类不会继承超类的构造函数, 因为超类的构造函数不一定能够满足子类的要求</li>
+<li>如果子类的设计构造函数与超类的设计构造函数相同, 要加上 <code class="notranslate">override</code></li>
+<li>如果子类的构造函数与父类的便利构造函数相同, 不需要加 <code class="notranslate">override</code>, 因为按照之前的规则, 子类是无法直接调用父类的便利构造函数</li>
+</ul>
+<h4>示例</h4>
+<p>🕐 定义一个基类并调用:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">age</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">say</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span> <span class="pl-kos">{</span>
+        <span class="pl-k">return</span> <span class="pl-s">"</span><span class="pl-s">I'm </span><span class="pl-kos">\(</span>age<span class="pl-kos">)</span><span class="pl-s"> years old.</span><span class="pl-s">"</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-k">var</span> <span class="pl-s1">p</span> <span class="pl-c1">=</span> <span class="pl-en">Pet</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>p<span class="pl-kos">.</span>say<span class="pl-kos">)</span> <span class="pl-c">// I'm 0 years old.</span></pre></div>
+<p>这里自动提供了设计构造函数</p>
+<p>🕑 创建一个子类并重写基类的设计构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">Cat</span><span class="pl-kos">:</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
+    <span class="pl-k"><span class="pl-k">override</span></span> <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        super<span class="pl-kos">.</span><span class="pl-en">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+        age <span class="pl-c1">=</span> <span class="pl-c1">2</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-k">var</span> <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-en">Cat</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>c<span class="pl-kos">.</span>say<span class="pl-kos">)</span> <span class="pl-c">// I'm 2 years old.</span></pre></div>
+<p>因为重写了基类的设计构造函数, 因而需要 <code class="notranslate">override</code></p>
+<p>🕒 创建一个子类隐式调用基类的设计构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">Dog</span><span class="pl-kos">:</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">name</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> name
+        <span class="pl-c">// super.init() 隐式调用</span>
+    <span class="pl-kos">}</span>
+    <span class="pl-k"><span class="pl-k">override</span></span> <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">say</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span> <span class="pl-kos">{</span>
+        <span class="pl-k">return</span> <span class="pl-s">"</span><span class="pl-kos">\(</span>super<span class="pl-kos">.</span>say<span class="pl-kos">)</span><span class="pl-s"> And call me </span><span class="pl-kos">\(</span>name<span class="pl-kos">)</span><span class="pl-s">"</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-k">var</span> <span class="pl-s1">d</span> <span class="pl-c1">=</span> <span class="pl-en">Dog</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">Chichi</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>d<span class="pl-kos">.</span>say<span class="pl-kos">)</span> <span class="pl-c">// I'm 0 years old. And call me Chichi</span></pre></div>
+<p>因为子类没有进行定制操作, 所以基类的设计构造函数会被隐式调用</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Automatic-Initializer-Inheritance" rel="nofollow">构造函数的自动继承 (Automatic Initializer Inheritance)</a></h3>
+<p>如果子类中新增的属性都提供了默认值, 则:</p>
+<ul>
+<li>子类没有提供设计构造函数, 则超类的设计构造函数会被自动继承</li>
+<li>子类实现或继承了其超类的所有的设计构造函数, 则自动继承超类的所有便利构造函数</li>
+</ul>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Designated-and-Convenience-Initializers-in-Action" rel="nofollow">设计构造函数和便利构造函数的应用 (Designated and Convenience Initializers in Action)</a></h3>
+<p>🕐 基类:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">Food</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">name</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> name
+    <span class="pl-kos">}</span>
+    <span class="pl-k"><span class="pl-k">convenience</span></span> <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span><span class="pl-en">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">[Unnamed]</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>![[Pasted image 20240122171918.png|400]]</p>
+<p>🕑 创建 <code class="notranslate">Food</code> 的子类, 重写 <code class="notranslate">init</code> 为便利构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">RecipeIngredient</span><span class="pl-kos">:</span> <span class="pl-smi">Food</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">quantity</span></span><span class="pl-kos">:</span> <span class="pl-smi">Int</span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">,</span> quantity<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>quantity <span class="pl-c1">=</span> quantity
+        super<span class="pl-kos">.</span><span class="pl-en">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> name<span class="pl-kos">)</span>
+    <span class="pl-kos">}</span>
+    <span class="pl-k"><span class="pl-k">override</span></span> <span class="pl-k"><span class="pl-k">convenience</span></span> <span class="pl-v">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span><span class="pl-en">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> name<span class="pl-kos">,</span> quantity<span class="pl-kos">:</span> <span class="pl-c1">1</span><span class="pl-kos">)</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>![[Pasted image 20240122172017.png|400]]</p>
+<p>🕒 创建 <code class="notranslate">RecipeIngredient</code> 的子类:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">ShoppingListItem</span><span class="pl-kos">:</span> <span class="pl-smi">RecipeIngredient</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">purchased</span></span> <span class="pl-c1">=</span> false
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">description</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span> <span class="pl-kos">{</span>
+        <span class="pl-k">var</span> <span class="pl-s1">output</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-kos">\(</span>quantity<span class="pl-kos">)</span><span class="pl-s"> x </span><span class="pl-kos">\(</span>name<span class="pl-kos">)</span><span class="pl-s">"</span>
+        output <span class="pl-c1">+=</span> purchased ? <span class="pl-s">"</span><span class="pl-s"> ✔</span><span class="pl-s">"</span> <span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s"> ✘</span><span class="pl-s">"</span>
+        <span class="pl-k">return</span> output
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>因为其所有属性都具有默认值, 并且没有自定义任何构造函数, 因而自动继承超类的构造函数</p>
+<p>![[Pasted image 20240122172224.png|400]]</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers" rel="nofollow">可失败的构造函数 (Failable Initializers)</a></h2>
+<p>🕐 使用 <code class="notranslate">?</code> 标记该构造函数可能会失败, 此时将返回该实例类型的可选值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> <span class="pl-s1"><span class="pl-c1">name</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span>
+    <span class="pl-v">init</span><span class="pl-c1">?</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        if name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span> <span class="pl-k">return</span> <span class="pl-smi">nil</span> <span class="pl-kos">}</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> name
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>使用 <code class="notranslate">retrun nil</code> 表示构造失败</p>
+<p>🕑 调用并解包可选值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-en">Pet</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">mimi</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+
+if <span class="pl-k">let</span> cat <span class="pl-c1">=</span> c <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>cat<span class="pl-kos">.</span>name<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕒 可选值为空可直接判断:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">d</span> <span class="pl-c1">=</span> <span class="pl-en">Pet</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+
+if d <span class="pl-c1">==</span> <span class="pl-smi">nil</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">error</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers-for-Enumerations" rel="nofollow">枚举类的可失败构造函数 (Failable Initializers for Enumerations)</a></h3>
+<p>🕐 基础示例:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">enum</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
+    <span class="pl-k">case</span> cat<span class="pl-kos">,</span> dog<span class="pl-kos">,</span> rabbit
+    <span class="pl-v">init</span><span class="pl-c1">?</span><span class="pl-kos">(</span>type<span class="pl-kos">:</span> <span class="pl-smi">Character</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        switch type <span class="pl-kos">{</span>
+        <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">:</span>
+            <span class="pl-smi">self</span> <span class="pl-c1">=</span> <span class="pl-kos">.</span>cat
+        <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">d</span><span class="pl-s">"</span><span class="pl-kos">:</span>
+            <span class="pl-smi">self</span> <span class="pl-c1">=</span> <span class="pl-kos">.</span>dog
+        <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">r</span><span class="pl-s">"</span><span class="pl-kos">:</span>
+            <span class="pl-smi">self</span> <span class="pl-c1">=</span> <span class="pl-kos">.</span>rabbit
+        <span class="pl-k">default</span><span class="pl-kos">:</span>
+            <span class="pl-k">return</span> <span class="pl-smi">nil</span>
+        <span class="pl-kos">}</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 调用示例:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">p</span> <span class="pl-c1">=</span> <span class="pl-en">Pet</span><span class="pl-kos">(</span>type<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+if p <span class="pl-c1">!=</span> <span class="pl-smi">nil</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">cat</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers-for-Enumerations-with-Raw-Values" rel="nofollow">带原始值的枚举类的可失败构造函数 (Failable Initializers for Enumerations with Raw Values)</a></h3>
+<p>带有原始值的枚举类会自动接受 <code class="notranslate">init?(rawValue: )</code></p>
+<p>🕐 采用这种方式对上面的枚举类重写:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">enum</span> <span class="pl-smi">Pet</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-kos">{</span>
+    <span class="pl-k">case</span> cat <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">,</span> dog <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">d</span><span class="pl-s">"</span><span class="pl-kos">,</span> rabbit <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">r</span><span class="pl-s">"</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 调用示例:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">p</span> <span class="pl-c1">=</span> <span class="pl-en">Pet</span><span class="pl-kos">(</span>rawValue<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+if p <span class="pl-c1">!=</span> <span class="pl-smi">nil</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">cat</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Propagation-of-Initialization-Failure" rel="nofollow">初始化失败的传播 (Propagation of Initialization Failure)</a></h3>
+<p>简单的说就是通过继承链或调用链进行传播</p>
+<p>🕐 创建一个基类:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> <span class="pl-s1"><span class="pl-c1">name</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span>
+    <span class="pl-v">init</span><span class="pl-c1">?</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        if name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span><span class="pl-k">return</span> <span class="pl-smi">nil</span><span class="pl-kos">}</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> name
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 一个子类调用基类的可失败构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">Cat</span><span class="pl-kos">:</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> <span class="pl-s1"><span class="pl-c1">age</span></span><span class="pl-kos">:</span> <span class="pl-smi">Int</span>
+    <span class="pl-v">init</span><span class="pl-c1">?</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">,</span> age<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        if age <span class="pl-c1">&lt;</span> <span class="pl-c1">2</span> <span class="pl-kos">{</span> <span class="pl-k">return</span> <span class="pl-smi">nil</span> <span class="pl-kos">}</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>age <span class="pl-c1">=</span> age
+        super<span class="pl-kos">.</span><span class="pl-en">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> name<span class="pl-kos">)</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>因为子类的构造函数是可失败的, 其才能够调用基类的可失败构造函数, 并且不需要加 <code class="notranslate">?</code></p>
+<p>🕒 调用示例:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">if <span class="pl-k">let</span> c <span class="pl-c1">=</span> <span class="pl-en">Cat</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">mimi</span><span class="pl-s">"</span><span class="pl-kos">,</span> age<span class="pl-kos">:</span> <span class="pl-c1">10</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>c<span class="pl-kos">.</span>name<span class="pl-kos">,</span> c<span class="pl-kos">.</span>age<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Overriding-a-Failable-Initializer" rel="nofollow">重写可失败的构造函数 (Overriding a Failable Initializer)</a></h3>
+<p>子类可以重写父类的可失败构造函数为普通构造函数, 反之不行</p>
+<p>🕐 简单示例, 创建一个基类:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">name</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-c1"><span class="pl-c1">?</span></span>
+    <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span><span class="pl-kos">}</span>
+    <span class="pl-v">init</span><span class="pl-c1">?</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        if name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span> <span class="pl-k">return</span> <span class="pl-smi">nil</span> <span class="pl-kos">}</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> name
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 创建一个子类重写基类的构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">Cat</span><span class="pl-kos">:</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
+    <span class="pl-k"><span class="pl-k">override</span></span> <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        super<span class="pl-kos">.</span><span class="pl-en">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">[Unknown]</span><span class="pl-s">"</span>
+    <span class="pl-kos">}</span>
+    <span class="pl-k"><span class="pl-k">override</span></span> <span class="pl-v">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        super<span class="pl-kos">.</span><span class="pl-en">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+        if name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span>
+            <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">[Unknown]</span><span class="pl-s">"</span>
+        <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
+            <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> name
+        <span class="pl-kos">}</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕒 创建一个子类重写基类的构造函数, 并调用基类的可失败构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">Dog</span><span class="pl-kos">:</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
+    <span class="pl-k"><span class="pl-k">override</span></span> <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        super<span class="pl-kos">.</span><span class="pl-en">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">[Unknown]</span><span class="pl-s">"</span><span class="pl-kos">)</span>!
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>此时要加上 <code class="notranslate">!</code>, 这表示你认为这样已经绝对安全了</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#The-init-Failable-Initializer" rel="nofollow">隐式解包的可失败构造函数 (The init! Failable Initializer)</a></h3>
+<p>也就是 <code class="notranslate">init!()</code></p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Required-Initializers" rel="nofollow">必要的构造函数 (Required Initializers)</a></h2>
+<p>🕐 在构造函数前使用 <code class="notranslate">required</code> 关键字标明子类都必须要实现该构造函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">SomeClass</span> <span class="pl-kos">{</span>
+    <span class="pl-k"><span class="pl-k">required</span></span> <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-c">// initializer implementation goes here</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 在子类中实现该构造函数也必须加上 <code class="notranslate">required</code>, 此时不必使用 <code class="notranslate">override</code></p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">SomeSubclass</span><span class="pl-kos">:</span> <span class="pl-smi">SomeClass</span> <span class="pl-kos">{</span>
+    <span class="pl-k"><span class="pl-k">required</span></span> <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-c">// subclass implementation of the required initializer goes here</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Setting-a-Default-Property-Value-with-a-Closure-or-Function" rel="nofollow">使用闭包或函数设置一个默认值 (Setting a Default Property Value with a Closure or Function)</a></h2>
+<p>🕐 基本结构:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">SomeClass</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> <span class="pl-s1"><span class="pl-c1">someProperty</span></span><span class="pl-kos">:</span> <span class="pl-smi">SomeType</span> <span class="pl-c1">=</span> <span class="pl-kos">{</span>
+        <span class="pl-k">return</span> someValue
+    <span class="pl-kos">}</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 闭包是在构造的过程中执行的, 这意味着此时其他属性不一定都构造完成了, 因而不能在其中调用其它属性或使用 <code class="notranslate">self</code></p>
+</div>
+<div style="font-size:small;margin-top:8px;float:right;">❤️ 转载文章请注明出处，谢谢！❤️</div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://cell.237927.xyz">237号房间</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if("04/07/2024"!=""){
+    var startSite=new Date("04/07/2024");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek main https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","obtips/obtips.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+</script>
+<script src='https://blog.meekdai.com/assets/GmeekTOC.js'></script>
+
+</html>
