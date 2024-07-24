@@ -10,9 +10,919 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="这是一个markdown格式的测试页面，也是个人经常会使用的格式记录。">
+<meta name="description" content="[Swift官方文档同步的中文快速入门教程](https://github.com/YugenFring/swift-tutorial-quickstart/wiki)
+
+建议: 这部分理解看得懂就可以了, 不用作额外的练习
+## [常量与变量 (Constants and Variables)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Constants-and-Variables)
+---
+🕐 先赋类型再赋值:
+```swift
+var user: String
+user = 'root'
+```
+
+🕑 赋值时自动推断类型:
+```swift
+let user = 'root'
+var passwd = 123456
+```
+
+> 在实践中, 更多使用的是这种方式
+
+🕒 同时操作多个量:
+```swift
+var x = 0.0, y = 0.1, z = 0.2
+var m, n: Double
+```
+## [注释 (Comments)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Comments)
+---
+🕐 单行注释:
+```swift
+// This is a comment
+```
+
+🕑 多行注释:
+```swift
+/* This is also a comment
+but is written over multiple lines. */
+```
+
+🕒 多级注释 (可进行展开或折叠):
+```
+/* This is the start of the first multiline comment.
+    /* This is the second, nested multiline comment. */
+This is the end of the first multiline comment. */
+```
+## [分号 (Semicolons)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Semicolons)
+---
+不作强制要求, 但也可使用:
+```swift
+let name = 'root'; print(name)
+```
+## [整数 (Integers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Integers)
+---
+一般整数使用 `Int` 即可, 如果要使用指定位数的也有
+### [整数范围 (Integer Bounds)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Integer-Bounds)
+
+获取类型的最值:
+```swift
+let minValue = UInt8.min
+let maxValue = UInt8.maxv
+```
+### [Int](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Int)
+
+类型 `Int` 的位数根据平台而定
+### [UInt](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#UInt)
+
+类型 `UInt` 的位数根据平台而定
+## [浮点数 (Floating-Point Numbers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Floating-Point-Numbers)
+---
+- `Double` : 64-bit (至少表示 15 位小数)
+- `Float` : 32-bit (差不多表示 6 位小数)
+## [类型安全与类型推断 (Type Safety and Type Inference)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Type-Safety-and-Type-Inference)
+---
+- 类型安全: 自动检查类型是否匹配
+- 类型推断: 根据值自动推断合适的类型
+## [数值字面量 (Numeric Literals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Numeric-Literals)
+---
+🕐 不同进制表示法:
+```swift
+let decimalInteger = 17
+let binaryInteger = 0b10001 // 二进制
+let octalInteger = 0o21 // 八进制
+let hexadecimalInteger = 0x11 // 十六进制
+```
+
+🕑 不同进制的指数表示法:
+```swift
+let decimalDouble = 12.1875
+let exponentDouble = 1.21875e1
+let hexadecimalDouble = 0xC.3p0 // 只支持十六进制
+```
+
+🕒 填充及下划线分隔表示法:
+```swift
+let paddedDouble = 000123.456
+let oneMillion = 1_000_000
+let justOverOneMillion = 1_000_000.000_000_1
+```
+## [数值类型转换 (Numeric Type Conversion)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Numeric-Type-Conversion)
+---
+🕐 赋值不在数值类型范围内的值将会报错
+
+🕑 不同数值类型间不能直接操作,需显式进行类型转换:
+```swift
+let x: UInt16 = 2_000
+let y: UInt8 = 1
+let z = x + UInt16(y)
+```
+## [类型别名 (Type Aliases)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Type-Aliases)
+---
+给类型取一个别名:
+```swift
+typealias MyType = UInt16
+var n = MyType.min
+```
+## [布尔值 (Booleans)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Booleans)
+---
+🕐 赋值:
+```swift
+let t = true
+let f = false
+```
+
+🕑 不是非 0 就是 true, 布尔就是布尔:
+```swift
+let n = 1
+if n {
+    // error
+}
+```
+
+> 这是与其他语言较为不同的地方
+## [元组 (Tuples)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Tuples)
+---
+🕐 元组定义与赋值:
+```swift
+let info = ('root', 123456)
+let (user, passwd) = info
+```
+
+🕑 赋值时使用下划线忽略:
+```swift
+let (user1, _) = info
+```
+### 索引 (Index)
+
+> 这是比较新颖的地方, 某种程度上看起来像是 python 的字典
+
+🕐 通过数值索引获取元素:
+```swift
+print(info.0, info.1)
+```
+
+🕑 通过名称获取元素:
+```swift
+let info = (user: 'root', passwd: 123456)
+print(info.user, info.passwd)
+```
+## [可选类型 (Optionals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Optionals)
+---
+🕐 定义方式: 在类型后加上 `?`
+
+🕑 可选类型要么有值要么为 `nil`:
+```swift
+var n: Int? = 404
+n = nil // 可选类型可赋值 nil
+```
+
+> Swift 是非空类型的安全系统, 其要求每个量的类型都是明确的, 因此直接给量赋 `nil` 是不安全的. 推荐在可能出现 `nil` 的地方都使用可选类型, 可以把可选类型理解为一个安全的包装器
+### [可选类型绑定 (Optional Binding)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Optional-Binding)
+
+即在条件表达式中使用赋值语句提取可选类型中的值
+
+🕐 当有值时, 条件表达式为 `true`, 同时提取值:
+```swift
+if let n = Int('123') { // 类型转换会返回可选值
+    print('The number is \(n)')
+} else {
+    print('error')
+}
+```
+
+🕑 当条件表达式中的局部变量名与外层相同时可简写:
+```swift
+let n = Int('123')
+if let n {
+    print('My number is \(n)')
+}
+```
+
+🕒 同时进行多个可选类型绑定:
+```swift
+if let a = Int('4'), let b = Int('42'), a < b && b < 100 {
+    print('\(a) < \(b) < 100')
+}
+```
+
+> 到这里可以将'可选类型绑定'理解为: 在条件语句中赋值可选类型, 就好像是使用普通类型一样
+### [提供备选值 (Providing a Fallback Value)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Providing-a-Fallback-Value)
+
+使用 `??` 解包可选类型, 当其为 `nil` 时提供备选值:
+```swift
+let name: String? = nil
+let greeting = 'Hello, ' + (name ?? 'root') + '!'
+print(greeting)
+```
+### [强制解包 (Force Unwrapping)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Force-Unwrapping)
+
+使用 `!` 解包可选值, 若为 `nil` 将触发错误:
+```swift
+let s = '123s'
+let i = Int(s)
+let n = i!
+```
+### [隐式解包 (Implicitly Unwrapped Optionals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Implicitly-Unwrapped-Optionals)
+
+适用于'当可选值有值后就一定保持有值'的情况
+
+🕐 定义方式: 类型后加上 `!`, 相当于可隐式解包的可选类型
+
+🕑 比可选类型多了自动隐式解包功能:
+```swift
+let user: String! = 'root'
+let name: String = user
+```
+## [错误处理 (Error Handling)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Error-Handling)
+---
+🕐 使用 `throws` 表明一个函数会抛出错误:
+```swift
+func f() throws {
+	...
+}
+```
+
+🕑 处理错误的语句:
+```swift
+do {
+	try f()
+} catch {
+	...
+} catch {
+	... 
+}
+```
+`try` 表明该函数可能会抛出错误, `catch` 用于捕获错误
+## [断言和前置条件 (Assertions and Preconditions)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Assertions-and-Preconditions)
+---
+'断言'和'前置条件'都是用于捕获意外的错误, 当不满足时中断程序执行; 前者只在开发环境中生效
+
+> 与'错误处理'不同的是, 错误处理处理的是可预见的错误, 而这里的错误是意外的, 不可预知的, 因而不一定能够复现
+### [使用断言 Debug (Debugging with Assertions)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Debugging-with-Assertions)
+
+```swift
+let n = -3
+assert(n >= 0, 'this is an error description') // 描述可省略
+```
+
+手动触发断言错误:
+```swift
+let n = -3
+if n > 0 {
+    assertionFailure('error')
+} else {
+    print('pass')
+}
+```
+### [执行前置条件 (Enforcing Preconditions)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Enforcing-Preconditions)
+
+```swift
+let n = -3
+precondition(n > 0, 'this is an error descriptoin')
+```
+
+手动触发前置条件错误:
+```swift
+let n = -3
+if n > 0 {
+    preconditionFailure('error')
+} else {
+    print('pass')
+}
+```
+
+> 关于这部分的使用还可以更进一步, 不过目前了解一下就足够了
+
+
+建议: 这部分理解看得懂就可以了, 不用作额外的练习
+## [术语 (Terminology)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Terminology)
+---
+学一下英语:
+- _Unary_: 一元
+- _Binary_: 二元
+- _Ternary_: 三元
+## [算术运算符 (Arithmetic Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Arithmetic-Operators)
+---
+🕐 加减乘除:
+```swift
+1 + 2
+5 - 3
+2 * 3
+10.0 / 2.5 
+```
+
+🕑 字符串拼接:
+```swift
+'hello, ' + 'world'
+```
+### [取余运算符 (Remainder Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Remainder-Operator)
+
+符号跟着被除数走:
+```swift
+9 % 4    // 1
+-9 % 4   // -1
+```
+### [一元负号操作符 (Unary Minus Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Unary-Minus-Operator)
+
+```swift
+let x = 3
+let y = -x
+let z = -y
+```
+### [一元正号运算符 (Unary Plus Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Unary-Plus-Operator)
+
+```swift
+let n = +3
+```
+
+> 实际不会发生任何影响
+## [复合赋值运算符 (Compound Assignment Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Compound-Assignment-Operators)
+---
+举个例子:
+```swift
+var n = 1
+n += 2
+```
+## [比较运算符 (Comparison Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Comparison-Operators)
+---
+🕐 举个例子:
+```swift
+1 == 1
+2 != 1
+2 > 1
+1 < 2
+1 >= 1
+2 <= 1
+```
+
+🕑 元组会逐个元素进行比较:
+```swift
+(1, 'a') < (2, 'c')
+```
+## [三元条件运算符 (Ternary Conditional Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Ternary-Conditional-Operator)
+---
+```swift
+let x = 2
+let b = true
+let y = x + (b ? 10: 20)
+```
+## [空值合并运算符 (Nil-Coalescing Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Nil-Coalescing-Operator)
+---
+即 `??`: [[01 基础部分 (The Basics)#[提供备选值 (Providing a Fallback Value)](https //docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics Providing-a-Fallback-Value)|here]]
+```swift
+let n = 'root'
+var s: String?
+let m = s ?? n
+```
+## [区间运算符 (Range Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Range-Operators)
+---
+获取区间内的离散数值
+### [闭区间运算符 (Closed Range Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Closed-Range-Operator)
+
+左闭右闭:
+```swift
+for i in 1...5 {
+    print(i)
+}
+```
+### [半开区间运算符 (Half-Open Range Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Half-Open-Range-Operator)
+
+左闭右开:
+```swift
+for i in 1..<5 {
+    print(i)
+}
+```
+### [单侧区间 (One-Sided Ranges)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#One-Sided-Ranges)
+
+🕐 右穷尽:
+```swift
+let m = ['a', 'b', 'c', 'd']
+for i in m[2...] {
+    print(i)
+}
+```
+
+🕑 左穷尽:
+```swift
+let m = ['a', 'b', 'c', 'd']
+for i in m[...2] {
+    print(i)
+}
+```
+
+🕒 左穷尽右开:
+```swift
+let m = ['a', 'b', 'c', 'd']
+for i in m[..<2] {
+    print(i)
+}
+```
+
+🕓 判断数字是否在区间中:
+```swift
+let range = ...5
+print(range.contains(7))
+```
+## [逻辑运算符 (Logical Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-Operators)
+---
+### [非运算符 (Logical NOT Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-NOT-Operator)
+
+```swift
+let f = false
+if !f {
+    print('true')
+}
+```
+### [并且运算符 (Logical AND Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-AND-Operator)
+
+```swift
+let t = true
+let f = false
+if t && f {
+    print('true')
+} else {
+    print('false')
+}
+```
+### [或运算符 (Logical OR Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-OR-Operator)
+
+```swift
+let t = true
+let f = false
+if t || f {
+    print('true')
+} else {
+    print('false')
+}
+```
+### [组合逻辑运算符 (Combining Logical Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Combining-Logical-Operators)
+
+上述逻辑运算符可以组合使用
+### [显式使用括号 (Explicit Parentheses)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Explicit-Parentheses)
+
+可以使用 `()` 改变优先级或者语法美观
+
+
+
+<!-- ##{'script':'<script src='https://blog.meekdai.com/assets/GmeekTOC.js'></script>'}## -->。">
 <meta property="og:title" content="Markdown测试页面">
-<meta property="og:description" content="这是一个markdown格式的测试页面，也是个人经常会使用的格式记录。">
+<meta property="og:description" content="[Swift官方文档同步的中文快速入门教程](https://github.com/YugenFring/swift-tutorial-quickstart/wiki)
+
+建议: 这部分理解看得懂就可以了, 不用作额外的练习
+## [常量与变量 (Constants and Variables)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Constants-and-Variables)
+---
+🕐 先赋类型再赋值:
+```swift
+var user: String
+user = 'root'
+```
+
+🕑 赋值时自动推断类型:
+```swift
+let user = 'root'
+var passwd = 123456
+```
+
+> 在实践中, 更多使用的是这种方式
+
+🕒 同时操作多个量:
+```swift
+var x = 0.0, y = 0.1, z = 0.2
+var m, n: Double
+```
+## [注释 (Comments)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Comments)
+---
+🕐 单行注释:
+```swift
+// This is a comment
+```
+
+🕑 多行注释:
+```swift
+/* This is also a comment
+but is written over multiple lines. */
+```
+
+🕒 多级注释 (可进行展开或折叠):
+```
+/* This is the start of the first multiline comment.
+    /* This is the second, nested multiline comment. */
+This is the end of the first multiline comment. */
+```
+## [分号 (Semicolons)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Semicolons)
+---
+不作强制要求, 但也可使用:
+```swift
+let name = 'root'; print(name)
+```
+## [整数 (Integers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Integers)
+---
+一般整数使用 `Int` 即可, 如果要使用指定位数的也有
+### [整数范围 (Integer Bounds)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Integer-Bounds)
+
+获取类型的最值:
+```swift
+let minValue = UInt8.min
+let maxValue = UInt8.maxv
+```
+### [Int](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Int)
+
+类型 `Int` 的位数根据平台而定
+### [UInt](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#UInt)
+
+类型 `UInt` 的位数根据平台而定
+## [浮点数 (Floating-Point Numbers)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Floating-Point-Numbers)
+---
+- `Double` : 64-bit (至少表示 15 位小数)
+- `Float` : 32-bit (差不多表示 6 位小数)
+## [类型安全与类型推断 (Type Safety and Type Inference)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Type-Safety-and-Type-Inference)
+---
+- 类型安全: 自动检查类型是否匹配
+- 类型推断: 根据值自动推断合适的类型
+## [数值字面量 (Numeric Literals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Numeric-Literals)
+---
+🕐 不同进制表示法:
+```swift
+let decimalInteger = 17
+let binaryInteger = 0b10001 // 二进制
+let octalInteger = 0o21 // 八进制
+let hexadecimalInteger = 0x11 // 十六进制
+```
+
+🕑 不同进制的指数表示法:
+```swift
+let decimalDouble = 12.1875
+let exponentDouble = 1.21875e1
+let hexadecimalDouble = 0xC.3p0 // 只支持十六进制
+```
+
+🕒 填充及下划线分隔表示法:
+```swift
+let paddedDouble = 000123.456
+let oneMillion = 1_000_000
+let justOverOneMillion = 1_000_000.000_000_1
+```
+## [数值类型转换 (Numeric Type Conversion)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Numeric-Type-Conversion)
+---
+🕐 赋值不在数值类型范围内的值将会报错
+
+🕑 不同数值类型间不能直接操作,需显式进行类型转换:
+```swift
+let x: UInt16 = 2_000
+let y: UInt8 = 1
+let z = x + UInt16(y)
+```
+## [类型别名 (Type Aliases)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Type-Aliases)
+---
+给类型取一个别名:
+```swift
+typealias MyType = UInt16
+var n = MyType.min
+```
+## [布尔值 (Booleans)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Booleans)
+---
+🕐 赋值:
+```swift
+let t = true
+let f = false
+```
+
+🕑 不是非 0 就是 true, 布尔就是布尔:
+```swift
+let n = 1
+if n {
+    // error
+}
+```
+
+> 这是与其他语言较为不同的地方
+## [元组 (Tuples)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Tuples)
+---
+🕐 元组定义与赋值:
+```swift
+let info = ('root', 123456)
+let (user, passwd) = info
+```
+
+🕑 赋值时使用下划线忽略:
+```swift
+let (user1, _) = info
+```
+### 索引 (Index)
+
+> 这是比较新颖的地方, 某种程度上看起来像是 python 的字典
+
+🕐 通过数值索引获取元素:
+```swift
+print(info.0, info.1)
+```
+
+🕑 通过名称获取元素:
+```swift
+let info = (user: 'root', passwd: 123456)
+print(info.user, info.passwd)
+```
+## [可选类型 (Optionals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Optionals)
+---
+🕐 定义方式: 在类型后加上 `?`
+
+🕑 可选类型要么有值要么为 `nil`:
+```swift
+var n: Int? = 404
+n = nil // 可选类型可赋值 nil
+```
+
+> Swift 是非空类型的安全系统, 其要求每个量的类型都是明确的, 因此直接给量赋 `nil` 是不安全的. 推荐在可能出现 `nil` 的地方都使用可选类型, 可以把可选类型理解为一个安全的包装器
+### [可选类型绑定 (Optional Binding)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Optional-Binding)
+
+即在条件表达式中使用赋值语句提取可选类型中的值
+
+🕐 当有值时, 条件表达式为 `true`, 同时提取值:
+```swift
+if let n = Int('123') { // 类型转换会返回可选值
+    print('The number is \(n)')
+} else {
+    print('error')
+}
+```
+
+🕑 当条件表达式中的局部变量名与外层相同时可简写:
+```swift
+let n = Int('123')
+if let n {
+    print('My number is \(n)')
+}
+```
+
+🕒 同时进行多个可选类型绑定:
+```swift
+if let a = Int('4'), let b = Int('42'), a < b && b < 100 {
+    print('\(a) < \(b) < 100')
+}
+```
+
+> 到这里可以将'可选类型绑定'理解为: 在条件语句中赋值可选类型, 就好像是使用普通类型一样
+### [提供备选值 (Providing a Fallback Value)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Providing-a-Fallback-Value)
+
+使用 `??` 解包可选类型, 当其为 `nil` 时提供备选值:
+```swift
+let name: String? = nil
+let greeting = 'Hello, ' + (name ?? 'root') + '!'
+print(greeting)
+```
+### [强制解包 (Force Unwrapping)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Force-Unwrapping)
+
+使用 `!` 解包可选值, 若为 `nil` 将触发错误:
+```swift
+let s = '123s'
+let i = Int(s)
+let n = i!
+```
+### [隐式解包 (Implicitly Unwrapped Optionals)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Implicitly-Unwrapped-Optionals)
+
+适用于'当可选值有值后就一定保持有值'的情况
+
+🕐 定义方式: 类型后加上 `!`, 相当于可隐式解包的可选类型
+
+🕑 比可选类型多了自动隐式解包功能:
+```swift
+let user: String! = 'root'
+let name: String = user
+```
+## [错误处理 (Error Handling)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Error-Handling)
+---
+🕐 使用 `throws` 表明一个函数会抛出错误:
+```swift
+func f() throws {
+	...
+}
+```
+
+🕑 处理错误的语句:
+```swift
+do {
+	try f()
+} catch {
+	...
+} catch {
+	... 
+}
+```
+`try` 表明该函数可能会抛出错误, `catch` 用于捕获错误
+## [断言和前置条件 (Assertions and Preconditions)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Assertions-and-Preconditions)
+---
+'断言'和'前置条件'都是用于捕获意外的错误, 当不满足时中断程序执行; 前者只在开发环境中生效
+
+> 与'错误处理'不同的是, 错误处理处理的是可预见的错误, 而这里的错误是意外的, 不可预知的, 因而不一定能够复现
+### [使用断言 Debug (Debugging with Assertions)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Debugging-with-Assertions)
+
+```swift
+let n = -3
+assert(n >= 0, 'this is an error description') // 描述可省略
+```
+
+手动触发断言错误:
+```swift
+let n = -3
+if n > 0 {
+    assertionFailure('error')
+} else {
+    print('pass')
+}
+```
+### [执行前置条件 (Enforcing Preconditions)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Enforcing-Preconditions)
+
+```swift
+let n = -3
+precondition(n > 0, 'this is an error descriptoin')
+```
+
+手动触发前置条件错误:
+```swift
+let n = -3
+if n > 0 {
+    preconditionFailure('error')
+} else {
+    print('pass')
+}
+```
+
+> 关于这部分的使用还可以更进一步, 不过目前了解一下就足够了
+
+
+建议: 这部分理解看得懂就可以了, 不用作额外的练习
+## [术语 (Terminology)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Terminology)
+---
+学一下英语:
+- _Unary_: 一元
+- _Binary_: 二元
+- _Ternary_: 三元
+## [算术运算符 (Arithmetic Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Arithmetic-Operators)
+---
+🕐 加减乘除:
+```swift
+1 + 2
+5 - 3
+2 * 3
+10.0 / 2.5 
+```
+
+🕑 字符串拼接:
+```swift
+'hello, ' + 'world'
+```
+### [取余运算符 (Remainder Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Remainder-Operator)
+
+符号跟着被除数走:
+```swift
+9 % 4    // 1
+-9 % 4   // -1
+```
+### [一元负号操作符 (Unary Minus Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Unary-Minus-Operator)
+
+```swift
+let x = 3
+let y = -x
+let z = -y
+```
+### [一元正号运算符 (Unary Plus Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Unary-Plus-Operator)
+
+```swift
+let n = +3
+```
+
+> 实际不会发生任何影响
+## [复合赋值运算符 (Compound Assignment Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Compound-Assignment-Operators)
+---
+举个例子:
+```swift
+var n = 1
+n += 2
+```
+## [比较运算符 (Comparison Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Comparison-Operators)
+---
+🕐 举个例子:
+```swift
+1 == 1
+2 != 1
+2 > 1
+1 < 2
+1 >= 1
+2 <= 1
+```
+
+🕑 元组会逐个元素进行比较:
+```swift
+(1, 'a') < (2, 'c')
+```
+## [三元条件运算符 (Ternary Conditional Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Ternary-Conditional-Operator)
+---
+```swift
+let x = 2
+let b = true
+let y = x + (b ? 10: 20)
+```
+## [空值合并运算符 (Nil-Coalescing Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Nil-Coalescing-Operator)
+---
+即 `??`: [[01 基础部分 (The Basics)#[提供备选值 (Providing a Fallback Value)](https //docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics Providing-a-Fallback-Value)|here]]
+```swift
+let n = 'root'
+var s: String?
+let m = s ?? n
+```
+## [区间运算符 (Range Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Range-Operators)
+---
+获取区间内的离散数值
+### [闭区间运算符 (Closed Range Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Closed-Range-Operator)
+
+左闭右闭:
+```swift
+for i in 1...5 {
+    print(i)
+}
+```
+### [半开区间运算符 (Half-Open Range Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Half-Open-Range-Operator)
+
+左闭右开:
+```swift
+for i in 1..<5 {
+    print(i)
+}
+```
+### [单侧区间 (One-Sided Ranges)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#One-Sided-Ranges)
+
+🕐 右穷尽:
+```swift
+let m = ['a', 'b', 'c', 'd']
+for i in m[2...] {
+    print(i)
+}
+```
+
+🕑 左穷尽:
+```swift
+let m = ['a', 'b', 'c', 'd']
+for i in m[...2] {
+    print(i)
+}
+```
+
+🕒 左穷尽右开:
+```swift
+let m = ['a', 'b', 'c', 'd']
+for i in m[..<2] {
+    print(i)
+}
+```
+
+🕓 判断数字是否在区间中:
+```swift
+let range = ...5
+print(range.contains(7))
+```
+## [逻辑运算符 (Logical Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-Operators)
+---
+### [非运算符 (Logical NOT Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-NOT-Operator)
+
+```swift
+let f = false
+if !f {
+    print('true')
+}
+```
+### [并且运算符 (Logical AND Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-AND-Operator)
+
+```swift
+let t = true
+let f = false
+if t && f {
+    print('true')
+} else {
+    print('false')
+}
+```
+### [或运算符 (Logical OR Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-OR-Operator)
+
+```swift
+let t = true
+let f = false
+if t || f {
+    print('true')
+} else {
+    print('false')
+}
+```
+### [组合逻辑运算符 (Combining Logical Operators)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Combining-Logical-Operators)
+
+上述逻辑运算符可以组合使用
+### [显式使用括号 (Explicit Parentheses)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Explicit-Parentheses)
+
+可以使用 `()` 改变优先级或者语法美观
+
+
+
+<!-- ##{'script':'<script src='https://blog.meekdai.com/assets/GmeekTOC.js'></script>'}## -->。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://cell.237927.xyz/post/Markdown-ce-shi-ye-mian.html">
 <meta property="og:image" content="https://cell.237927.xyz/avatar.svg">
@@ -72,202 +982,323 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><p>这是一个markdown格式的测试页面，也是个人经常会使用的格式记录。</p>
-<h2>Static Badge</h2>
-<div class="highlight highlight-text-md"><pre class="notranslate"><span class="pl-s">![</span><span class="pl-s">]</span><span class="pl-s">(</span><span class="pl-corl">https://img.shields.io/badge/参考页面-orange</span><span class="pl-s">)</span></pre></div>
-<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/50539c7f6bb2b61e6ac231ae26d1c92e1ec485538d4d093948ef9efabb3ec5b3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2545352538462538322545382538302538332545392541312542352545392539442541322d6f72616e6765"><img src="https://camo.githubusercontent.com/50539c7f6bb2b61e6ac231ae26d1c92e1ec485538d4d093948ef9efabb3ec5b3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2545352538462538322545382538302538332545392541312542352545392539442541322d6f72616e6765" alt="" data-canonical-src="https://img.shields.io/badge/%E5%8F%82%E8%80%83%E9%A1%B5%E9%9D%A2-orange" style="max-width: 100%;"></a></p>
-<h2>标题</h2>
-<div class="highlight highlight-text-md"><pre class="notranslate"><span class="pl-mh"># <span class="pl-en">H1</span></span>
-<span class="pl-mh">## <span class="pl-en">H2</span></span>
-<span class="pl-mh">### <span class="pl-en">H3</span></span>
-<span class="pl-mh">#### <span class="pl-en">H4</span></span></pre></div>
-<h2>强调</h2>
-<div class="highlight highlight-text-md"><pre class="notranslate">今天的天气真好啊，可以吃<span class="pl-s">**</span>冰激凌<span class="pl-s">**</span>吗？</pre></div>
-<p>今天的天气真好啊，可以吃<strong>冰激凌</strong>吗？</p>
-<h2>删除横线</h2>
-<div class="highlight highlight-text-md"><pre class="notranslate">今天的天气真好啊，可以吃<span class="pl-s">~~</span>冰激凌<span class="pl-s">~~</span>吗？</pre></div>
-<p>今天的天气真好啊，可以吃<del>冰激凌</del>吗？</p>
-<h2>列表</h2>
-<div class="highlight highlight-text-md"><pre class="notranslate"><span class="pl-s">1</span><span class="pl-v">.</span> 看电视
-<span class="pl-s">2</span><span class="pl-v">.</span> 吃饭
-<span class="pl-s">3</span><span class="pl-v">.</span> 睡觉
-
-<span class="pl-v">-</span> 乒乓球
-<span class="pl-v">-</span> 篮球
-<span class="pl-v">-</span> 羽毛球</pre></div>
-<ol>
-<li>看电视</li>
-<li>吃饭</li>
-<li>睡觉</li>
-</ol>
-<ul>
-<li>乒乓球</li>
-<li>篮球</li>
-<li>羽毛球</li>
-</ul>
-<h2>代码高亮</h2>
-<p>```python<br>
-import request<br>
-import time</p>
-<p>time.sleep_ms(1000)<br>
-print("Hello World")<br>
-```</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">request</span>
-<span class="pl-k">import</span> <span class="pl-s1">time</span>
-
-<span class="pl-s1">time</span>.<span class="pl-en">sleep_ms</span>(<span class="pl-c1">1000</span>)
-<span class="pl-en">print</span>(<span class="pl-s">"Hello World"</span>)</pre></div>
-<h2>链接</h2>
-<div class="highlight highlight-text-md"><pre class="notranslate"><span class="pl-s">[</span>我的博客<span class="pl-s">]</span><span class="pl-s">(</span><span class="pl-corl">https://meekdai.github.io</span><span class="pl-s">)</span></pre></div>
-<p><a href="https://meekdai.github.io" rel="nofollow">我的博客</a></p>
-<h2>图片</h2>
-<div class="highlight highlight-text-md"><pre class="notranslate"><span class="pl-s">![</span>这是我的头像PNG<span class="pl-s">]</span><span class="pl-s">(</span><span class="pl-corl">https://github.com/Meekdai/meekdai.github.io/assets/11755104/e4da3470-d4b1-4cc7-9d84-f7da69f90a76</span><span class="pl-s">)</span>
-<span class="pl-s">![</span>这是我的头像SVG<span class="pl-s">]</span><span class="pl-s">(</span><span class="pl-corl">https://blog.meekdai.com/avatar.svg</span><span class="pl-s">)</span></pre></div>
-<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/Meekdai/meekdai.github.io/assets/11755104/e4da3470-d4b1-4cc7-9d84-f7da69f90a76"><img src="https://github.com/Meekdai/meekdai.github.io/assets/11755104/e4da3470-d4b1-4cc7-9d84-f7da69f90a76" alt="这是我的头像PNG" style="max-width: 100%;"></a></p>
-<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/98eb644a858175897f2128fb1fb8128b58637dfc30a1b75729bd2a21da68cae6/68747470733a2f2f626c6f672e6d65656b6461692e636f6d2f6176617461722e737667"><img src="https://camo.githubusercontent.com/98eb644a858175897f2128fb1fb8128b58637dfc30a1b75729bd2a21da68cae6/68747470733a2f2f626c6f672e6d65656b6461692e636f6d2f6176617461722e737667" alt="这是我的头像SVG" data-canonical-src="https://blog.meekdai.com/avatar.svg" style="max-width: 100%;"></a></p>
-<h2>表格</h2>
-<div class="highlight highlight-text-md"><pre class="notranslate"><span class="pl-ml">|</span> Table Heading 1 <span class="pl-ml">|</span> Table Heading 2 <span class="pl-ml">|</span> Center align    <span class="pl-ml">|</span> Right align     <span class="pl-ml">|</span> Table Heading 5 <span class="pl-ml">|</span>
-<span class="pl-ml">|</span> :-------------- <span class="pl-ml">|</span> :-------------- <span class="pl-ml">|</span> :-------------: <span class="pl-ml">|</span> --------------: <span class="pl-ml">|</span> :-------------- <span class="pl-ml">|</span>
-<span class="pl-ml">|</span> Item 1          <span class="pl-ml">|</span> Item 2          <span class="pl-ml">|</span> Item 3          <span class="pl-ml">|</span> Item 4          <span class="pl-ml">|</span> Item 5          <span class="pl-ml">|</span>
-<span class="pl-ml">|</span> Item 1          <span class="pl-ml">|</span> Item 2          <span class="pl-ml">|</span> Item 3          <span class="pl-ml">|</span> Item 4          <span class="pl-ml">|</span> Item 5          <span class="pl-ml">|</span>
-<span class="pl-ml">|</span> Item 1          <span class="pl-ml">|</span> Item 2          <span class="pl-ml">|</span> Item 3          <span class="pl-ml">|</span> Item 4          <span class="pl-ml">|</span> Item 5          <span class="pl-ml">|</span></pre></div>
-<markdown-accessiblity-table><table role="table">
-<thead>
-<tr>
-<th align="left">Table Heading 1</th>
-<th align="left">Table Heading 2</th>
-<th align="center">Center align</th>
-<th align="right">Right align</th>
-<th align="left">Table Heading 5</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">Item 1</td>
-<td align="left">Item 2</td>
-<td align="center">Item 3</td>
-<td align="right">Item 4</td>
-<td align="left">Item 5</td>
-</tr>
-<tr>
-<td align="left">Item 1</td>
-<td align="left">Item 2</td>
-<td align="center">Item 3</td>
-<td align="right">Item 4</td>
-<td align="left">Item 5</td>
-</tr>
-<tr>
-<td align="left">Item 1</td>
-<td align="left">Item 2</td>
-<td align="center">Item 3</td>
-<td align="right">Item 4</td>
-<td align="left">Item 5</td>
-</tr>
-</tbody>
-</table></markdown-accessiblity-table>
-<h2>水平线</h2>
-<div class="highlight highlight-text-md"><pre class="notranslate"><span class="pl-s">---</span>
-<span class="pl-s">我在2个水平线中间</span>
-<span class="pl-s">***</span></pre></div>
+<div class="markdown-body" id="postBody"><p><a href="https://github.com/YugenFring/swift-tutorial-quickstart/wiki">Swift官方文档同步的中文快速入门教程</a></p>
+<p>建议: 这部分理解看得懂就可以了, 不用作额外的练习</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Constants-and-Variables" rel="nofollow">常量与变量 (Constants and Variables)</a></h2>
 <hr>
-<p>我在2个水平线中间</p>
-<hr>
-<h2>引用</h2>
-<div class="highlight highlight-text-md"><pre class="notranslate"><span class="pl-ent"><span class="pl-ent">&gt; </span>落霞与孤鹜齐飞，秋水共长天一色。《滕王阁序》--王勃 </span></pre></div>
+<p>🕐 先赋类型再赋值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">user</span><span class="pl-kos">:</span> <span class="pl-smi">String</span>
+user <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span></pre></div>
+<p>🕑 赋值时自动推断类型:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span>
+<span class="pl-k">var</span> <span class="pl-s1">passwd</span> <span class="pl-c1">=</span> <span class="pl-c1">123456</span></pre></div>
 <blockquote>
-<p>落霞与孤鹜齐飞，秋水共长天一色。《滕王阁序》--王勃</p>
+<p>在实践中, 更多使用的是这种方式</p>
 </blockquote>
-<h2>对比</h2>
-<div class="highlight highlight-source-diff"><pre class="notranslate"><span class="pl-mi1"><span class="pl-mi1">+</span> this text is highlighted in green</span>
-<span class="pl-md"><span class="pl-md">-</span> this text is highlighted in red</span></pre></div>
-<pre class="notranslate">```diff
-+ this text is highlighted in green
-- this text is highlighted in red
-```
-</pre>
-<h2>字体颜色</h2>
-<div class="highlight highlight-source-css"><pre class="notranslate"><span class="pl-ent">Some</span> <span class="pl-ent">text</span> <span class="pl-ent">in</span> <span class="pl-ent">green</span>! 123</pre></div>
-<pre class="notranslate">```CSS
-Some text in green! 123
-```
-</pre>
-<div class="highlight highlight-source-p4"><pre class="notranslate"><span class="pl-c1">Some</span> <span class="pl-c1">text</span> <span class="pl-c1">in</span> <span class="pl-c1">blue</span>! <span class="pl-c1">123</span></pre></div>
-<div class="highlight highlight-source-mint"><pre class="notranslate"><span class="pl-en">Some</span> <span class="pl-c1">text</span> <span class="pl-c1">in</span> <span class="pl-c1">blue</span> <span class="pl-k">with</span> <span class="pl-c1">additional</span> <span class="pl-c1">keyword</span> <span class="pl-c1">highlighting</span>! <span class="pl-c1">123</span></pre></div>
-<pre class="notranslate">```P4
-Some text in blue! 123
-```
-
-```Mint
-Some text in blue with additional keyword highlighting! 123
-```
-</pre>
-<div class="highlight highlight-source-json"><pre class="notranslate"><span class="pl-ii">Some text highlighted in red! 123</span></pre></div>
-<pre class="notranslate">```JSON
-Some text highlighted in red! 123
-```
-</pre>
-<h2>HTML tricks</h2>
-<p><samp>Monospaced text</samp></p>
-<pre class="notranslate"><code class="notranslate">&lt;samp&gt;Monospaced text&lt;/samp&gt;
-</code></pre>
+<p>🕒 同时操作多个量:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">x</span> <span class="pl-c1">=</span> 0.0<span class="pl-kos">,</span> <span class="pl-s1">y</span> <span class="pl-c1">=</span> 0.1<span class="pl-kos">,</span> <span class="pl-s1">z</span> <span class="pl-c1">=</span> 0.2
+<span class="pl-k">var</span> <span class="pl-s1">m</span><span class="pl-kos">,</span> <span class="pl-s1">n</span><span class="pl-kos">:</span> <span class="pl-smi">Double</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Comments" rel="nofollow">注释 (Comments)</a></h2>
 <hr>
-<p><ins>Underlined text</ins></p>
-<pre class="notranslate"><code class="notranslate">&lt;ins&gt;Underlined text&lt;/ins&gt;
+<p>🕐 单行注释:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-c">// This is a comment</span></pre></div>
+<p>🕑 多行注释:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-c">/* This is also a comment</span>
+<span class="pl-c">but is written over multiple lines. */</span></pre></div>
+<p>🕒 多级注释 (可进行展开或折叠):</p>
+<pre class="notranslate"><code class="notranslate">/* This is the start of the first multiline comment.
+    /* This is the second, nested multiline comment. */
+This is the end of the first multiline comment. */
 </code></pre>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Semicolons" rel="nofollow">分号 (Semicolons)</a></h2>
 <hr>
-<markdown-accessiblity-table><table role="table"><tbody><tr><td>Boxed text</td></tr></tbody></table></markdown-accessiblity-table>
-<pre class="notranslate"><code class="notranslate">&lt;table&gt;&lt;tr&gt;&lt;td&gt;Boxed text&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-</code></pre>
+<p>不作强制要求, 但也可使用:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">name</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span>; <span class="pl-en">print</span><span class="pl-kos">(</span>name<span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Integers" rel="nofollow">整数 (Integers)</a></h2>
 <hr>
-<details>
-<summary>Item summary with dropdown</summary>
-<p>Dropdown content (supports <strong>markdown</strong> <del>yay!</del>)</p>
-<div class="highlight highlight-source-json"><pre class="notranslate">{
-  <span class="pl-ii">awesome: "true"</span>
-}</pre></div>
-</details>
-<pre class="notranslate">&lt;details&gt;
-&lt;summary&gt;Item summary with dropdown&lt;/summary&gt;
-
-Dropdown content (supports **markdown** ~~yay!~~)
-
-```json
-{
-  awesome: "true"
-}
-```
-&lt;/details&gt;
-</pre>
+<p>一般整数使用 <code class="notranslate">Int</code> 即可, 如果要使用指定位数的也有</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Integer-Bounds" rel="nofollow">整数范围 (Integer Bounds)</a></h3>
+<p>获取类型的最值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">minValue</span> <span class="pl-c1">=</span> <span class="pl-smi">UInt8</span><span class="pl-kos">.</span>min
+<span class="pl-k">let</span> <span class="pl-s1">maxValue</span> <span class="pl-c1">=</span> <span class="pl-smi">UInt8</span><span class="pl-kos">.</span>maxv</pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Int" rel="nofollow">Int</a></h3>
+<p>类型 <code class="notranslate">Int</code> 的位数根据平台而定</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#UInt" rel="nofollow">UInt</a></h3>
+<p>类型 <code class="notranslate">UInt</code> 的位数根据平台而定</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Floating-Point-Numbers" rel="nofollow">浮点数 (Floating-Point Numbers)</a></h2>
 <hr>
-<p><strong><em>Italic-bold</em></strong></p>
-<pre class="notranslate"><code class="notranslate">__*Italic-bold*__
-</code></pre>
+<ul>
+<li><code class="notranslate">Double</code> : 64-bit (至少表示 15 位小数)</li>
+<li><code class="notranslate">Float</code> : 32-bit (差不多表示 6 位小数)</li>
+</ul>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Type-Safety-and-Type-Inference" rel="nofollow">类型安全与类型推断 (Type Safety and Type Inference)</a></h2>
 <hr>
-<p>Superscript<sup>TM</sup></p>
-<pre class="notranslate"><code class="notranslate">Superscript&lt;sup&gt;TM&lt;/sup&gt;
-</code></pre>
+<ul>
+<li>类型安全: 自动检查类型是否匹配</li>
+<li>类型推断: 根据值自动推断合适的类型</li>
+</ul>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Numeric-Literals" rel="nofollow">数值字面量 (Numeric Literals)</a></h2>
 <hr>
-<p>Superscript-italic<sup><em>tm</em></sup></p>
-<pre class="notranslate"><code class="notranslate">Superscript-italic&lt;sup&gt;*tm*&lt;/sup&gt;
-</code></pre>
+<p>🕐 不同进制表示法:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">decimalInteger</span> <span class="pl-c1">=</span> <span class="pl-c1">17</span>
+<span class="pl-k">let</span> <span class="pl-s1">binaryInteger</span> <span class="pl-c1">=</span> <span class="pl-c1">0b10001</span> <span class="pl-c">// 二进制</span>
+<span class="pl-k">let</span> <span class="pl-s1">octalInteger</span> <span class="pl-c1">=</span> <span class="pl-c1">0o21</span> <span class="pl-c">// 八进制</span>
+<span class="pl-k">let</span> <span class="pl-s1">hexadecimalInteger</span> <span class="pl-c1">=</span> <span class="pl-c1">0x11</span> <span class="pl-c">// 十六进制</span></pre></div>
+<p>🕑 不同进制的指数表示法:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">decimalDouble</span> <span class="pl-c1">=</span> 12.1875
+<span class="pl-k">let</span> <span class="pl-s1">exponentDouble</span> <span class="pl-c1">=</span> 1.21875e1
+<span class="pl-k">let</span> <span class="pl-s1">hexadecimalDouble</span> <span class="pl-c1">=</span> <span class="pl-c1">0xC</span><span class="pl-kos">.</span><span class="pl-c1">3</span>p<span class="pl-c1">0</span> <span class="pl-c">// 只支持十六进制</span></pre></div>
+<p>🕒 填充及下划线分隔表示法:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">paddedDouble</span> <span class="pl-c1">=</span> 000123.456
+<span class="pl-k">let</span> <span class="pl-s1">oneMillion</span> <span class="pl-c1">=</span> <span class="pl-c1">1_000_000</span>
+<span class="pl-k">let</span> <span class="pl-s1">justOverOneMillion</span> <span class="pl-c1">=</span> 1_000_000.000_000_1</pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Numeric-Type-Conversion" rel="nofollow">数值类型转换 (Numeric Type Conversion)</a></h2>
 <hr>
-<p>Subscript<sub>x</sub></p>
-<pre class="notranslate"><code class="notranslate">Subscript&lt;sub&gt;x&lt;/sub&gt;
-</code></pre>
+<p>🕐 赋值不在数值类型范围内的值将会报错</p>
+<p>🕑 不同数值类型间不能直接操作,需显式进行类型转换:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">x</span><span class="pl-kos">:</span> <span class="pl-smi">UInt16</span> <span class="pl-c1">=</span> <span class="pl-c1">2_000</span>
+<span class="pl-k">let</span> <span class="pl-s1">y</span><span class="pl-kos">:</span> <span class="pl-smi">UInt8</span> <span class="pl-c1">=</span> <span class="pl-c1">1</span>
+<span class="pl-k">let</span> <span class="pl-s1">z</span> <span class="pl-c1">=</span> x <span class="pl-c1">+</span> UInt16<span class="pl-kos">(</span>y<span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Type-Aliases" rel="nofollow">类型别名 (Type Aliases)</a></h2>
 <hr>
-<p>Subscript-bold<sub><strong>min</strong></sub></p>
-<pre class="notranslate"><code class="notranslate">Subscript-bold&lt;sub&gt;**min**&lt;/sub&gt;
-</code></pre>
+<p>给类型取一个别名:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">typealias</span> <span class="pl-smi">MyType</span> <span class="pl-c1">=</span> <span class="pl-smi">UInt16</span>
+<span class="pl-k">var</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-smi">MyType</span><span class="pl-kos">.</span>min</pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Booleans" rel="nofollow">布尔值 (Booleans)</a></h2>
 <hr>
-<p><del><strong><em>Italic-bold-strikethrough</em></strong></del></p>
-<pre class="notranslate"><code class="notranslate">~~__*Italic-bold-strikethrough*__~~
-</code></pre>
-<h2>参考</h2>
-<p>更多GitHub Markdown 语法参考：</p>
-<ol>
-<li><a href="https://github.com/Olwiba/Kickass-markdown/">https://github.com/Olwiba/Kickass-markdown/</a></li>
-<li><a href="https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax</a></li>
-</ol>
+<p>🕐 赋值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">t</span> <span class="pl-c1">=</span> true
+<span class="pl-k">let</span> <span class="pl-s1">f</span> <span class="pl-c1">=</span> false</pre></div>
+<p>🕑 不是非 0 就是 true, 布尔就是布尔:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">1</span>
+if n <span class="pl-kos">{</span>
+    <span class="pl-c">// error</span>
+<span class="pl-kos">}</span></pre></div>
+<blockquote>
+<p>这是与其他语言较为不同的地方</p>
+</blockquote>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Tuples" rel="nofollow">元组 (Tuples)</a></h2>
+<hr>
+<p>🕐 元组定义与赋值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">info</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-c1">123456</span><span class="pl-kos">)</span>
+<span class="pl-k">let</span> <span class="pl-kos">(</span>user<span class="pl-kos">,</span> passwd<span class="pl-kos">)</span> <span class="pl-c1">=</span> info</pre></div>
+<p>🕑 赋值时使用下划线忽略:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-kos">(</span>user1<span class="pl-kos">,</span> _<span class="pl-kos">)</span> <span class="pl-c1">=</span> info</pre></div>
+<h3>索引 (Index)</h3>
+<blockquote>
+<p>这是比较新颖的地方, 某种程度上看起来像是 python 的字典</p>
+</blockquote>
+<p>🕐 通过数值索引获取元素:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">print</span><span class="pl-kos">(</span>info<span class="pl-kos">.</span><span class="pl-c1">0</span><span class="pl-kos">,</span> info<span class="pl-kos">.</span><span class="pl-c1">1</span><span class="pl-kos">)</span></pre></div>
+<p>🕑 通过名称获取元素:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">info</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span>user<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span><span class="pl-kos">,</span> passwd<span class="pl-kos">:</span> <span class="pl-c1">123456</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>info<span class="pl-kos">.</span>user<span class="pl-kos">,</span> info<span class="pl-kos">.</span>passwd<span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Optionals" rel="nofollow">可选类型 (Optionals)</a></h2>
+<hr>
+<p>🕐 定义方式: 在类型后加上 <code class="notranslate">?</code></p>
+<p>🕑 可选类型要么有值要么为 <code class="notranslate">nil</code>:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">n</span><span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-c1"><span class="pl-c1">?</span></span> <span class="pl-c1">=</span> <span class="pl-c1">404</span>
+n <span class="pl-c1">=</span> <span class="pl-smi">nil</span> <span class="pl-c">// 可选类型可赋值 nil</span></pre></div>
+<blockquote>
+<p>Swift 是非空类型的安全系统, 其要求每个量的类型都是明确的, 因此直接给量赋 <code class="notranslate">nil</code> 是不安全的. 推荐在可能出现 <code class="notranslate">nil</code> 的地方都使用可选类型, 可以把可选类型理解为一个安全的包装器</p>
+</blockquote>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Optional-Binding" rel="nofollow">可选类型绑定 (Optional Binding)</a></h3>
+<p>即在条件表达式中使用赋值语句提取可选类型中的值</p>
+<p>🕐 当有值时, 条件表达式为 <code class="notranslate">true</code>, 同时提取值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">if <span class="pl-k">let</span> n <span class="pl-c1">=</span> <span class="pl-en">Int</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">123</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> <span class="pl-c">// 类型转换会返回可选值</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">The number is </span><span class="pl-kos">\(</span>n<span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">error</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 当条件表达式中的局部变量名与外层相同时可简写:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-en">Int</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">123</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+if <span class="pl-k">let</span> n <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">My number is </span><span class="pl-kos">\(</span>n<span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕒 同时进行多个可选类型绑定:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">if <span class="pl-k">let</span> a <span class="pl-c1">=</span> <span class="pl-en">Int</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">4</span><span class="pl-s">"</span><span class="pl-kos">)</span><span class="pl-kos">,</span> <span class="pl-k">let</span> b <span class="pl-c1">=</span> <span class="pl-en">Int</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">42</span><span class="pl-s">"</span><span class="pl-kos">)</span><span class="pl-kos">,</span> a <span class="pl-c1">&lt;</span> b &amp;&amp; b <span class="pl-c1">&lt;</span> <span class="pl-c1">100</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>a<span class="pl-kos">)</span><span class="pl-s"> &lt; </span><span class="pl-kos">\(</span>b<span class="pl-kos">)</span><span class="pl-s"> &lt; 100</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<blockquote>
+<p>到这里可以将"可选类型绑定"理解为: 在条件语句中赋值可选类型, 就好像是使用普通类型一样</p>
+</blockquote>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Providing-a-Fallback-Value" rel="nofollow">提供备选值 (Providing a Fallback Value)</a></h3>
+<p>使用 <code class="notranslate">??</code> 解包可选类型, 当其为 <code class="notranslate">nil</code> 时提供备选值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">name</span><span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-c1"><span class="pl-c1">?</span></span> <span class="pl-c1">=</span> <span class="pl-smi">nil</span>
+<span class="pl-k">let</span> <span class="pl-s1">greeting</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">Hello, </span><span class="pl-s">"</span> <span class="pl-c1">+</span> <span class="pl-kos">(</span>name <span class="pl-c1">??</span> <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-c1">+</span> <span class="pl-s">"</span><span class="pl-s">!</span><span class="pl-s">"</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>greeting<span class="pl-kos">)</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Force-Unwrapping" rel="nofollow">强制解包 (Force Unwrapping)</a></h3>
+<p>使用 <code class="notranslate">!</code> 解包可选值, 若为 <code class="notranslate">nil</code> 将触发错误:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">123s</span><span class="pl-s">"</span>
+<span class="pl-k">let</span> <span class="pl-s1">i</span> <span class="pl-c1">=</span> <span class="pl-en">Int</span><span class="pl-kos">(</span>s<span class="pl-kos">)</span>
+<span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> i!</pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Implicitly-Unwrapped-Optionals" rel="nofollow">隐式解包 (Implicitly Unwrapped Optionals)</a></h3>
+<p>适用于"当可选值有值后就一定保持有值"的情况</p>
+<p>🕐 定义方式: 类型后加上 <code class="notranslate">!</code>, 相当于可隐式解包的可选类型</p>
+<p>🕑 比可选类型多了自动隐式解包功能:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">user</span><span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-c1">!</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span>
+<span class="pl-k">let</span> <span class="pl-s1">name</span><span class="pl-kos">:</span> <span class="pl-smi">String</span> <span class="pl-c1">=</span> user</pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Error-Handling" rel="nofollow">错误处理 (Error Handling)</a></h2>
+<hr>
+<p>🕐 使用 <code class="notranslate">throws</code> 表明一个函数会抛出错误:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> f<span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-k">throws</span> <span class="pl-kos">{</span>
+	<span class="pl-c1">...</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 处理错误的语句:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">do</span> <span class="pl-kos">{</span>
+	<span class="pl-c1"><span class="pl-k">try</span></span> <span class="pl-en">f</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span> <span class="pl-k">catch</span> <span class="pl-kos">{</span>
+	<span class="pl-c1">...</span>
+<span class="pl-kos">}</span> <span class="pl-k">catch</span> <span class="pl-kos">{</span>
+	<span class="pl-c1">...</span> 
+<span class="pl-kos">}</span></pre></div>
+<p><code class="notranslate">try</code> 表明该函数可能会抛出错误, <code class="notranslate">catch</code> 用于捕获错误</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Assertions-and-Preconditions" rel="nofollow">断言和前置条件 (Assertions and Preconditions)</a></h2>
+<hr>
+<p>"断言"和"前置条件"都是用于捕获意外的错误, 当不满足时中断程序执行; 前者只在开发环境中生效</p>
+<blockquote>
+<p>与"错误处理"不同的是, 错误处理处理的是可预见的错误, 而这里的错误是意外的, 不可预知的, 因而不一定能够复现</p>
+</blockquote>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Debugging-with-Assertions" rel="nofollow">使用断言 Debug (Debugging with Assertions)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">3</span>
+<span class="pl-en">assert</span><span class="pl-kos">(</span>n <span class="pl-c1">&gt;=</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">this is an error description</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-c">// 描述可省略</span></pre></div>
+<p>手动触发断言错误:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">3</span>
+if n <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span> <span class="pl-kos">{</span>
+    <span class="pl-en">assertionFailure</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">error</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">pass</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Enforcing-Preconditions" rel="nofollow">执行前置条件 (Enforcing Preconditions)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">3</span>
+<span class="pl-en">precondition</span><span class="pl-kos">(</span>n <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">this is an error descriptoin</span><span class="pl-s">"</span><span class="pl-kos">)</span></pre></div>
+<p>手动触发前置条件错误:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">3</span>
+if n <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span> <span class="pl-kos">{</span>
+    <span class="pl-en">preconditionFailure</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">error</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">pass</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<blockquote>
+<p>关于这部分的使用还可以更进一步, 不过目前了解一下就足够了</p>
+</blockquote>
+<p>建议: 这部分理解看得懂就可以了, 不用作额外的练习</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Terminology" rel="nofollow">术语 (Terminology)</a></h2>
+<hr>
+<p>学一下英语:</p>
+<ul>
+<li><em>Unary</em>: 一元</li>
+<li><em>Binary</em>: 二元</li>
+<li><em>Ternary</em>: 三元</li>
+</ul>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Arithmetic-Operators" rel="nofollow">算术运算符 (Arithmetic Operators)</a></h2>
+<hr>
+<p>🕐 加减乘除:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-c1">1</span> <span class="pl-c1">+</span> <span class="pl-c1">2</span>
+<span class="pl-c1">5</span> <span class="pl-c1">-</span> <span class="pl-c1">3</span>
+<span class="pl-c1">2</span> <span class="pl-c1">*</span> <span class="pl-c1">3</span>
+10.0 <span class="pl-c1">/</span> 2.5 </pre></div>
+<p>🕑 字符串拼接:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-s">"</span><span class="pl-s">hello, </span><span class="pl-s">"</span> <span class="pl-c1">+</span> <span class="pl-s">"</span><span class="pl-s">world</span><span class="pl-s">"</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Remainder-Operator" rel="nofollow">取余运算符 (Remainder Operator)</a></h3>
+<p>符号跟着被除数走:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-c1">9</span> <span class="pl-c1">%</span> <span class="pl-c1">4</span>    <span class="pl-c">// 1</span>
+<span class="pl-c1">-</span><span class="pl-c1">9</span> <span class="pl-c1">%</span> <span class="pl-c1">4</span>   <span class="pl-c">// -1</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Unary-Minus-Operator" rel="nofollow">一元负号操作符 (Unary Minus Operator)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">3</span>
+<span class="pl-k">let</span> <span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span>x
+<span class="pl-k">let</span> <span class="pl-s1">z</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span>y</pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Unary-Plus-Operator" rel="nofollow">一元正号运算符 (Unary Plus Operator)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">+</span><span class="pl-c1">3</span></pre></div>
+<blockquote>
+<p>实际不会发生任何影响</p>
+</blockquote>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Compound-Assignment-Operators" rel="nofollow">复合赋值运算符 (Compound Assignment Operators)</a></h2>
+<hr>
+<p>举个例子:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">1</span>
+n <span class="pl-c1">+=</span> <span class="pl-c1">2</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Comparison-Operators" rel="nofollow">比较运算符 (Comparison Operators)</a></h2>
+<hr>
+<p>🕐 举个例子:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-c1">1</span> <span class="pl-c1">==</span> <span class="pl-c1">1</span>
+<span class="pl-c1">2</span> <span class="pl-c1">!=</span> <span class="pl-c1">1</span>
+<span class="pl-c1">2</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">1</span>
+<span class="pl-c1">1</span> <span class="pl-c1">&lt;</span> <span class="pl-c1">2</span>
+<span class="pl-c1">1</span> <span class="pl-c1">&gt;=</span> <span class="pl-c1">1</span>
+<span class="pl-c1">2</span> <span class="pl-c1">&lt;=</span> <span class="pl-c1">1</span></pre></div>
+<p>🕑 元组会逐个元素进行比较:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-kos">(</span><span class="pl-c1">1</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-c1">&lt;</span> <span class="pl-kos">(</span><span class="pl-c1">2</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Ternary-Conditional-Operator" rel="nofollow">三元条件运算符 (Ternary Conditional Operator)</a></h2>
+<hr>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">2</span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> true
+<span class="pl-k">let</span> <span class="pl-s1">y</span> <span class="pl-c1">=</span> x <span class="pl-c1">+</span> <span class="pl-kos">(</span>b ? <span class="pl-c1">10</span><span class="pl-kos">:</span> <span class="pl-c1">20</span><span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Nil-Coalescing-Operator" rel="nofollow">空值合并运算符 (Nil-Coalescing Operator)</a></h2>
+<hr>
+<p>即 <code class="notranslate">??</code>: [[01 基础部分 (The Basics)#[提供备选值 (Providing a Fallback Value)](https //docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics Providing-a-Fallback-Value)|here]]</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span>
+<span class="pl-k">var</span> <span class="pl-s1">s</span><span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-c1"><span class="pl-c1">?</span></span>
+<span class="pl-k">let</span> <span class="pl-s1">m</span> <span class="pl-c1">=</span> s <span class="pl-c1">??</span> n</pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Range-Operators" rel="nofollow">区间运算符 (Range Operators)</a></h2>
+<hr>
+<p>获取区间内的离散数值</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Closed-Range-Operator" rel="nofollow">闭区间运算符 (Closed Range Operator)</a></h3>
+<p>左闭右闭:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in <span class="pl-c1">1</span><span class="pl-c1">...</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Half-Open-Range-Operator" rel="nofollow">半开区间运算符 (Half-Open Range Operator)</a></h3>
+<p>左闭右开:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in <span class="pl-c1">1</span><span class="pl-c1">..&lt;</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#One-Sided-Ranges" rel="nofollow">单侧区间 (One-Sided Ranges)</a></h3>
+<p>🕐 右穷尽:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">m</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">d</span><span class="pl-s">"</span><span class="pl-kos">]</span>
+for <span class="pl-s1">i</span> in <span class="pl-en">m</span><span class="pl-kos">[</span><span class="pl-c1">2</span><span class="pl-c1">...</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕑 左穷尽:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">m</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">d</span><span class="pl-s">"</span><span class="pl-kos">]</span>
+for <span class="pl-s1">i</span> in <span class="pl-en">m</span><span class="pl-kos">[</span><span class="pl-c1">...</span><span class="pl-c1">2</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕒 左穷尽右开:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">m</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">d</span><span class="pl-s">"</span><span class="pl-kos">]</span>
+for <span class="pl-s1">i</span> in <span class="pl-en">m</span><span class="pl-kos">[</span><span class="pl-c1">..&lt;</span><span class="pl-c1">2</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕓 判断数字是否在区间中:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">range</span> <span class="pl-c1">=</span> <span class="pl-c1">...</span><span class="pl-c1">5</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>range<span class="pl-kos">.</span><span class="pl-en">contains</span><span class="pl-kos">(</span><span class="pl-c1">7</span><span class="pl-kos">)</span><span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-Operators" rel="nofollow">逻辑运算符 (Logical Operators)</a></h2>
+<hr>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-NOT-Operator" rel="nofollow">非运算符 (Logical NOT Operator)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">f</span> <span class="pl-c1">=</span> false
+if !f <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">true</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-AND-Operator" rel="nofollow">并且运算符 (Logical AND Operator)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">t</span> <span class="pl-c1">=</span> true
+<span class="pl-k">let</span> <span class="pl-s1">f</span> <span class="pl-c1">=</span> false
+if t &amp;&amp; f <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">true</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">false</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-OR-Operator" rel="nofollow">或运算符 (Logical OR Operator)</a></h3>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">t</span> <span class="pl-c1">=</span> true
+<span class="pl-k">let</span> <span class="pl-s1">f</span> <span class="pl-c1">=</span> false
+if t || f <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">true</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">false</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Combining-Logical-Operators" rel="nofollow">组合逻辑运算符 (Combining Logical Operators)</a></h3>
+<p>上述逻辑运算符可以组合使用</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Explicit-Parentheses" rel="nofollow">显式使用括号 (Explicit Parentheses)</a></h3>
+<p>可以使用 <code class="notranslate">()</code> 改变优先级或者语法美观</p>
 </div>
 <div style="font-size:small;margin-top:8px;float:right;">❤️ 转载文章请注明出处，谢谢！❤️</div>
 
