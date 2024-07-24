@@ -921,4 +921,4 @@ T _someClass;
 
 由于时间关系，总结的比较草率，还有很多需要补充的地方。对于 swift 语言，只是对语法进行了简单的学习。其核心思想还需进一步的深入学习——实践 + 概念。
 
-<!-- ##{"script":"<script src='https://cell.237927.xyz/assets/GmeekTOC.js'></script>"}## -->
+<!-- ##{"script":"<script src='https://cell.237927.xyz/assets/articletoc.js'></script>"}## -->
