@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark_colorblind" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://cell.237927.xyz/avatar.svg"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="[Swift官方文档同步的中文快速入门教程](https://github.com/YugenFring/swift-tutorial-quickstart/wiki)
+
+类似 lambda 表达式.
+
+建议: 跟着例子从上往下一步步跟着理解, 最后2小节难一点
+## [闭包表达式 (Closure Expressions)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Closure-Expressions)
+---
+### [sorted 方法 (The Sorted Method)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#The-Sorted-Method)
+
+根据方法对元素进行排序:
+```swift
+func backward(_ s1: String, _ s2: String) -> Bool {
+    return s1 > s2
+}
+
+let names = ['Chris', 'Alex', 'Ewa', 'Barry', 'Daniella']
+var reversedNames = names.sorted(by: backward)
+print(reversedNames)
+```
+### [闭包表达式语法 (Closure Expression Syntax)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Closure-Expression-Syntax)
+
+🕐 上述可以被改写为:
+```swift
+var reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
+    return s1 > s2
+})
+
+print(reversedNames)
+```
+即将匿名函数放在 `{}` 内,  `in` 后接函数体 
+
+🕑 因为函数体就一个表达式, 可以被写在一行:
+```swift
+var reversedNames =  names.sorted(by: { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+
+print(reversedNames)
+```
+### [从上下文中推断类型 (Inferring Type From Context)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Inferring-Type-From-Context)
+
+因为可以从上下文中推断类型, 上述可以被改写为:
+```swift
+var reversedNames =  names.sorted(by: { s1, s2 in return s1 > s2 } )
+
+print(reversedNames)
+```
+### [单行表达式的隐式返回 (Implicit Returns from Single-Expression Closures)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Implicit-Returns-from-Single-Expression-Closures)
+
+单行表达式可省略 return:
+```swift
+var reversedNames =  names.sorted(by: { s1, s2 in s1 > s2 } )
+
+print(reversedNames)
+```
+### [参数名简记法 (Shorthand Argument Names)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Shorthand-Argument-Names)
+
+使用 **$x** 来快速获取参数:
+```swift
+var reversedNames =  names.sorted(by: { $0 > $1 } )
+
+print(reversedNames)
+```
+ x 的最大值+1表示该闭包所接受的参数数量
+### [运算符方法 (Operator Methods)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Operator-Methods)
+
+因为 String 实现了比较操作符方法, 即接受两个 String 参数并返回布尔值, 这刚好符合要求:
+```swift
+var reversedNames =  names.sorted(by: > )
+
+print(reversedNames)
+```
+## [尾闭包 (Trailing Closures)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Trailing-Closures)
+---
+调用闭包类型参数时, 可以将闭包写在后面:
+```swift
+func someFunc(closure: () -> Void) {
+    // function body goes here
+}
+```
+
+🕐 常规调用:
+```swift
+someFunc(closure: {
+    // closure's body goes here
+})
+```
+
+🕑 尾调用:
+```swift
+someFunc() {
+    // trailing closure's body goes here
+}
+```
+### 示例 1
+
+🕐 例如上面的例子可改写为:
+```swift
+var reversedNames =  names.sorted() { $0 > $1 }
+
+print(reversedNames)
+```
+
+🕑 如果闭包是唯一参数, 括号可以省略:
+```swift
+var reversedNames =  names.sorted { $0 > $1 }
+
+print(reversedNames)
+```
+### 示例 2
+
+下面以数组的 `map` 方法为例子:
+```swift
+let d = [
+    0: 'Zero', 1: 'One', 2: 'Two',   3: 'Three', 4: 'Four',
+    5: 'Five', 6: 'Six', 7: 'Seven', 8: 'Eight', 9: 'Nine'
+]
+let a = [16, 58, 510]
+
+let s = a.map { (n) -> String in
+    var n = n
+    var output = ''
+    repeat {
+        output = d[n % 10]! + output
+        n /= 10
+    } while n > 0
+    return output
+}
+```
+### 示例 3
+
+当有多个闭包参数时, 通过尾闭包传递第一个参数时名称可以省略, 后面的要标出:
+```swift
+func loadFile(from server: String, upload: (String) -> Void, onFailure: () -> Void) {
+    print('Downloaded file from \(server)')
+    if server.count <= 10 {
+        upload('Uploaded \(server.count) bytes.')
+    } else {
+        onFailure()
+    }
+}
+```
+调用:
+```swift
+loadFile(from: 'Youtube') { file in
+    print(file)
+} onFailure: {
+    print('Couldn't upload the file.')
+}
+```
+## [值获取 (Capturing Values)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Capturing-Values)
+
+闭包可以从上下文环境中获取值:
+```swift
+func getIncrease(step: Int) -> () -> Int {
+    var total = 0
+    func increaser() -> Int {
+        total += step
+        return total
+    }
+    return increaser
+}
+```
+每调用一次 `f()` 返回的值都会增加:
+```swift
+let f = getIncrease(step: 10)
+print(f())
+print(f())
+```
+即闭包外的量与闭包绑定了
+## [闭包为引用类型 (Closures Are Reference Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Closures-Are-Reference-Types)
+
+即值传递类型为指针传递
+## [闭包逃逸 (Escaping Closures)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Escaping-Closures)
+---
+指的是被作为参数传递的闭包, 在函数返回后还可以被调用.
+
+🕐 常见的方式是将其存储到外部变量中:
+```swift
+var outer: [() -> Void] = []
+
+func toOuter(c: @escaping () -> Void) {
+    outer.append(c)
+}
+```
+使用 `@escaping` 定义一个可逃逸的闭包
+
+🕑 定义一个具有非逃逸的闭包的函数:
+```swift
+func noOuter(c: () -> Void) {
+    c()
+}
+```
+
+🕒 定义一个类调用这两个函数:
+```swift
+class SomeClass {
+    var x = 10
+    func doThing() {
+        toOuter { self.x = 99 } // 等价为 { [self] in x = 99 }
+        noOuter { x = 200 }
+    }
+}
+```
+对于可逃逸闭包, 需要显示指明要捕获 self, 或者将其添加到闭包的捕获列表中, 即上面的 `[self]`
+
+🕓 调用该类的方法:
+```swift
+let myClass = SomeClass()
+
+myClass.doThing()
+print(myClass.x) // 200
+```
+
+🕔 调用该类的逃逸闭包:
+```swift
+outer.first?()
+print(myClass.x) // 99
+```
+
+🕑 对于值类型则情况不同:
+```swift
+struct SomeStruct {
+    var x = 10
+    mutating func doSomething() {
+        noOuter { x = 200 }  // Ok
+        toOuter { x = 100 }     // Error
+    }
+}
+```
+值类型的 self 是隐式传递的, 但是逃逸闭包不能捕获值类型的 self, 因而这里将报错. 
+
+> 值类型不允许共享可变性, 也就是多个代码部分对同一数据的读写权限. 值类型被传递时将会创建一个独立的副本, 那么你修改了一个其中一个副本并不会影响到另一个副本; 因而, 假设值类型可以逃逸, 那么在逃逸闭包中对其修改后是新创建一个副本还是修改原有副本? (值类型的定义已结束)
+## [自动闭包 (Autoclosures)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Autoclosures)
+---
+自动闭包用于封装一个表达式, 其返回值为表达式的执行结果
+
+🕐 延迟执行:
+```swift
+var a = ['Chris', 'Alex', 'Ewa', 'Barry', 'Daniella']
+let c = { a.remove(at: 0) }
+
+print(a.count) // 5
+print('Remove \(c())')
+print(a.count) // 4
+```
+自动闭包中的表达式只有被调用的时候才会执行
+
+🕑 作为参数时的延迟执行:
+```swift
+func test(c: () -> String) {
+    print('Remove \(c())')
+}
+
+test(c: { a.remove(at: 0) })
+print(a.count) // 3
+```
+
+🕒 可以在闭包参数前使用 `@autoclosure`, 从而在传参时省略 {}:
+```swift
+func test(c: @autoclosure () -> String) {
+    print('Remove \(c())')
+}
+test(c: a.remove(at: 0))
+```
+
+🕒 可以和 `@escaping` 一起使用:
+```swift
+var outer: [() -> String] = []
+
+func collect(_ c: @autoclosure @escaping () -> String) {
+    outer.append(c)
+}
+```
+传递自动闭包:
+```swift
+collect(a.remove(at: 0))
+collect(a.remove(at: 0))
+print('Collected \(outer.count) closures.')
+```
+调用闭包:
+```swift
+for c in outer {
+    print('Now serving \(c())')
+}
+```
+
+
+<!-- ##{'script':'<script src='https://blog.meekdai.com/assets/GmeekTOC.js'></script>'}## -->。">
+<meta property="og:title" content="[Swift 官方教程]07 闭包">
+<meta property="og:description" content="[Swift官方文档同步的中文快速入门教程](https://github.com/YugenFring/swift-tutorial-quickstart/wiki)
+
+类似 lambda 表达式.
+
+建议: 跟着例子从上往下一步步跟着理解, 最后2小节难一点
+## [闭包表达式 (Closure Expressions)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Closure-Expressions)
+---
+### [sorted 方法 (The Sorted Method)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#The-Sorted-Method)
+
+根据方法对元素进行排序:
+```swift
+func backward(_ s1: String, _ s2: String) -> Bool {
+    return s1 > s2
+}
+
+let names = ['Chris', 'Alex', 'Ewa', 'Barry', 'Daniella']
+var reversedNames = names.sorted(by: backward)
+print(reversedNames)
+```
+### [闭包表达式语法 (Closure Expression Syntax)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Closure-Expression-Syntax)
+
+🕐 上述可以被改写为:
+```swift
+var reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
+    return s1 > s2
+})
+
+print(reversedNames)
+```
+即将匿名函数放在 `{}` 内,  `in` 后接函数体 
+
+🕑 因为函数体就一个表达式, 可以被写在一行:
+```swift
+var reversedNames =  names.sorted(by: { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+
+print(reversedNames)
+```
+### [从上下文中推断类型 (Inferring Type From Context)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Inferring-Type-From-Context)
+
+因为可以从上下文中推断类型, 上述可以被改写为:
+```swift
+var reversedNames =  names.sorted(by: { s1, s2 in return s1 > s2 } )
+
+print(reversedNames)
+```
+### [单行表达式的隐式返回 (Implicit Returns from Single-Expression Closures)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Implicit-Returns-from-Single-Expression-Closures)
+
+单行表达式可省略 return:
+```swift
+var reversedNames =  names.sorted(by: { s1, s2 in s1 > s2 } )
+
+print(reversedNames)
+```
+### [参数名简记法 (Shorthand Argument Names)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Shorthand-Argument-Names)
+
+使用 **$x** 来快速获取参数:
+```swift
+var reversedNames =  names.sorted(by: { $0 > $1 } )
+
+print(reversedNames)
+```
+ x 的最大值+1表示该闭包所接受的参数数量
+### [运算符方法 (Operator Methods)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Operator-Methods)
+
+因为 String 实现了比较操作符方法, 即接受两个 String 参数并返回布尔值, 这刚好符合要求:
+```swift
+var reversedNames =  names.sorted(by: > )
+
+print(reversedNames)
+```
+## [尾闭包 (Trailing Closures)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Trailing-Closures)
+---
+调用闭包类型参数时, 可以将闭包写在后面:
+```swift
+func someFunc(closure: () -> Void) {
+    // function body goes here
+}
+```
+
+🕐 常规调用:
+```swift
+someFunc(closure: {
+    // closure's body goes here
+})
+```
+
+🕑 尾调用:
+```swift
+someFunc() {
+    // trailing closure's body goes here
+}
+```
+### 示例 1
+
+🕐 例如上面的例子可改写为:
+```swift
+var reversedNames =  names.sorted() { $0 > $1 }
+
+print(reversedNames)
+```
+
+🕑 如果闭包是唯一参数, 括号可以省略:
+```swift
+var reversedNames =  names.sorted { $0 > $1 }
+
+print(reversedNames)
+```
+### 示例 2
+
+下面以数组的 `map` 方法为例子:
+```swift
+let d = [
+    0: 'Zero', 1: 'One', 2: 'Two',   3: 'Three', 4: 'Four',
+    5: 'Five', 6: 'Six', 7: 'Seven', 8: 'Eight', 9: 'Nine'
+]
+let a = [16, 58, 510]
+
+let s = a.map { (n) -> String in
+    var n = n
+    var output = ''
+    repeat {
+        output = d[n % 10]! + output
+        n /= 10
+    } while n > 0
+    return output
+}
+```
+### 示例 3
+
+当有多个闭包参数时, 通过尾闭包传递第一个参数时名称可以省略, 后面的要标出:
+```swift
+func loadFile(from server: String, upload: (String) -> Void, onFailure: () -> Void) {
+    print('Downloaded file from \(server)')
+    if server.count <= 10 {
+        upload('Uploaded \(server.count) bytes.')
+    } else {
+        onFailure()
+    }
+}
+```
+调用:
+```swift
+loadFile(from: 'Youtube') { file in
+    print(file)
+} onFailure: {
+    print('Couldn't upload the file.')
+}
+```
+## [值获取 (Capturing Values)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Capturing-Values)
+
+闭包可以从上下文环境中获取值:
+```swift
+func getIncrease(step: Int) -> () -> Int {
+    var total = 0
+    func increaser() -> Int {
+        total += step
+        return total
+    }
+    return increaser
+}
+```
+每调用一次 `f()` 返回的值都会增加:
+```swift
+let f = getIncrease(step: 10)
+print(f())
+print(f())
+```
+即闭包外的量与闭包绑定了
+## [闭包为引用类型 (Closures Are Reference Types)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Closures-Are-Reference-Types)
+
+即值传递类型为指针传递
+## [闭包逃逸 (Escaping Closures)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Escaping-Closures)
+---
+指的是被作为参数传递的闭包, 在函数返回后还可以被调用.
+
+🕐 常见的方式是将其存储到外部变量中:
+```swift
+var outer: [() -> Void] = []
+
+func toOuter(c: @escaping () -> Void) {
+    outer.append(c)
+}
+```
+使用 `@escaping` 定义一个可逃逸的闭包
+
+🕑 定义一个具有非逃逸的闭包的函数:
+```swift
+func noOuter(c: () -> Void) {
+    c()
+}
+```
+
+🕒 定义一个类调用这两个函数:
+```swift
+class SomeClass {
+    var x = 10
+    func doThing() {
+        toOuter { self.x = 99 } // 等价为 { [self] in x = 99 }
+        noOuter { x = 200 }
+    }
+}
+```
+对于可逃逸闭包, 需要显示指明要捕获 self, 或者将其添加到闭包的捕获列表中, 即上面的 `[self]`
+
+🕓 调用该类的方法:
+```swift
+let myClass = SomeClass()
+
+myClass.doThing()
+print(myClass.x) // 200
+```
+
+🕔 调用该类的逃逸闭包:
+```swift
+outer.first?()
+print(myClass.x) // 99
+```
+
+🕑 对于值类型则情况不同:
+```swift
+struct SomeStruct {
+    var x = 10
+    mutating func doSomething() {
+        noOuter { x = 200 }  // Ok
+        toOuter { x = 100 }     // Error
+    }
+}
+```
+值类型的 self 是隐式传递的, 但是逃逸闭包不能捕获值类型的 self, 因而这里将报错. 
+
+> 值类型不允许共享可变性, 也就是多个代码部分对同一数据的读写权限. 值类型被传递时将会创建一个独立的副本, 那么你修改了一个其中一个副本并不会影响到另一个副本; 因而, 假设值类型可以逃逸, 那么在逃逸闭包中对其修改后是新创建一个副本还是修改原有副本? (值类型的定义已结束)
+## [自动闭包 (Autoclosures)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Autoclosures)
+---
+自动闭包用于封装一个表达式, 其返回值为表达式的执行结果
+
+🕐 延迟执行:
+```swift
+var a = ['Chris', 'Alex', 'Ewa', 'Barry', 'Daniella']
+let c = { a.remove(at: 0) }
+
+print(a.count) // 5
+print('Remove \(c())')
+print(a.count) // 4
+```
+自动闭包中的表达式只有被调用的时候才会执行
+
+🕑 作为参数时的延迟执行:
+```swift
+func test(c: () -> String) {
+    print('Remove \(c())')
+}
+
+test(c: { a.remove(at: 0) })
+print(a.count) // 3
+```
+
+🕒 可以在闭包参数前使用 `@autoclosure`, 从而在传参时省略 {}:
+```swift
+func test(c: @autoclosure () -> String) {
+    print('Remove \(c())')
+}
+test(c: a.remove(at: 0))
+```
+
+🕒 可以和 `@escaping` 一起使用:
+```swift
+var outer: [() -> String] = []
+
+func collect(_ c: @autoclosure @escaping () -> String) {
+    outer.append(c)
+}
+```
+传递自动闭包:
+```swift
+collect(a.remove(at: 0))
+collect(a.remove(at: 0))
+print('Collected \(outer.count) closures.')
+```
+调用闭包:
+```swift
+for c in outer {
+    print('Now serving \(c())')
+}
+```
+
+
+<!-- ##{'script':'<script src='https://blog.meekdai.com/assets/GmeekTOC.js'></script>'}## -->。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cell.237927.xyz/post/%5BSwift%20-guan-fang-jiao-cheng-%5D07%20-bi-bao.html">
+<meta property="og:image" content="https://cell.237927.xyz/avatar.svg">
+<title>[Swift 官方教程]07 闭包</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">[Swift 官方教程]07 闭包</h1>
+<div class="title-right">
+    <a href="https://cell.237927.xyz" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/obtips/obtips.github.io/issues/19" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p><a href="https://github.com/YugenFring/swift-tutorial-quickstart/wiki">Swift官方文档同步的中文快速入门教程</a></p>
+<p>类似 lambda 表达式.</p>
+<p>建议: 跟着例子从上往下一步步跟着理解, 最后2小节难一点</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Closure-Expressions" rel="nofollow">闭包表达式 (Closure Expressions)</a></h2>
+<hr>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#The-Sorted-Method" rel="nofollow">sorted 方法 (The Sorted Method)</a></h3>
+<p>根据方法对元素进行排序:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> backward<span class="pl-kos">(</span>_ s1<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">,</span> _ s2<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Bool</span> <span class="pl-kos">{</span>
+    <span class="pl-k">return</span> s1 <span class="pl-c1">&gt;</span> s2
+<span class="pl-kos">}</span>
+
+<span class="pl-k">let</span> <span class="pl-s1">names</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">Chris</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Alex</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Ewa</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Barry</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Daniella</span><span class="pl-s">"</span><span class="pl-kos">]</span>
+<span class="pl-k">var</span> <span class="pl-s1">reversedNames</span> <span class="pl-c1">=</span> names<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span>by<span class="pl-kos">:</span> backward<span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>reversedNames<span class="pl-kos">)</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Closure-Expression-Syntax" rel="nofollow">闭包表达式语法 (Closure Expression Syntax)</a></h3>
+<p>🕐 上述可以被改写为:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">reversedNames</span> <span class="pl-c1">=</span> names<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span>by<span class="pl-kos">:</span> <span class="pl-kos">{</span> <span class="pl-kos">(</span>s1<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">,</span> s2<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Bool</span> <span class="pl-k">in</span>
+    <span class="pl-k">return</span> s1 <span class="pl-c1">&gt;</span> s2
+<span class="pl-kos">}</span><span class="pl-kos">)</span>
+
+<span class="pl-en">print</span><span class="pl-kos">(</span>reversedNames<span class="pl-kos">)</span></pre></div>
+<p>即将匿名函数放在 <code class="notranslate">{}</code> 内,  <code class="notranslate">in</code> 后接函数体</p>
+<p>🕑 因为函数体就一个表达式, 可以被写在一行:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">reversedNames</span> <span class="pl-c1">=</span>  names<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span>by<span class="pl-kos">:</span> <span class="pl-kos">{</span> <span class="pl-kos">(</span>s1<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">,</span> s2<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Bool</span> <span class="pl-k">in</span> <span class="pl-k">return</span> s1 <span class="pl-c1">&gt;</span> s2 <span class="pl-kos">}</span> <span class="pl-kos">)</span>
+
+<span class="pl-en">print</span><span class="pl-kos">(</span>reversedNames<span class="pl-kos">)</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Inferring-Type-From-Context" rel="nofollow">从上下文中推断类型 (Inferring Type From Context)</a></h3>
+<p>因为可以从上下文中推断类型, 上述可以被改写为:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">reversedNames</span> <span class="pl-c1">=</span>  names<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span>by<span class="pl-kos">:</span> <span class="pl-kos">{</span> s1<span class="pl-kos">,</span> s2 <span class="pl-k">in</span> <span class="pl-k">return</span> s1 <span class="pl-c1">&gt;</span> s2 <span class="pl-kos">}</span> <span class="pl-kos">)</span>
+
+<span class="pl-en">print</span><span class="pl-kos">(</span>reversedNames<span class="pl-kos">)</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Implicit-Returns-from-Single-Expression-Closures" rel="nofollow">单行表达式的隐式返回 (Implicit Returns from Single-Expression Closures)</a></h3>
+<p>单行表达式可省略 return:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">reversedNames</span> <span class="pl-c1">=</span>  names<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span>by<span class="pl-kos">:</span> <span class="pl-kos">{</span> s1<span class="pl-kos">,</span> s2 <span class="pl-k">in</span> s1 <span class="pl-c1">&gt;</span> s2 <span class="pl-kos">}</span> <span class="pl-kos">)</span>
+
+<span class="pl-en">print</span><span class="pl-kos">(</span>reversedNames<span class="pl-kos">)</span></pre></div>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Shorthand-Argument-Names" rel="nofollow">参数名简记法 (Shorthand Argument Names)</a></h3>
+<p>使用 <strong>$x</strong> 来快速获取参数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">reversedNames</span> <span class="pl-c1">=</span>  names<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span>by<span class="pl-kos">:</span> <span class="pl-kos">{</span> $0 <span class="pl-c1">&gt;</span> $1 <span class="pl-kos">}</span> <span class="pl-kos">)</span>
+
+<span class="pl-en">print</span><span class="pl-kos">(</span>reversedNames<span class="pl-kos">)</span></pre></div>
+<p>x 的最大值+1表示该闭包所接受的参数数量</p>
+<h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Operator-Methods" rel="nofollow">运算符方法 (Operator Methods)</a></h3>
+<p>因为 String 实现了比较操作符方法, 即接受两个 String 参数并返回布尔值, 这刚好符合要求:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">reversedNames</span> <span class="pl-c1">=</span>  names<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span>by<span class="pl-kos">:</span> <span class="pl-c1">&gt;</span> <span class="pl-kos">)</span>
+
+<span class="pl-en">print</span><span class="pl-kos">(</span>reversedNames<span class="pl-kos">)</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Trailing-Closures" rel="nofollow">尾闭包 (Trailing Closures)</a></h2>
+<hr>
+<p>调用闭包类型参数时, 可以将闭包写在后面:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> someFunc<span class="pl-kos">(</span>closure<span class="pl-kos">:</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Void</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-c">// function body goes here</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕐 常规调用:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">someFunc</span><span class="pl-kos">(</span>closure<span class="pl-kos">:</span> <span class="pl-kos">{</span>
+    <span class="pl-c">// closure's body goes here</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span></pre></div>
+<p>🕑 尾调用:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">someFunc</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-c">// trailing closure's body goes here</span>
+<span class="pl-kos">}</span></pre></div>
+<h3>示例 1</h3>
+<p>🕐 例如上面的例子可改写为:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">reversedNames</span> <span class="pl-c1">=</span>  names<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> $0 <span class="pl-c1">&gt;</span> $1 <span class="pl-kos">}</span>
+
+<span class="pl-en">print</span><span class="pl-kos">(</span>reversedNames<span class="pl-kos">)</span></pre></div>
+<p>🕑 如果闭包是唯一参数, 括号可以省略:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">reversedNames</span> <span class="pl-c1">=</span>  names<span class="pl-kos">.</span><span class="pl-en">sorted</span> <span class="pl-kos">{</span> $0 <span class="pl-c1">&gt;</span> $1 <span class="pl-kos">}</span>
+
+<span class="pl-en">print</span><span class="pl-kos">(</span>reversedNames<span class="pl-kos">)</span></pre></div>
+<h3>示例 2</h3>
+<p>下面以数组的 <code class="notranslate">map</code> 方法为例子:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">d</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span>
+    <span class="pl-c1">0</span><span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">Zero</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-c1">1</span><span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">One</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-c1">2</span><span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">Two</span><span class="pl-s">"</span><span class="pl-kos">,</span>   <span class="pl-c1">3</span><span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">Three</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-c1">4</span><span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">Four</span><span class="pl-s">"</span><span class="pl-kos">,</span>
+    <span class="pl-c1">5</span><span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">Five</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-c1">6</span><span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">Six</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-c1">7</span><span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">Seven</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-c1">8</span><span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">Eight</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-c1">9</span><span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">Nine</span><span class="pl-s">"</span>
+<span class="pl-kos">]</span>
+<span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-c1">16</span><span class="pl-kos">,</span> <span class="pl-c1">58</span><span class="pl-kos">,</span> <span class="pl-c1">510</span><span class="pl-kos">]</span>
+
+<span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> a<span class="pl-kos">.</span><span class="pl-en">map</span> <span class="pl-kos">{</span> <span class="pl-kos">(</span>n<span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">String</span> <span class="pl-k">in</span>
+    <span class="pl-k">var</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> n
+    <span class="pl-k">var</span> <span class="pl-s1">output</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">"</span>
+    repeat <span class="pl-kos">{</span>
+        output <span class="pl-c1">=</span> <span class="pl-en">d</span><span class="pl-kos">[</span>n <span class="pl-c1">%</span> <span class="pl-c1">10</span><span class="pl-kos">]</span>! <span class="pl-c1">+</span> output
+        n <span class="pl-c1">/=</span> <span class="pl-c1">10</span>
+    <span class="pl-kos">}</span> while n <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span>
+    <span class="pl-k">return</span> output
+<span class="pl-kos">}</span></pre></div>
+<h3>示例 3</h3>
+<p>当有多个闭包参数时, 通过尾闭包传递第一个参数时名称可以省略, 后面的要标出:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> loadFile<span class="pl-kos">(</span>from server<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">,</span> upload<span class="pl-kos">:</span> <span class="pl-kos">(</span><span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Void</span><span class="pl-kos">,</span> onFailure<span class="pl-kos">:</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Void</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Downloaded file from </span><span class="pl-kos">\(</span>server<span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+    if server<span class="pl-kos">.</span>count <span class="pl-c1">&lt;=</span> <span class="pl-c1">10</span> <span class="pl-kos">{</span>
+        <span class="pl-en">upload</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Uploaded </span><span class="pl-kos">\(</span>server<span class="pl-kos">.</span>count<span class="pl-kos">)</span><span class="pl-s"> bytes.</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+    <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
+        <span class="pl-en">onFailure</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>调用:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">loadFile</span><span class="pl-kos">(</span>from<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">Youtube</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> file <span class="pl-k">in</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span>file<span class="pl-kos">)</span>
+<span class="pl-kos">}</span> onFailure<span class="pl-kos">:</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Couldn't upload the file.</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Capturing-Values" rel="nofollow">值获取 (Capturing Values)</a></h2>
+<p>闭包可以从上下文环境中获取值:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> getIncrease<span class="pl-kos">(</span>step<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Int</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1">total</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span>
+    <span class="pl-en">func</span> increaser<span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Int</span> <span class="pl-kos">{</span>
+        total <span class="pl-c1">+=</span> step
+        <span class="pl-k">return</span> total
+    <span class="pl-kos">}</span>
+    <span class="pl-k">return</span> increaser
+<span class="pl-kos">}</span></pre></div>
+<p>每调用一次 <code class="notranslate">f()</code> 返回的值都会增加:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">f</span> <span class="pl-c1">=</span> <span class="pl-en">getIncrease</span><span class="pl-kos">(</span>step<span class="pl-kos">:</span> <span class="pl-c1">10</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-en">f</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-en">f</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span></pre></div>
+<p>即闭包外的量与闭包绑定了</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Closures-Are-Reference-Types" rel="nofollow">闭包为引用类型 (Closures Are Reference Types)</a></h2>
+<p>即值传递类型为指针传递</p>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Escaping-Closures" rel="nofollow">闭包逃逸 (Escaping Closures)</a></h2>
+<hr>
+<p>指的是被作为参数传递的闭包, 在函数返回后还可以被调用.</p>
+<p>🕐 常见的方式是将其存储到外部变量中:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">outer</span><span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Void</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-kos">]</span>
+
+<span class="pl-en">func</span> toOuter<span class="pl-kos">(</span>c<span class="pl-kos">:</span> <span class="pl-k">@escaping</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Void</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    outer<span class="pl-kos">.</span><span class="pl-en">append</span><span class="pl-kos">(</span>c<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>使用 <code class="notranslate">@escaping</code> 定义一个可逃逸的闭包</p>
+<p>🕑 定义一个具有非逃逸的闭包的函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> noOuter<span class="pl-kos">(</span>c<span class="pl-kos">:</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Void</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-en">c</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>🕒 定义一个类调用这两个函数:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">SomeClass</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> <span class="pl-c1">10</span>
+    <span class="pl-en">func</span> doThing<span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-en">toOuter</span> <span class="pl-kos">{</span> <span class="pl-smi">self</span><span class="pl-kos">.</span>x <span class="pl-c1">=</span> <span class="pl-c1">99</span> <span class="pl-kos">}</span> <span class="pl-c">// 等价为 { [self] in x = 99 }</span>
+        <span class="pl-en">noOuter</span> <span class="pl-kos">{</span> x <span class="pl-c1">=</span> <span class="pl-c1">200</span> <span class="pl-kos">}</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>对于可逃逸闭包, 需要显示指明要捕获 self, 或者将其添加到闭包的捕获列表中, 即上面的 <code class="notranslate">[self]</code></p>
+<p>🕓 调用该类的方法:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">myClass</span> <span class="pl-c1">=</span> <span class="pl-en">SomeClass</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+
+myClass<span class="pl-kos">.</span><span class="pl-en">doThing</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>myClass<span class="pl-kos">.</span>x<span class="pl-kos">)</span> <span class="pl-c">// 200</span></pre></div>
+<p>🕔 调用该类的逃逸闭包:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">outer<span class="pl-kos">.</span><span class="pl-en">first</span><span class="pl-c1"><span class="pl-c1">?</span></span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>myClass<span class="pl-kos">.</span>x<span class="pl-kos">)</span> <span class="pl-c">// 99</span></pre></div>
+<p>🕑 对于值类型则情况不同:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">SomeStruct</span> <span class="pl-kos">{</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> <span class="pl-c1">10</span>
+    <span class="pl-k">mutating</span> <span class="pl-en">func</span> doSomething<span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-en">noOuter</span> <span class="pl-kos">{</span> x <span class="pl-c1">=</span> <span class="pl-c1">200</span> <span class="pl-kos">}</span>  <span class="pl-c">// Ok</span>
+        <span class="pl-en">toOuter</span> <span class="pl-kos">{</span> x <span class="pl-c1">=</span> <span class="pl-c1">100</span> <span class="pl-kos">}</span>     <span class="pl-c">// Error</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>值类型的 self 是隐式传递的, 但是逃逸闭包不能捕获值类型的 self, 因而这里将报错.</p>
+<blockquote>
+<p>值类型不允许共享可变性, 也就是多个代码部分对同一数据的读写权限. 值类型被传递时将会创建一个独立的副本, 那么你修改了一个其中一个副本并不会影响到另一个副本; 因而, 假设值类型可以逃逸, 那么在逃逸闭包中对其修改后是新创建一个副本还是修改原有副本? (值类型的定义已结束)</p>
+</blockquote>
+<h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures#Autoclosures" rel="nofollow">自动闭包 (Autoclosures)</a></h2>
+<hr>
+<p>自动闭包用于封装一个表达式, 其返回值为表达式的执行结果</p>
+<p>🕐 延迟执行:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">Chris</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Alex</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Ewa</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Barry</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Daniella</span><span class="pl-s">"</span><span class="pl-kos">]</span>
+<span class="pl-k">let</span> <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-kos">{</span> a<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span>at<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">)</span> <span class="pl-kos">}</span>
+
+<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span>count<span class="pl-kos">)</span> <span class="pl-c">// 5</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Remove </span><span class="pl-kos">\(</span><span class="pl-en">c</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span>count<span class="pl-kos">)</span> <span class="pl-c">// 4</span></pre></div>
+<p>自动闭包中的表达式只有被调用的时候才会执行</p>
+<p>🕑 作为参数时的延迟执行:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> test<span class="pl-kos">(</span>c<span class="pl-kos">:</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Remove </span><span class="pl-kos">\(</span><span class="pl-en">c</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-en">test</span><span class="pl-kos">(</span>c<span class="pl-kos">:</span> <span class="pl-kos">{</span> a<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span>at<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">)</span> <span class="pl-kos">}</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span>count<span class="pl-kos">)</span> <span class="pl-c">// 3</span></pre></div>
+<p>🕒 可以在闭包参数前使用 <code class="notranslate">@autoclosure</code>, 从而在传参时省略 {}:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> test<span class="pl-kos">(</span>c<span class="pl-kos">:</span> <span class="pl-k">@autoclosure</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Remove </span><span class="pl-kos">\(</span><span class="pl-en">c</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span>
+<span class="pl-en">test</span><span class="pl-kos">(</span>c<span class="pl-kos">:</span> a<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span>at<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">)</span><span class="pl-kos">)</span></pre></div>
+<p>🕒 可以和 <code class="notranslate">@escaping</code> 一起使用:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">outer</span><span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">String</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-kos">]</span>
+
+<span class="pl-en">func</span> collect<span class="pl-kos">(</span>_ c<span class="pl-kos">:</span> <span class="pl-k">@autoclosure</span> <span class="pl-k">@escaping</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    outer<span class="pl-kos">.</span><span class="pl-en">append</span><span class="pl-kos">(</span>c<span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+<p>传递自动闭包:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">collect</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span>at<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">)</span><span class="pl-kos">)</span>
+<span class="pl-en">collect</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span>at<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">)</span><span class="pl-kos">)</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Collected </span><span class="pl-kos">\(</span>outer<span class="pl-kos">.</span>count<span class="pl-kos">)</span><span class="pl-s"> closures.</span><span class="pl-s">"</span><span class="pl-kos">)</span></pre></div>
+<p>调用闭包:</p>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">c</span> in outer <span class="pl-kos">{</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Now serving </span><span class="pl-kos">\(</span><span class="pl-en">c</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span></pre></div>
+</div>
+<div style="font-size:small;margin-top:8px;float:right;">❤️ 转载文章请注明出处，谢谢！❤️</div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://cell.237927.xyz">237号房间</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if("04/07/2024"!=""){
+    var startSite=new Date("04/07/2024");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek main https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","obtips/obtips.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+</script>
+<script src='https://blog.meekdai.com/assets/GmeekTOC.js'></script>
+
+</html>
