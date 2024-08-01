@@ -5,7 +5,7 @@ style.innerHTML = `
 }
 
 #header {
-    height: 300px;
+    height: 340px;
 }
 
 #header h1 {
@@ -29,7 +29,7 @@ style.innerHTML = `
 }
 
 html {
-    background: url('https://blog.freeblock.cn/background.webp') no-repeat center center fixed;
+    background: url('https://red.237927.xyz/background.webp') no-repeat center center fixed;
     background-size: cover;
 }
 
