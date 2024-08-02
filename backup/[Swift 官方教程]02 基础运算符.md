@@ -74,7 +74,8 @@ let y = x + (b ? 10: 20)
 ```
 ## [空值合并运算符 (Nil-Coalescing Operator)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Nil-Coalescing-Operator)
 ---
-即 `??`: [[01 基础部分 (The Basics)#[提供备选值 (Providing a Fallback Value)](https //docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics Providing-a-Fallback-Value)|here]]
+即 `??`: [01 基础部分: 提供备选值 (Providing a Fallback Value)](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Providing-a-Fallback-Value)
+
 ```swift
 let n = "root"
 var s: String?
