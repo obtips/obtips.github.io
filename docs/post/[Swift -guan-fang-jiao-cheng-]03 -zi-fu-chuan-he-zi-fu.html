@@ -783,9 +783,9 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li><code class="notranslate">\0</code> (空字符), <code class="notranslate">\\</code> (反斜杠), <code class="notranslate">\t</code> (水平制表符), <code class="notranslate">\n</code> (换行), <code class="notranslate">\r</code> (回车), <code class="notranslate">\"</code> (双引号), <code class="notranslate">\'</code> (单引号)</li>
 <li><code class="notranslate">\u{</code><em>n</em><code class="notranslate">}</code>, 其中 n 是 1-8 位的十六进制数, 即 Unicode 标量值</li>
 </ul>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{24}</span><span class="pl-s">"</span>        <span class="pl-c">// $,  Unicode scalar U+0024</span>
-<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{2665}</span><span class="pl-s">"</span>      <span class="pl-c">// ♥,  Unicode scalar U+2665</span>
-<span class="pl-k">let</span> <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{1F496}</span><span class="pl-s">"</span> <span class="pl-c">// 💖, Unicode scalar U+1F496</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{24}</span><span class="pl-s">"</span>        // $,  Unicode scalar U+0024
+<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{2665}</span><span class="pl-s">"</span>      // ♥,  Unicode scalar U+2665
+<span class="pl-k">let</span> <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{1F496}</span><span class="pl-s">"</span> // 💖, Unicode scalar U+1F496</pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Extended-String-Delimiters" rel="nofollow">扩展的字符串界定符 (Extended String Delimiters)</a></h3>
 <p>通过在字符串外层使用 <code class="notranslate">#</code> (任意个数)达到在原生字符串的效果</p>
 <p>🕐 以下是等价的:</p>
@@ -851,21 +851,21 @@ s<span class="pl-kos">.</span><span class="pl-en">append</span><span class="pl-k
 <p>🕐 如二者都表示 <code class="notranslate">é</code>:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{E9}</span><span class="pl-s">"</span>
 <span class="pl-k">let</span> <span class="pl-s1">b</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{65}</span><span class="pl-s">\u{301}</span><span class="pl-s">"</span> 
-<span class="pl-en">print</span><span class="pl-kos">(</span>a <span class="pl-c1">==</span> b<span class="pl-kos">)</span> <span class="pl-c">// true</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span>a <span class="pl-c1">==</span> b<span class="pl-kos">)</span> // true</pre></div>
 <p>🕑 扩展字素簇可通过组合或拆解的形式表示:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{D55C}</span><span class="pl-s">"</span> <span class="pl-c">// 한 </span>
-<span class="pl-k">let</span> <span class="pl-s1">b</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{1112}</span><span class="pl-s">\u{1161}</span><span class="pl-s">\u{11AB}</span><span class="pl-s">"</span> <span class="pl-c">// ᄒ, ᅡ, ᆫ</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>a <span class="pl-c1">==</span> b<span class="pl-kos">)</span> <span class="pl-c">// true</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{D55C}</span><span class="pl-s">"</span> // 한 
+<span class="pl-k">let</span> <span class="pl-s1">b</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{1112}</span><span class="pl-s">\u{1161}</span><span class="pl-s">\u{11AB}</span><span class="pl-s">"</span> // ᄒ, ᅡ, ᆫ
+<span class="pl-en">print</span><span class="pl-kos">(</span>a <span class="pl-c1">==</span> b<span class="pl-kos">)</span> // true</pre></div>
 <p>🕒 可以给 Unicode 标量进行字符修饰; 如给它添加某个符号:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{E9}</span><span class="pl-s">\u{20DD}</span><span class="pl-s">"</span></pre></div>
 <p>但是其仍然被视为 <code class="notranslate">Character</code></p>
 <p>🕔 组合地区指示符:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">\u{1F1FA}</span><span class="pl-s">\u{1F1F8}</span><span class="pl-s">"</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">)</span> <span class="pl-c">// 🇺🇸</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">)</span> // 🇺🇸</pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Counting-Characters" rel="nofollow">计算字符数量 (Counting Characters)</a></h2>
 <hr>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>s<span class="pl-kos">.</span>count<span class="pl-kos">)</span> <span class="pl-c">// 4</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span>s<span class="pl-kos">.</span>count<span class="pl-kos">)</span> // 4</pre></div>
 <blockquote>
 <p>计算字符数量需要遍历最底层 <em>Unicode 标量值</em>, 因而字符串越长性能也越差</p>
 </blockquote>
@@ -875,14 +875,14 @@ s<span class="pl-kos">.</span><span class="pl-en">append</span><span class="pl-k
 <p>每个字符串值都有其对应的索引类型 <em>String.Index</em> 来标识每个字符所在的位置, 由于字符串的特殊组成, 需要遍历 <em>Unicode 标量值</em>来决定每个字符的位置, 因而不能直接使用数值索引</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">abcdefg</span><span class="pl-s">"</span></pre></div>
 <p>🕐 获取首字符:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">s</span><span class="pl-kos">[</span>s<span class="pl-kos">.</span>startIndex<span class="pl-kos">]</span> <span class="pl-c">// a</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">s</span><span class="pl-kos">[</span>s<span class="pl-kos">.</span>startIndex<span class="pl-kos">]</span> // a</pre></div>
 <p>🕑 获取指定字符前或后的字符:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">s</span><span class="pl-kos">[</span>s<span class="pl-kos">.</span><span class="pl-en">index</span><span class="pl-kos">(</span>before<span class="pl-kos">:</span> s<span class="pl-kos">.</span>endIndex<span class="pl-kos">)</span><span class="pl-kos">]</span> <span class="pl-c">// g</span>
-<span class="pl-en">s</span><span class="pl-kos">[</span>s<span class="pl-kos">.</span><span class="pl-en">index</span><span class="pl-kos">(</span>after<span class="pl-kos">:</span> s<span class="pl-kos">.</span>startIndex<span class="pl-kos">)</span><span class="pl-kos">]</span> <span class="pl-c">// b</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">s</span><span class="pl-kos">[</span>s<span class="pl-kos">.</span><span class="pl-en">index</span><span class="pl-kos">(</span>before<span class="pl-kos">:</span> s<span class="pl-kos">.</span>endIndex<span class="pl-kos">)</span><span class="pl-kos">]</span> // g
+<span class="pl-en">s</span><span class="pl-kos">[</span>s<span class="pl-kos">.</span><span class="pl-en">index</span><span class="pl-kos">(</span>after<span class="pl-kos">:</span> s<span class="pl-kos">.</span>startIndex<span class="pl-kos">)</span><span class="pl-kos">]</span> // b</pre></div>
 <p>其中 <em>endIndex</em> 指向最后一个字符的下一位置</p>
 <p>🕒 获取指定偏移位置的索引:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">index</span> <span class="pl-c1">=</span> s<span class="pl-kos">.</span><span class="pl-en">index</span><span class="pl-kos">(</span>s<span class="pl-kos">.</span>startIndex<span class="pl-kos">,</span> offsetBy<span class="pl-kos">:</span> <span class="pl-c1">3</span><span class="pl-kos">)</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-en">s</span><span class="pl-kos">[</span>index<span class="pl-kos">]</span><span class="pl-kos">)</span> <span class="pl-c">// d</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-en">s</span><span class="pl-kos">[</span>index<span class="pl-kos">]</span><span class="pl-kos">)</span> // d</pre></div>
 <p>🕓 通过索引遍历字符串:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in s<span class="pl-kos">.</span>indices <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-en">s</span><span class="pl-kos">[</span>i<span class="pl-kos">]</span><span class="pl-kos">)</span>
@@ -943,11 +943,11 @@ if a <span class="pl-c1">==</span> b <span class="pl-kos">{</span>
 <span class="pl-kos">]</span></pre></div>
 <p>判断 <code class="notranslate">String</code> 是否拥有指定的前缀或后缀:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in list <span class="pl-kos">{</span>
-    if i<span class="pl-kos">.</span><span class="pl-en">hasPrefix</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Act 1</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> <span class="pl-c">// 是否拥有前缀</span>
+    if i<span class="pl-kos">.</span><span class="pl-en">hasPrefix</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Act 1</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> // 是否拥有前缀
         <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">prefix</span><span class="pl-s">"</span><span class="pl-kos">)</span>
     <span class="pl-kos">}</span>
     
-    if i<span class="pl-kos">.</span><span class="pl-en">hasSuffix</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">cell</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> <span class="pl-c">// 是否拥有后缀</span>
+    if i<span class="pl-kos">.</span><span class="pl-en">hasSuffix</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">cell</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> // 是否拥有后缀
         <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">suffix</span><span class="pl-s">"</span><span class="pl-kos">)</span>
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span></pre></div>
@@ -960,28 +960,28 @@ if a <span class="pl-c1">==</span> b <span class="pl-kos">{</span>
 <div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">codeUnit</span> in dogString<span class="pl-kos">.</span>utf8 <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>codeUnit<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">,</span> terminator<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
-<span class="pl-c">// 68 111 103 226 128 188 240 159 144 182</span></pre></div>
+// 68 111 103 226 128 188 240 159 144 182</pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#UTF-16-Representation" rel="nofollow">UTF-16 形式 (UTF-16 Representation)</a></h3>
 <p>![[Pasted image 20240226165345.png|550]]</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">codeUnit</span> in dogString<span class="pl-kos">.</span>utf16 <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>codeUnit<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">,</span> terminator<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
-<span class="pl-c">// 68 111 103 8252 55357 56374 </span></pre></div>
+// 68 111 103 8252 55357 56374 </pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode-Scalar-Representation" rel="nofollow">Unicode 标量值形式 (Unicode Scalar Representation)</a></h3>
 <p>![[Pasted image 20240226165504.png|500]]</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">scalar</span> in dogString<span class="pl-kos">.</span>unicodeScalars <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>scalar<span class="pl-kos">.</span>value<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">,</span> terminator<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
-<span class="pl-c">// 68 111 103 8252 128054 </span></pre></div>
+// 68 111 103 8252 128054 </pre></div>
 <p>🕐 可以直接将该标量值转换为 <code class="notranslate">String</code>:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">scalar</span> in dogString<span class="pl-kos">.</span>unicodeScalars <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>scalar<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
-<span class="pl-c">// D</span>
-<span class="pl-c">// o</span>
-<span class="pl-c">// g</span>
-<span class="pl-c">// ‼</span>
-<span class="pl-c">// 🐶</span></pre></div>
+// D
+// o
+// g
+// ‼
+// 🐶</pre></div>
 </div>
 <div style="font-size:small;margin-top:8px;float:right;">❤️ 感谢你的访问，欢迎留言交流！❤️</div>
 

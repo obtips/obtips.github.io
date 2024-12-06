@@ -663,10 +663,10 @@ user <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Comments" rel="nofollow">注释 (Comments)</a></h2>
 <hr>
 <p>🕐 单行注释:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-c">// This is a comment</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate">// This is a comment</pre></div>
 <p>🕑 多行注释:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-c">/* This is also a comment</span>
-<span class="pl-c">but is written over multiple lines. */</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate">/* This is also a comment
+but is written over multiple lines. */</pre></div>
 <p>🕒 多级注释 (可进行展开或折叠):</p>
 <pre class="notranslate"><code class="notranslate">/* This is the start of the first multiline comment.
     /* This is the second, nested multiline comment. */
@@ -703,13 +703,13 @@ This is the end of the first multiline comment. */
 <hr>
 <p>🕐 不同进制表示法:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">decimalInteger</span> <span class="pl-c1">=</span> <span class="pl-c1">17</span>
-<span class="pl-k">let</span> <span class="pl-s1">binaryInteger</span> <span class="pl-c1">=</span> <span class="pl-c1">0b10001</span> <span class="pl-c">// 二进制</span>
-<span class="pl-k">let</span> <span class="pl-s1">octalInteger</span> <span class="pl-c1">=</span> <span class="pl-c1">0o21</span> <span class="pl-c">// 八进制</span>
-<span class="pl-k">let</span> <span class="pl-s1">hexadecimalInteger</span> <span class="pl-c1">=</span> <span class="pl-c1">0x11</span> <span class="pl-c">// 十六进制</span></pre></div>
+<span class="pl-k">let</span> <span class="pl-s1">binaryInteger</span> <span class="pl-c1">=</span> <span class="pl-c1">0b10001</span> // 二进制
+<span class="pl-k">let</span> <span class="pl-s1">octalInteger</span> <span class="pl-c1">=</span> <span class="pl-c1">0o21</span> // 八进制
+<span class="pl-k">let</span> <span class="pl-s1">hexadecimalInteger</span> <span class="pl-c1">=</span> <span class="pl-c1">0x11</span> // 十六进制</pre></div>
 <p>🕑 不同进制的指数表示法:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">decimalDouble</span> <span class="pl-c1">=</span> 12.1875
 <span class="pl-k">let</span> <span class="pl-s1">exponentDouble</span> <span class="pl-c1">=</span> 1.21875e1
-<span class="pl-k">let</span> <span class="pl-s1">hexadecimalDouble</span> <span class="pl-c1">=</span> <span class="pl-c1">0xC</span><span class="pl-kos">.</span><span class="pl-c1">3</span>p<span class="pl-c1">0</span> <span class="pl-c">// 只支持十六进制</span></pre></div>
+<span class="pl-k">let</span> <span class="pl-s1">hexadecimalDouble</span> <span class="pl-c1">=</span> <span class="pl-c1">0xC</span><span class="pl-kos">.</span><span class="pl-c1">3</span>p<span class="pl-c1">0</span> // 只支持十六进制</pre></div>
 <p>🕒 填充及下划线分隔表示法:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">paddedDouble</span> <span class="pl-c1">=</span> 000123.456
 <span class="pl-k">let</span> <span class="pl-s1">oneMillion</span> <span class="pl-c1">=</span> <span class="pl-c1">1_000_000</span>
@@ -734,7 +734,7 @@ This is the end of the first multiline comment. */
 <p>🕑 不是非 0 就是 true, 布尔就是布尔:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">1</span>
 if n <span class="pl-kos">{</span>
-    <span class="pl-c">// error</span>
+    // error
 <span class="pl-kos">}</span></pre></div>
 <blockquote>
 <p>这是与其他语言较为不同的地方</p>
@@ -760,14 +760,14 @@ if n <span class="pl-kos">{</span>
 <p>🕐 定义方式: 在类型后加上 <code class="notranslate">?</code></p>
 <p>🕑 可选类型要么有值要么为 <code class="notranslate">nil</code>:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">n</span><span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-c1"><span class="pl-c1">?</span></span> <span class="pl-c1">=</span> <span class="pl-c1">404</span>
-n <span class="pl-c1">=</span> <span class="pl-smi">nil</span> <span class="pl-c">// 可选类型可赋值 nil</span></pre></div>
+n <span class="pl-c1">=</span> <span class="pl-smi">nil</span> // 可选类型可赋值 nil</pre></div>
 <blockquote>
 <p>Swift 是非空类型的安全系统, 其要求每个量的类型都是明确的, 因此直接给量赋 <code class="notranslate">nil</code> 是不安全的. 推荐在可能出现 <code class="notranslate">nil</code> 的地方都使用可选类型, 可以把可选类型理解为一个安全的包装器</p>
 </blockquote>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Optional-Binding" rel="nofollow">可选类型绑定 (Optional Binding)</a></h3>
 <p>即在条件表达式中使用赋值语句提取可选类型中的值</p>
 <p>🕐 当有值时, 条件表达式为 <code class="notranslate">true</code>, 同时提取值:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">if <span class="pl-k">let</span> n <span class="pl-c1">=</span> <span class="pl-en">Int</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">123</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> <span class="pl-c">// 类型转换会返回可选值</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate">if <span class="pl-k">let</span> n <span class="pl-c1">=</span> <span class="pl-en">Int</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">123</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> // 类型转换会返回可选值
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">The number is </span><span class="pl-kos">\(</span>n<span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">error</span><span class="pl-s">"</span><span class="pl-kos">)</span>
@@ -823,7 +823,7 @@ if <span class="pl-k">let</span> n <span class="pl-kos">{</span>
 </blockquote>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Debugging-with-Assertions" rel="nofollow">使用断言 Debug (Debugging with Assertions)</a></h3>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">3</span>
-<span class="pl-en">assert</span><span class="pl-kos">(</span>n <span class="pl-c1">&gt;=</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">this is an error description</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-c">// 描述可省略</span></pre></div>
+<span class="pl-en">assert</span><span class="pl-kos">(</span>n <span class="pl-c1">&gt;=</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">this is an error description</span><span class="pl-s">"</span><span class="pl-kos">)</span> // 描述可省略</pre></div>
 <p>手动触发断言错误:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">3</span>
 if n <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span> <span class="pl-kos">{</span>

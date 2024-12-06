@@ -509,7 +509,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-kos">}</span></pre></div>
 <p>强制链式解包:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">john</span> <span class="pl-c1">=</span> <span class="pl-en">Person</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
-<span class="pl-k">let</span> <span class="pl-s1">roomCount</span> <span class="pl-c1">=</span> john<span class="pl-kos">.</span>residence!<span class="pl-kos">.</span>numberOfRooms <span class="pl-c">// 错误</span></pre></div>
+<span class="pl-k">let</span> <span class="pl-s1">roomCount</span> <span class="pl-c1">=</span> john<span class="pl-kos">.</span>residence!<span class="pl-kos">.</span>numberOfRooms // 错误</pre></div>
 <p>可选链式解包:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate">john<span class="pl-kos">.</span>residence <span class="pl-c1">=</span> <span class="pl-en">Residence</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
 if <span class="pl-k">let</span> roomCount <span class="pl-c1">=</span> john<span class="pl-kos">.</span>residence<span class="pl-c1"><span class="pl-c1">?</span></span><span class="pl-kos">.</span>numberOfRooms <span class="pl-kos">{</span>

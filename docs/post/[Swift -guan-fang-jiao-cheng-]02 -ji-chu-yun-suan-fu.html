@@ -441,8 +441,8 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-s">"</span><span class="pl-s">hello, </span><span class="pl-s">"</span> <span class="pl-c1">+</span> <span class="pl-s">"</span><span class="pl-s">world</span><span class="pl-s">"</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Remainder-Operator" rel="nofollow">取余运算符 (Remainder Operator)</a></h3>
 <p>符号跟着被除数走:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-c1">9</span> <span class="pl-c1">%</span> <span class="pl-c1">4</span>    <span class="pl-c">// 1</span>
-<span class="pl-c1">-</span><span class="pl-c1">9</span> <span class="pl-c1">%</span> <span class="pl-c1">4</span>   <span class="pl-c">// -1</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-c1">9</span> <span class="pl-c1">%</span> <span class="pl-c1">4</span>    // 1
+<span class="pl-c1">-</span><span class="pl-c1">9</span> <span class="pl-c1">%</span> <span class="pl-c1">4</span>   // -1</pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Unary-Minus-Operator" rel="nofollow">一元负号操作符 (Unary Minus Operator)</a></h3>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">3</span>
 <span class="pl-k">let</span> <span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span>x
@@ -472,7 +472,7 @@ n <span class="pl-c1">+=</span> <span class="pl-c1">2</span></pre></div>
 <hr>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">2</span>
 <span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> true
-<span class="pl-k">let</span> <span class="pl-s1">y</span> <span class="pl-c1">=</span> x <span class="pl-c1">+</span> <span class="pl-kos">(</span>b ? <span class="pl-c1">10</span><span class="pl-kos">:</span> <span class="pl-c1">20</span><span class="pl-kos">)</span></pre></div>
+<span class="pl-k">let</span> <span class="pl-s1">y</span> <span class="pl-c1">=</span> x <span class="pl-c1">+</span> <span class="pl-kos">(</span>b <span class="pl-c1">?</span> <span class="pl-c1">10</span>: <span class="pl-c1">20</span><span class="pl-kos">)</span></pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Nil-Coalescing-Operator" rel="nofollow">空值合并运算符 (Nil-Coalescing Operator)</a></h2>
 <hr>
 <p>即 <code class="notranslate">??</code>: <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Providing-a-Fallback-Value" rel="nofollow">01 基础部分: 提供备选值 (Providing a Fallback Value)</a></p>

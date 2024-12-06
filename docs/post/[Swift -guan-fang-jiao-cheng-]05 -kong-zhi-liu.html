@@ -913,11 +913,11 @@ for <span class="pl-s1">i</span> in <span class="pl-c1">1</span><span class="pl-
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕓 等差列:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in <span class="pl-en">stride</span><span class="pl-kos">(</span>from<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> to<span class="pl-kos">:</span> <span class="pl-c1">20</span><span class="pl-kos">,</span> by<span class="pl-kos">:</span> <span class="pl-c1">2</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> <span class="pl-c">//不含 20</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in <span class="pl-en">stride</span><span class="pl-kos">(</span>from<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> to<span class="pl-kos">:</span> <span class="pl-c1">20</span><span class="pl-kos">,</span> by<span class="pl-kos">:</span> <span class="pl-c1">2</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> //不含 20
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
 
-for <span class="pl-s1">i</span> in <span class="pl-en">stride</span><span class="pl-kos">(</span>from<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> through<span class="pl-kos">:</span> <span class="pl-c1">20</span><span class="pl-kos">,</span> by<span class="pl-kos">:</span> <span class="pl-c1">2</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> <span class="pl-c">// 含 20</span>
+for <span class="pl-s1">i</span> in <span class="pl-en">stride</span><span class="pl-kos">(</span>from<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> through<span class="pl-kos">:</span> <span class="pl-c1">20</span><span class="pl-kos">,</span> by<span class="pl-kos">:</span> <span class="pl-c1">2</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> // 含 20
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#While-Loops" rel="nofollow">While 循环 (While Loops)</a></h2>
@@ -1150,7 +1150,7 @@ aLoop: while true <span class="pl-kos">{</span>
         <span class="pl-k">return</span>
     <span class="pl-kos">}</span>
 
-    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Hello </span><span class="pl-kos">\(</span>name<span class="pl-kos">)</span><span class="pl-s">!</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-c">// 条件语句中的变量会保留</span>
+    <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Hello </span><span class="pl-kos">\(</span>name<span class="pl-kos">)</span><span class="pl-s">!</span><span class="pl-s">"</span><span class="pl-kos">)</span> // 条件语句中的变量会保留
 
     guard <span class="pl-k">let</span> location <span class="pl-c1">=</span> <span class="pl-en">person</span><span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">location</span><span class="pl-s">"</span><span class="pl-kos">]</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
         <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">I hope the weather is nice near you.</span><span class="pl-s">"</span><span class="pl-kos">)</span>
@@ -1169,10 +1169,10 @@ aLoop: while true <span class="pl-kos">{</span>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">score</span> <span class="pl-c1">=</span> <span class="pl-c1">1</span>
 
 if score <span class="pl-c1">&lt;</span> <span class="pl-c1">10</span> <span class="pl-kos">{</span>
-    <span class="pl-en">defer</span> <span class="pl-kos">{</span>
+    <span class="pl-k">defer</span> <span class="pl-kos">{</span>
         <span class="pl-en">print</span><span class="pl-kos">(</span>score<span class="pl-kos">)</span>
     <span class="pl-kos">}</span>
-    <span class="pl-en">defer</span> <span class="pl-kos">{</span>
+    <span class="pl-k">defer</span> <span class="pl-kos">{</span>
         <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">The score is:</span><span class="pl-s">"</span><span class="pl-kos">)</span>
     <span class="pl-kos">}</span>
     score <span class="pl-c1">+=</span> <span class="pl-c1">5</span>
@@ -1183,9 +1183,9 @@ if score <span class="pl-c1">&lt;</span> <span class="pl-c1">10</span> <span cla
 <p>即检查 API 的版本兼容性. 这里先了解就行, 日后用到再作深入了解</p>
 <p>🕐 用于条件语句:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate">if #available<span class="pl-kos">(</span>iOS <span class="pl-c1">10</span><span class="pl-kos">,</span> macOS <span class="pl-c1">10</span><span class="pl-kos">.</span><span class="pl-c1">12</span><span class="pl-kos">,</span> <span class="pl-c1">*</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-    <span class="pl-c">// Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS</span>
+    // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS
 <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
-    <span class="pl-c">// Fall back to earlier iOS and macOS APIs</span>
+    // Fall back to earlier iOS and macOS APIs
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 用于类型:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-s1">@<span class="pl-smi">available</span><span class="pl-kos">(</span>macOS <span class="pl-c1">10</span><span class="pl-kos">.</span><span class="pl-c1">12</span><span class="pl-kos">,</span> <span class="pl-c1">*</span><span class="pl-kos">)</span></span>
@@ -1205,11 +1205,11 @@ if score <span class="pl-c1">&lt;</span> <span class="pl-c1">10</span> <span cla
 <div class="highlight highlight-source-swift"><pre class="notranslate">if #available<span class="pl-kos">(</span>iOS <span class="pl-c1">10</span><span class="pl-kos">,</span> <span class="pl-c1">*</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
 	<span class="pl-c1">...</span>
 <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
-    <span class="pl-c">// Fallback code</span>
+    // Fallback code
 <span class="pl-kos">}</span></pre></div>
 <p>等价于:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate">if #unavailable<span class="pl-kos">(</span>iOS <span class="pl-c1">10</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-    <span class="pl-c">// Fallback code</span>
+    // Fallback code
 <span class="pl-kos">}</span></pre></div>
 </div>
 <div style="font-size:small;margin-top:8px;float:right;">❤️ 感谢你的访问，欢迎留言交流！❤️</div>

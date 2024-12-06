@@ -827,10 +827,10 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-kos">}</span></pre></div>
 <p>访问 <strong>computed properties</strong> 是调用其 <code class="notranslate">get</code> 方法:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-en">MyStruct</span><span class="pl-kos">(</span>a<span class="pl-kos">:</span> <span class="pl-c1">3</span><span class="pl-kos">,</span> b<span class="pl-kos">:</span> <span class="pl-c1">5</span><span class="pl-kos">)</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>s<span class="pl-kos">.</span>c<span class="pl-kos">)</span> <span class="pl-c">// 80</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span>s<span class="pl-kos">.</span>c<span class="pl-kos">)</span> // 80</pre></div>
 <p>访问 <strong>computed properties</strong> 是调用其 <code class="notranslate">set</code> 方法:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate">s<span class="pl-kos">.</span>c <span class="pl-c1">=</span> <span class="pl-c1">10</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>s<span class="pl-kos">.</span>a<span class="pl-kos">,</span> s<span class="pl-kos">.</span>b<span class="pl-kos">)</span> <span class="pl-c">// 1 5</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span>s<span class="pl-kos">.</span>a<span class="pl-kos">,</span> s<span class="pl-kos">.</span>b<span class="pl-kos">)</span> // 1 5</pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Shorthand-Setter-Declaration" rel="nofollow">更简洁的 Setter 声明 (Shorthand Setter Declaration)</a></h3>
 <p><code class="notranslate">set</code> 中的参数可以被 <code class="notranslate">newValue</code> 替代:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">MyStruct</span> <span class="pl-kos">{</span>
@@ -922,10 +922,10 @@ c<span class="pl-kos">.</span>total <span class="pl-c1">=</span> <span class="pl
 <span class="pl-kos">}</span></pre></div>
 <p>访问该属性实际上是访问对应的包装器的 <code class="notranslate">wrappedValue</code>:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">rectangle</span> <span class="pl-c1">=</span> <span class="pl-en">SmallRectangle</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>rectangle<span class="pl-kos">.</span>height<span class="pl-kos">)</span> <span class="pl-c">// 0</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>rectangle<span class="pl-kos">.</span>height<span class="pl-kos">)</span> // 0
 
 rectangle<span class="pl-kos">.</span>height <span class="pl-c1">=</span> <span class="pl-c1">999</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>rectangle<span class="pl-kos">.</span>height<span class="pl-kos">)</span> <span class="pl-c">// 12</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span>rectangle<span class="pl-kos">.</span>height<span class="pl-kos">)</span> // 12</pre></div>
 <p>🕑 以上等价于:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">SmallRectangle</span> <span class="pl-kos">{</span>
     <span class="pl-k">private</span> <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">_height</span></span> <span class="pl-c1">=</span> <span class="pl-en">TwelveOrLess</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
@@ -1032,10 +1032,10 @@ rectangle<span class="pl-kos">.</span>height <span class="pl-c1">=</span> <span 
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">someStructure</span> <span class="pl-c1">=</span> <span class="pl-en">SomeStructure</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
 
 someStructure<span class="pl-kos">.</span>someNumber <span class="pl-c1">=</span> <span class="pl-c1">4</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>someStructure<span class="pl-kos">.</span>$someNumber<span class="pl-kos">)</span> <span class="pl-c">// false</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>someStructure<span class="pl-kos">.</span>$someNumber<span class="pl-kos">)</span> // false
 
 someStructure<span class="pl-kos">.</span>someNumber <span class="pl-c1">=</span> <span class="pl-c1">55</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>someStructure<span class="pl-kos">.</span>$someNumber<span class="pl-kos">)</span> <span class="pl-c">// true</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span>someStructure<span class="pl-kos">.</span>$someNumber<span class="pl-kos">)</span> // true</pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Global-and-Local-Variables" rel="nofollow">全局和局部量 (Global and Local Variables)</a></h2>
 <p>全局量总是延迟计算, 而局部量不会</p>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Type-Properties" rel="nofollow">类型属性 (Type Properties)</a></h2>
@@ -1066,14 +1066,14 @@ someStructure<span class="pl-kos">.</span>someNumber <span class="pl-c1">=</span
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Querying-and-Setting-Type-Properties" rel="nofollow">查询和设置类型属性 (Querying and Setting Type Properties)</a></h3>
 <p>直接通过类型访问即可:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-smi">SomeStructure</span><span class="pl-kos">.</span>storedTypeProperty<span class="pl-kos">)</span>
-<span class="pl-c">// Prints "Some value."</span>
+// Prints "Some value."
 <span class="pl-smi">SomeStructure</span><span class="pl-kos">.</span>storedTypeProperty <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">Another value.</span><span class="pl-s">"</span>
 <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-smi">SomeStructure</span><span class="pl-kos">.</span>storedTypeProperty<span class="pl-kos">)</span>
-<span class="pl-c">// Prints "Another value."</span>
+// Prints "Another value."
 <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-smi">SomeEnumeration</span><span class="pl-kos">.</span>computedTypeProperty<span class="pl-kos">)</span>
-<span class="pl-c">// Prints "6"</span>
+// Prints "6"
 <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-smi">SomeClass</span><span class="pl-kos">.</span>computedTypeProperty<span class="pl-kos">)</span>
-<span class="pl-c">// Prints "27"</span></pre></div>
+// Prints "27"</pre></div>
 </div>
 <div style="font-size:small;margin-top:8px;float:right;">❤️ 感谢你的访问，欢迎留言交流！❤️</div>
 

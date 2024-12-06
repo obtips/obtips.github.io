@@ -697,15 +697,15 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <hr>
 <p>调用闭包类型参数时, 可以将闭包写在后面:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> someFunc<span class="pl-kos">(</span>closure<span class="pl-kos">:</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Void</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-    <span class="pl-c">// function body goes here</span>
+    // function body goes here
 <span class="pl-kos">}</span></pre></div>
 <p>🕐 常规调用:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">someFunc</span><span class="pl-kos">(</span>closure<span class="pl-kos">:</span> <span class="pl-kos">{</span>
-    <span class="pl-c">// closure's body goes here</span>
+    // closure's body goes here
 <span class="pl-kos">}</span><span class="pl-kos">)</span></pre></div>
 <p>🕑 尾调用:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">someFunc</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-    <span class="pl-c">// trailing closure's body goes here</span>
+    // trailing closure's body goes here
 <span class="pl-kos">}</span></pre></div>
 <h3>示例 1</h3>
 <p>🕐 例如上面的例子可改写为:</p>
@@ -784,7 +784,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">SomeClass</span> <span class="pl-kos">{</span>
     <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> <span class="pl-c1">10</span>
     <span class="pl-en">func</span> doThing<span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        <span class="pl-en">toOuter</span> <span class="pl-kos">{</span> <span class="pl-smi">self</span><span class="pl-kos">.</span>x <span class="pl-c1">=</span> <span class="pl-c1">99</span> <span class="pl-kos">}</span> <span class="pl-c">// 等价为 { [self] in x = 99 }</span>
+        <span class="pl-en">toOuter</span> <span class="pl-kos">{</span> <span class="pl-smi">self</span><span class="pl-kos">.</span>x <span class="pl-c1">=</span> <span class="pl-c1">99</span> <span class="pl-kos">}</span> // 等价为 { [self] in x = 99 }
         <span class="pl-en">noOuter</span> <span class="pl-kos">{</span> x <span class="pl-c1">=</span> <span class="pl-c1">200</span> <span class="pl-kos">}</span>
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span></pre></div>
@@ -793,16 +793,16 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">myClass</span> <span class="pl-c1">=</span> <span class="pl-en">SomeClass</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
 
 myClass<span class="pl-kos">.</span><span class="pl-en">doThing</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>myClass<span class="pl-kos">.</span>x<span class="pl-kos">)</span> <span class="pl-c">// 200</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span>myClass<span class="pl-kos">.</span>x<span class="pl-kos">)</span> // 200</pre></div>
 <p>🕔 调用该类的逃逸闭包:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate">outer<span class="pl-kos">.</span><span class="pl-en">first</span><span class="pl-c1"><span class="pl-c1">?</span></span><span class="pl-kos">(</span><span class="pl-kos">)</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>myClass<span class="pl-kos">.</span>x<span class="pl-kos">)</span> <span class="pl-c">// 99</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span>myClass<span class="pl-kos">.</span>x<span class="pl-kos">)</span> // 99</pre></div>
 <p>🕑 对于值类型则情况不同:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">SomeStruct</span> <span class="pl-kos">{</span>
     <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> <span class="pl-c1">10</span>
     <span class="pl-k">mutating</span> <span class="pl-en">func</span> doSomething<span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        <span class="pl-en">noOuter</span> <span class="pl-kos">{</span> x <span class="pl-c1">=</span> <span class="pl-c1">200</span> <span class="pl-kos">}</span>  <span class="pl-c">// Ok</span>
-        <span class="pl-en">toOuter</span> <span class="pl-kos">{</span> x <span class="pl-c1">=</span> <span class="pl-c1">100</span> <span class="pl-kos">}</span>     <span class="pl-c">// Error</span>
+        <span class="pl-en">noOuter</span> <span class="pl-kos">{</span> x <span class="pl-c1">=</span> <span class="pl-c1">200</span> <span class="pl-kos">}</span>  // Ok
+        <span class="pl-en">toOuter</span> <span class="pl-kos">{</span> x <span class="pl-c1">=</span> <span class="pl-c1">100</span> <span class="pl-kos">}</span>     // Error
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span></pre></div>
 <p>值类型的 self 是隐式传递的, 但是逃逸闭包不能捕获值类型的 self, 因而这里将报错.</p>
@@ -816,9 +816,9 @@ myClass<span class="pl-kos">.</span><span class="pl-en">doThing</span><span clas
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">Chris</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Alex</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Ewa</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Barry</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Daniella</span><span class="pl-s">"</span><span class="pl-kos">]</span>
 <span class="pl-k">let</span> <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-kos">{</span> a<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span>at<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">)</span> <span class="pl-kos">}</span>
 
-<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span>count<span class="pl-kos">)</span> <span class="pl-c">// 5</span>
+<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span>count<span class="pl-kos">)</span> // 5
 <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Remove </span><span class="pl-kos">\(</span><span class="pl-en">c</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span>count<span class="pl-kos">)</span> <span class="pl-c">// 4</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span>count<span class="pl-kos">)</span> // 4</pre></div>
 <p>自动闭包中的表达式只有被调用的时候才会执行</p>
 <p>🕑 作为参数时的延迟执行:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> test<span class="pl-kos">(</span>c<span class="pl-kos">:</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
@@ -826,7 +826,7 @@ myClass<span class="pl-kos">.</span><span class="pl-en">doThing</span><span clas
 <span class="pl-kos">}</span>
 
 <span class="pl-en">test</span><span class="pl-kos">(</span>c<span class="pl-kos">:</span> <span class="pl-kos">{</span> a<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span>at<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">)</span> <span class="pl-kos">}</span><span class="pl-kos">)</span>
-<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span>count<span class="pl-kos">)</span> <span class="pl-c">// 3</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span>count<span class="pl-kos">)</span> // 3</pre></div>
 <p>🕒 可以在闭包参数前使用 <code class="notranslate">@autoclosure</code>, 从而在传参时省略 {}:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> test<span class="pl-kos">(</span>c<span class="pl-kos">:</span> <span class="pl-k">@autoclosure</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Remove </span><span class="pl-kos">\(</span><span class="pl-en">c</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
