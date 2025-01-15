@@ -802,7 +802,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">s1</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">"</span>
 <span class="pl-k">var</span> <span class="pl-s1">s2</span> <span class="pl-c1">=</span> <span class="pl-en">String</span><span class="pl-kos">(</span><span class="pl-kos">)</span> </pre></div>
 <p>🕑 判断是否为空:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">if s<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">if</span> s<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span>
 	<span class="pl-c1">...</span>
 <span class="pl-kos">}</span></pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#String-Mutability" rel="nofollow">字符串的可变性 (String Mutability)</a></h2>
@@ -814,7 +814,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Working-with-Characters" rel="nofollow">使用字符 (Working with Characters)</a></h2>
 <hr>
 <p>🕐 字符串是字符数组:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">c</span> in <span class="pl-s">"</span><span class="pl-s">Dog!🐶</span><span class="pl-s">"</span> <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">c</span> <span class="pl-k">in</span> <span class="pl-s">"</span><span class="pl-s">Dog!🐶</span><span class="pl-s">"</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>c<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 定义字符:</p>
@@ -884,7 +884,7 @@ s<span class="pl-kos">.</span><span class="pl-en">append</span><span class="pl-k
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">index</span> <span class="pl-c1">=</span> s<span class="pl-kos">.</span><span class="pl-en">index</span><span class="pl-kos">(</span>s<span class="pl-kos">.</span>startIndex<span class="pl-kos">,</span> offsetBy<span class="pl-kos">:</span> <span class="pl-c1">3</span><span class="pl-kos">)</span>
 <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-en">s</span><span class="pl-kos">[</span>index<span class="pl-kos">]</span><span class="pl-kos">)</span> // d</pre></div>
 <p>🕓 通过索引遍历字符串:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in s<span class="pl-kos">.</span>indices <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> s<span class="pl-kos">.</span>indices <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-en">s</span><span class="pl-kos">[</span>i<span class="pl-kos">]</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <blockquote>
@@ -917,13 +917,13 @@ s<span class="pl-kos">.</span><span class="pl-en">removeSubrange</span><span cla
 <p>🕐 比较字符串的值是否相等:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">I'm root</span><span class="pl-s">"</span>
 <span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">I'm root</span><span class="pl-s">"</span>
-if a <span class="pl-c1">==</span> b <span class="pl-kos">{</span>
+<span class="pl-k">if</span> a <span class="pl-c1">==</span> b <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">equal</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 需要注意扩展字素簇的情况:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">Voulez-vous un caf</span><span class="pl-s">\u{E9}</span><span class="pl-s">?</span><span class="pl-s">"</span>
 <span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">Voulez-vous un caf</span><span class="pl-s">\u{65}</span><span class="pl-s">\u{301}</span><span class="pl-s">?</span><span class="pl-s">"</span>
-if a <span class="pl-c1">==</span> b <span class="pl-kos">{</span>
+<span class="pl-k">if</span> a <span class="pl-c1">==</span> b <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">equal</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>因为 <em>\\u{65}\\u{301}</em> 为 <em>\\u{E9}</em> 的扩展表示</p>
@@ -942,12 +942,12 @@ if a <span class="pl-c1">==</span> b <span class="pl-kos">{</span>
     <span class="pl-s">"</span><span class="pl-s">Act 2 Scene 6: Friar Lawrence's cell</span><span class="pl-s">"</span>
 <span class="pl-kos">]</span></pre></div>
 <p>判断 <code class="notranslate">String</code> 是否拥有指定的前缀或后缀:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in list <span class="pl-kos">{</span>
-    if i<span class="pl-kos">.</span><span class="pl-en">hasPrefix</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Act 1</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> // 是否拥有前缀
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> list <span class="pl-kos">{</span>
+    <span class="pl-k">if</span> i<span class="pl-kos">.</span><span class="pl-en">hasPrefix</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Act 1</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> // 是否拥有前缀
         <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">prefix</span><span class="pl-s">"</span><span class="pl-kos">)</span>
     <span class="pl-kos">}</span>
     
-    if i<span class="pl-kos">.</span><span class="pl-en">hasSuffix</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">cell</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> // 是否拥有后缀
+    <span class="pl-k">if</span> i<span class="pl-kos">.</span><span class="pl-en">hasSuffix</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">cell</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> // 是否拥有后缀
         <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">suffix</span><span class="pl-s">"</span><span class="pl-kos">)</span>
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span></pre></div>
@@ -957,24 +957,24 @@ if a <span class="pl-c1">==</span> b <span class="pl-kos">{</span>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">dogString</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">Dog‼🐶</span><span class="pl-s">"</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#UTF-8-Representation" rel="nofollow">UTF-8 形式 (UTF-8 Representation)</a></h3>
 <p>![[Pasted image 20240226165335.png]]</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">codeUnit</span> in dogString<span class="pl-kos">.</span>utf8 <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">codeUnit</span> <span class="pl-k">in</span> dogString<span class="pl-kos">.</span>utf8 <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>codeUnit<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">,</span> terminator<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
 // 68 111 103 226 128 188 240 159 144 182</pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#UTF-16-Representation" rel="nofollow">UTF-16 形式 (UTF-16 Representation)</a></h3>
 <p>![[Pasted image 20240226165345.png|550]]</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">codeUnit</span> in dogString<span class="pl-kos">.</span>utf16 <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">codeUnit</span> <span class="pl-k">in</span> dogString<span class="pl-kos">.</span>utf16 <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>codeUnit<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">,</span> terminator<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
 // 68 111 103 8252 55357 56374 </pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters#Unicode-Scalar-Representation" rel="nofollow">Unicode 标量值形式 (Unicode Scalar Representation)</a></h3>
 <p>![[Pasted image 20240226165504.png|500]]</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">scalar</span> in dogString<span class="pl-kos">.</span>unicodeScalars <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">scalar</span> <span class="pl-k">in</span> dogString<span class="pl-kos">.</span>unicodeScalars <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>scalar<span class="pl-kos">.</span>value<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">,</span> terminator<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
 // 68 111 103 8252 128054 </pre></div>
 <p>🕐 可以直接将该标量值转换为 <code class="notranslate">String</code>:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">scalar</span> in dogString<span class="pl-kos">.</span>unicodeScalars <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">scalar</span> <span class="pl-k">in</span> dogString<span class="pl-kos">.</span>unicodeScalars <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-kos">\(</span>scalar<span class="pl-kos">)</span><span class="pl-s"> </span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
 // D

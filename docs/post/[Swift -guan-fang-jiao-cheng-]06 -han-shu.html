@@ -588,10 +588,10 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> minMax<span class="pl-kos">(</span>array<span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-smi">Int</span><span class="pl-kos">]</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-kos">(</span>min<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">,</span> max<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
     <span class="pl-k">var</span> <span class="pl-s1">currentMin</span> <span class="pl-c1">=</span> <span class="pl-en">array</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span>
     <span class="pl-k">var</span> <span class="pl-s1">currentMax</span> <span class="pl-c1">=</span> <span class="pl-en">array</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span>
-    for <span class="pl-s1">v</span> in <span class="pl-en">array</span><span class="pl-kos">[</span><span class="pl-c1">1</span><span class="pl-c1">..&lt;</span>array<span class="pl-kos">.</span>count<span class="pl-kos">]</span> <span class="pl-kos">{</span>
-        if v <span class="pl-c1">&lt;</span> currentMin <span class="pl-kos">{</span>
+    <span class="pl-k">for</span> <span class="pl-s1">v</span> <span class="pl-k">in</span> <span class="pl-en">array</span><span class="pl-kos">[</span><span class="pl-c1">1</span><span class="pl-c1">..&lt;</span>array<span class="pl-kos">.</span>count<span class="pl-kos">]</span> <span class="pl-kos">{</span>
+        <span class="pl-k">if</span> v <span class="pl-c1">&lt;</span> currentMin <span class="pl-kos">{</span>
             currentMin <span class="pl-c1">=</span> v
-        <span class="pl-kos">}</span> <span class="pl-k">else</span> if v <span class="pl-c1">&gt;</span> currentMax <span class="pl-kos">{</span>
+        <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-k">if</span> v <span class="pl-c1">&gt;</span> currentMax <span class="pl-kos">{</span>
             currentMax <span class="pl-c1">=</span> v
         <span class="pl-kos">}</span>
     <span class="pl-kos">}</span>
@@ -602,21 +602,21 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-en">print</span><span class="pl-kos">(</span>result<span class="pl-kos">.</span>min<span class="pl-kos">,</span> result<span class="pl-kos">.</span>max<span class="pl-kos">)</span></pre></div>
 <h4><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions#Optional-Tuple-Return-Types" rel="nofollow">可选元组返回类型 (Optional Tuple Return Types)</a></h4>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> minMax<span class="pl-kos">(</span>array<span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-smi">Int</span><span class="pl-kos">]</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-kos">(</span>min<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">,</span> max<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">)</span><span class="pl-c1"><span class="pl-c1">?</span></span> <span class="pl-kos">{</span>
-    if array<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span> <span class="pl-k">return</span> <span class="pl-smi">nil</span><span class="pl-kos">}</span>
+    <span class="pl-k">if</span> array<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span> <span class="pl-k">return</span> <span class="pl-smi">nil</span><span class="pl-kos">}</span>
     
     <span class="pl-k">var</span> <span class="pl-s1">currentMin</span> <span class="pl-c1">=</span> <span class="pl-en">array</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span>
     <span class="pl-k">var</span> <span class="pl-s1">currentMax</span> <span class="pl-c1">=</span> <span class="pl-en">array</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span>
-    for <span class="pl-s1">v</span> in <span class="pl-en">array</span><span class="pl-kos">[</span><span class="pl-c1">1</span><span class="pl-c1">..&lt;</span>array<span class="pl-kos">.</span>count<span class="pl-kos">]</span> <span class="pl-kos">{</span>
-        if v <span class="pl-c1">&lt;</span> currentMin <span class="pl-kos">{</span>
+    <span class="pl-k">for</span> <span class="pl-s1">v</span> <span class="pl-k">in</span> <span class="pl-en">array</span><span class="pl-kos">[</span><span class="pl-c1">1</span><span class="pl-c1">..&lt;</span>array<span class="pl-kos">.</span>count<span class="pl-kos">]</span> <span class="pl-kos">{</span>
+        <span class="pl-k">if</span> v <span class="pl-c1">&lt;</span> currentMin <span class="pl-kos">{</span>
             currentMin <span class="pl-c1">=</span> v
-        <span class="pl-kos">}</span> <span class="pl-k">else</span> if v <span class="pl-c1">&gt;</span> currentMax <span class="pl-kos">{</span>
+        <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-k">if</span> v <span class="pl-c1">&gt;</span> currentMax <span class="pl-kos">{</span>
             currentMax <span class="pl-c1">=</span> v
         <span class="pl-kos">}</span>
     <span class="pl-kos">}</span>
     <span class="pl-k">return</span> <span class="pl-kos">(</span>currentMin<span class="pl-kos">,</span> currentMax<span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
 
-if <span class="pl-k">let</span> result <span class="pl-c1">=</span> <span class="pl-en">minMax</span><span class="pl-kos">(</span>array<span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-c1">7</span><span class="pl-kos">,</span> <span class="pl-c1">13</span><span class="pl-kos">,</span> <span class="pl-c1">28</span><span class="pl-kos">,</span> <span class="pl-c1">14</span><span class="pl-kos">,</span> <span class="pl-c1">5</span><span class="pl-kos">]</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+<span class="pl-k">if</span> <span class="pl-k">let</span> result <span class="pl-c1">=</span> <span class="pl-en">minMax</span><span class="pl-kos">(</span>array<span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-c1">7</span><span class="pl-kos">,</span> <span class="pl-c1">13</span><span class="pl-kos">,</span> <span class="pl-c1">28</span><span class="pl-kos">,</span> <span class="pl-c1">14</span><span class="pl-kos">,</span> <span class="pl-c1">5</span><span class="pl-kos">]</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>result<span class="pl-kos">.</span>min<span class="pl-kos">,</span> result<span class="pl-kos">.</span>max<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions#Functions-With-an-Implicit-Return" rel="nofollow">隐式返回 (Functions With an Implicit Return)</a></h3>
@@ -649,13 +649,13 @@ if <span class="pl-k">let</span> result <span class="pl-c1">=</span> <span class
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions#Variadic-Parameters" rel="nofollow">可变参数 (Variadic Parameters)</a></h3>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> arithmeticMean<span class="pl-kos">(</span>_ numbers<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-c1">...</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Double</span> <span class="pl-kos">{</span>
     <span class="pl-k">var</span> <span class="pl-s1">total</span><span class="pl-kos">:</span> <span class="pl-smi">Double</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span>
-    for <span class="pl-s1">i</span> in numbers <span class="pl-kos">{</span>
+    <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> numbers <span class="pl-kos">{</span>
         total <span class="pl-c1">+=</span> i
     <span class="pl-kos">}</span>
     <span class="pl-k">return</span> total <span class="pl-c1">/</span> Double<span class="pl-kos">(</span>numbers<span class="pl-kos">.</span>count<span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
 
-<span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-en">arithmeticMean</span><span class="pl-kos">(</span><span class="pl-c1">3</span><span class="pl-kos">,</span> 8.25<span class="pl-kos">,</span> 18.75<span class="pl-kos">)</span><span class="pl-kos">)</span></pre></div>
+<span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-en">arithmeticMean</span><span class="pl-kos">(</span><span class="pl-c1">3</span><span class="pl-kos">,</span> <span class="pl-c1">8.25</span><span class="pl-kos">,</span> <span class="pl-c1">18.75</span><span class="pl-kos">)</span><span class="pl-kos">)</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions#In-Out-Parameters" rel="nofollow">引用参数 (In-Out Parameters)</a></h3>
 <p>参数默认为常量值传递, 将其设置为 <code class="notranslate">inout</code> 就可以引用传递:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> swapTwoInts<span class="pl-kos">(</span>_ a<span class="pl-kos">:</span> <span class="pl-k">inout</span> <span class="pl-smi">Int</span><span class="pl-kos">,</span> _ b<span class="pl-kos">:</span> <span class="pl-k">inout</span> <span class="pl-smi">Int</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
@@ -703,7 +703,7 @@ if <span class="pl-k">let</span> result <span class="pl-c1">=</span> <span class
 <span class="pl-kos">}</span></pre></div>
 <p>使用该函数类型:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> chooseFunction<span class="pl-kos">(</span>_ num<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-kos">(</span><span class="pl-smi">Int</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Int</span> <span class="pl-kos">{</span>
-    if num <span class="pl-c1">&lt;</span> <span class="pl-c1">100</span> <span class="pl-kos">{</span>
+    <span class="pl-k">if</span> num <span class="pl-c1">&lt;</span> <span class="pl-c1">100</span> <span class="pl-kos">{</span>
         <span class="pl-k">return</span> add
     <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
         <span class="pl-k">return</span> sub
@@ -725,7 +725,7 @@ if <span class="pl-k">let</span> result <span class="pl-c1">=</span> <span class
         <span class="pl-k">return</span> input <span class="pl-c1">-</span> <span class="pl-c1">100</span>
     <span class="pl-kos">}</span>
     
-    if num <span class="pl-c1">&lt;</span> <span class="pl-c1">100</span> <span class="pl-kos">{</span>
+    <span class="pl-k">if</span> num <span class="pl-c1">&lt;</span> <span class="pl-c1">100</span> <span class="pl-kos">{</span>
         <span class="pl-k">return</span> add
     <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
         <span class="pl-k">return</span> sub

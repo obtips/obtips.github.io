@@ -217,7 +217,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/methods#The-self-Property" rel="nofollow"><code class="notranslate">self</code> 属性 (The self Property)</a></h3>
 <p><code class="notranslate">self</code> 指向自身实例, 一般用于区分同名的量</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Point</span> <span class="pl-kos">{</span>
-    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> 0.0<span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> 0.0
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span><span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
     <span class="pl-en">func</span> compare<span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Bool</span> <span class="pl-kos">{</span>
         <span class="pl-k">return</span> <span class="pl-smi">self</span><span class="pl-kos">.</span>x <span class="pl-c1">&gt;</span> x
     <span class="pl-kos">}</span>
@@ -225,21 +225,21 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/methods#Modifying-Value-Types-from-Within-Instance-Methods" rel="nofollow">在实例方法中修改值类型 (Modifying Value Types from Within Instance Methods)</a></h3>
 <p>默认情况下, 值类型中的方法不能修改值类型的属性, 但可以通过 <code class="notranslate">mutating</code> 实现:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Point</span> <span class="pl-kos">{</span>
-    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> 0.0<span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> 0.0
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span><span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
     <span class="pl-k">mutating</span> <span class="pl-en">func</span> moveBy<span class="pl-kos">(</span>x deltaX<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">,</span> y deltaY<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
         x <span class="pl-c1">+=</span> deltaX
         y <span class="pl-c1">+=</span> deltaY
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span>
-<span class="pl-k">var</span> <span class="pl-s1">somePoint</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 1.0<span class="pl-kos">,</span> y<span class="pl-kos">:</span> 1.0<span class="pl-kos">)</span>
-somePoint<span class="pl-kos">.</span><span class="pl-en">moveBy</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 2.0<span class="pl-kos">,</span> y<span class="pl-kos">:</span> 3.0<span class="pl-kos">)</span></pre></div>
+<span class="pl-k">var</span> <span class="pl-s1">somePoint</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-c1">1.0</span><span class="pl-kos">,</span> y<span class="pl-kos">:</span> <span class="pl-c1">1.0</span><span class="pl-kos">)</span>
+somePoint<span class="pl-kos">.</span><span class="pl-en">moveBy</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-c1">2.0</span><span class="pl-kos">,</span> y<span class="pl-kos">:</span> <span class="pl-c1">3.0</span><span class="pl-kos">)</span></pre></div>
 <blockquote>
 <p>这里给出个人理解, 因为值类型就是一个值, 你调用了其中的方法对其进行修改, 那么之前的赋值就变了, 而值应该是保持不变的, 所以这么做更加的安全</p>
 </blockquote>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/methods#Assigning-to-self-Within-a-Mutating-Method" rel="nofollow">在可变方法中给 <code class="notranslate">self</code> 赋值 (Assigning to self Within a Mutating Method)</a></h3>
 <p>🕐 可以直接给 <code class="notranslate">self</code> 赋值, 这是上述代码的另一种实现:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Point</span> <span class="pl-kos">{</span>
-    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> 0.0<span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> 0.0
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span><span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
     <span class="pl-k">mutating</span> <span class="pl-en">func</span> moveBy<span class="pl-kos">(</span>x deltaX<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">,</span> y deltaY<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
         <span class="pl-smi">self</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> x <span class="pl-c1">+</span> deltaX<span class="pl-kos">,</span> y<span class="pl-kos">:</span> y <span class="pl-c1">+</span> deltaY<span class="pl-kos">)</span>
     <span class="pl-kos">}</span>
@@ -248,7 +248,7 @@ somePoint<span class="pl-kos">.</span><span class="pl-en">moveBy</span><span cla
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">enum</span> <span class="pl-smi">TriStateSwitch</span> <span class="pl-kos">{</span>
     <span class="pl-k">case</span> off<span class="pl-kos">,</span> low<span class="pl-kos">,</span> high
     <span class="pl-k">mutating</span> <span class="pl-en">func</span> next<span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        switch <span class="pl-smi">self</span> <span class="pl-kos">{</span>
+        <span class="pl-k">switch</span> <span class="pl-smi">self</span> <span class="pl-kos">{</span>
         <span class="pl-k">case</span> <span class="pl-kos">.</span>off<span class="pl-kos">:</span>
             <span class="pl-smi">self</span> <span class="pl-c1">=</span> <span class="pl-kos">.</span>low
         <span class="pl-k">case</span> <span class="pl-kos">.</span>low<span class="pl-kos">:</span>

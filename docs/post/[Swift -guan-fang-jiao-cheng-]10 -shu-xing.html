@@ -892,7 +892,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
             <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Set total to </span><span class="pl-kos">\(</span>newNum<span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
         <span class="pl-kos">}</span>
         didSet <span class="pl-kos">{</span>
-            if total <span class="pl-c1">&gt;</span> oldValue  <span class="pl-kos">{</span>
+            <span class="pl-k">if</span> total <span class="pl-c1">&gt;</span> oldValue  <span class="pl-kos">{</span>
                 <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Added </span><span class="pl-kos">\(</span>total <span class="pl-c1">-</span> oldValue<span class="pl-kos">)</span><span class="pl-s"> steps</span><span class="pl-s">"</span><span class="pl-kos">)</span>
             <span class="pl-kos">}</span>
         <span class="pl-kos">}</span>
@@ -1009,19 +1009,19 @@ rectangle<span class="pl-kos">.</span>height <span class="pl-c1">=</span> <span 
     <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">wrappedValue</span></span><span class="pl-kos">:</span> <span class="pl-smi">Int</span> <span class="pl-kos">{</span>
         <span class="pl-k">get</span> <span class="pl-kos">{</span> <span class="pl-k">return</span> number <span class="pl-kos">}</span>
         <span class="pl-k">set</span> <span class="pl-kos">{</span>
-            if newValue <span class="pl-c1">&gt;</span> <span class="pl-c1">12</span> <span class="pl-kos">{</span>
+            <span class="pl-k">if</span> newValue <span class="pl-c1">&gt;</span> <span class="pl-c1">12</span> <span class="pl-kos">{</span>
                 number <span class="pl-c1">=</span> <span class="pl-c1">12</span>
-                projectedValue <span class="pl-c1">=</span> true
+                projectedValue <span class="pl-c1">=</span> <span class="pl-c1">true</span>
             <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
                 number <span class="pl-c1">=</span> newValue
-                projectedValue <span class="pl-c1">=</span> false
+                projectedValue <span class="pl-c1">=</span> <span class="pl-c1">false</span>
             <span class="pl-kos">}</span>
         <span class="pl-kos">}</span>
     <span class="pl-kos">}</span>
 
     <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
         <span class="pl-smi">self</span><span class="pl-kos">.</span>number <span class="pl-c1">=</span> <span class="pl-c1">0</span>
-        <span class="pl-smi">self</span><span class="pl-kos">.</span>projectedValue <span class="pl-c1">=</span> false
+        <span class="pl-smi">self</span><span class="pl-kos">.</span>projectedValue <span class="pl-c1">=</span> <span class="pl-c1">false</span>
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span>
 

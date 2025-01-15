@@ -1104,10 +1104,10 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Exchange</span> <span class="pl-kos">{</span>
     <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">n</span></span><span class="pl-kos">:</span> <span class="pl-smi">Double</span>
     <span class="pl-v">init</span><span class="pl-kos">(</span>fromUS x<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        n <span class="pl-c1">=</span> x <span class="pl-c1">*</span> 7.12
+        n <span class="pl-c1">=</span> x <span class="pl-c1">*</span> <span class="pl-c1">7.12</span>
     <span class="pl-kos">}</span>
     <span class="pl-v">init</span><span class="pl-kos">(</span>fromJP y<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        n <span class="pl-c1">=</span> y <span class="pl-c1">*</span> 0.0048
+        n <span class="pl-c1">=</span> y <span class="pl-c1">*</span> <span class="pl-c1">0.0048</span>
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span>
 
@@ -1130,8 +1130,8 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 调用时必须指明实参标签:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 1.0<span class="pl-kos">,</span> y<span class="pl-kos">:</span> 2.1<span class="pl-kos">,</span> z<span class="pl-kos">:</span> 3.2<span class="pl-kos">)</span>
-<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>s<span class="pl-kos">:</span> 1.8<span class="pl-kos">)</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-c1">1.0</span><span class="pl-kos">,</span> y<span class="pl-kos">:</span> <span class="pl-c1">2.1</span><span class="pl-kos">,</span> z<span class="pl-kos">:</span> <span class="pl-c1">3.2</span><span class="pl-kos">)</span>
+<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>s<span class="pl-kos">:</span> <span class="pl-c1">1.8</span><span class="pl-kos">)</span></pre></div>
 <p>如果没有设置实参标签, 则会自动将参数名设置为实参标签</p>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Parameters-Without-Argument-Labels" rel="nofollow">忽略实参标签 (Initializer Parameters Without Argument Labels)</a></h3>
 <p>使用 <code class="notranslate">_</code> 忽略实参标签:</p>
@@ -1153,12 +1153,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Memberwise-Initializers-for-Structure-Types" rel="nofollow">结构体的成员式构造函数 (Memberwise Initializers for Structure Types)</a></h3>
 <p>🕐 没有其他初构造函数时, 结构体会自动为每个属性提供构造函数:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Point</span> <span class="pl-kos">{</span>
-    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> 0.0<span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> 0.0
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span><span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 调用其构造函数:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">point1</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>y<span class="pl-kos">:</span> 20.0<span class="pl-kos">)</span>
-<span class="pl-k">let</span> <span class="pl-s1">point2</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 10.0<span class="pl-kos">)</span>
-<span class="pl-k">let</span> <span class="pl-s1">point3</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 3.0<span class="pl-kos">,</span> y<span class="pl-kos">:</span> 4.0<span class="pl-kos">)</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">point1</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>y<span class="pl-kos">:</span> <span class="pl-c1">20.0</span><span class="pl-kos">)</span>
+<span class="pl-k">let</span> <span class="pl-s1">point2</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-c1">10.0</span><span class="pl-kos">)</span>
+<span class="pl-k">let</span> <span class="pl-s1">point3</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-c1">3.0</span><span class="pl-kos">,</span> y<span class="pl-kos">:</span> <span class="pl-c1">4.0</span><span class="pl-kos">)</span></pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Delegation-for-Value-Types" rel="nofollow">值类型的初始化委派 (Initializer Delegation for Value Types)</a></h2>
 <hr>
 <p>🕐 构造函数中可以调用其他构造函数, 使用 <code class="notranslate">self.init()</code></p>
@@ -1166,9 +1166,9 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h3>示例</h3>
 <p>🕐 定义一个包含 3 个构造函数的值类型:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Point</span> <span class="pl-kos">{</span>
-    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> 0.0
-    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> 0.0
-    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">z</span></span> <span class="pl-c1">=</span> 0.0
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">x</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">y</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">z</span></span> <span class="pl-c1">=</span> <span class="pl-c1">0.0</span>
     <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span><span class="pl-kos">}</span>
     <span class="pl-v">init</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">,</span> y<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">,</span> z<span class="pl-kos">:</span> <span class="pl-smi">Double</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
         <span class="pl-smi">self</span><span class="pl-kos">.</span>x <span class="pl-c1">=</span> x
@@ -1185,9 +1185,9 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>🕐 调用其无参构造函数 (行为同默认构造函数):</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">p1</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span><span class="pl-kos">)</span></pre></div>
 <p>🕑 调用其有参构造函数 (行为同成员式构造函数):</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">p2</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 1.2<span class="pl-kos">,</span> y<span class="pl-kos">:</span> 1.6<span class="pl-kos">,</span> z<span class="pl-kos">:</span> 2.8<span class="pl-kos">)</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">p2</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-c1">1.2</span><span class="pl-kos">,</span> y<span class="pl-kos">:</span> <span class="pl-c1">1.6</span><span class="pl-kos">,</span> z<span class="pl-kos">:</span> <span class="pl-c1">2.8</span><span class="pl-kos">)</span></pre></div>
 <p>🕒 调用具有初始化委派行为的构造函数:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">p3</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> 3.2<span class="pl-kos">,</span> y<span class="pl-kos">:</span> 2.1<span class="pl-kos">)</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">p3</span> <span class="pl-c1">=</span> <span class="pl-en">Point</span><span class="pl-kos">(</span>x<span class="pl-kos">:</span> <span class="pl-c1">3.2</span><span class="pl-kos">,</span> y<span class="pl-kos">:</span> <span class="pl-c1">2.1</span><span class="pl-kos">)</span></pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Class-Inheritance-and-Initialization" rel="nofollow">类的继承和构造 (Class Inheritance and Initialization)</a></h2>
 <hr>
 <p>要确保本身定义的值和继承来的值在构造后都具有初始值</p>
@@ -1309,10 +1309,10 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>![[Pasted image 20240122172017.png|400]]</p>
 <p>🕒 创建 <code class="notranslate">RecipeIngredient</code> 的子类:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">ShoppingListItem</span><span class="pl-kos">:</span> <span class="pl-smi">RecipeIngredient</span> <span class="pl-kos">{</span>
-    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">purchased</span></span> <span class="pl-c1">=</span> false
+    <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">purchased</span></span> <span class="pl-c1">=</span> <span class="pl-c1">false</span>
     <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">description</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span> <span class="pl-kos">{</span>
         <span class="pl-k">var</span> <span class="pl-s1">output</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-kos">\(</span>quantity<span class="pl-kos">)</span><span class="pl-s"> x </span><span class="pl-kos">\(</span>name<span class="pl-kos">)</span><span class="pl-s">"</span>
-        output <span class="pl-c1">+=</span> purchased <span class="pl-c1">?</span> <span class="pl-s">"</span><span class="pl-s"> ✔</span><span class="pl-s">"</span> : <span class="pl-s">"</span><span class="pl-s"> ✘</span><span class="pl-s">"</span>
+        output <span class="pl-c1">+=</span> purchased <span class="pl-c1">?</span> <span class="pl-s">"</span><span class="pl-s"> ✔</span><span class="pl-s">"</span> <span class="pl-k">:</span> <span class="pl-s">"</span><span class="pl-s"> ✘</span><span class="pl-s">"</span>
         <span class="pl-k">return</span> output
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span></pre></div>
@@ -1323,7 +1323,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">struct</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
     <span class="pl-k">let</span> <span class="pl-s1"><span class="pl-c1">name</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span>
     <span class="pl-v">init</span><span class="pl-c1">?</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        if name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span> <span class="pl-k">return</span> <span class="pl-smi">nil</span> <span class="pl-kos">}</span>
+        <span class="pl-k">if</span> name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span> <span class="pl-k">return</span> <span class="pl-smi">nil</span> <span class="pl-kos">}</span>
         <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> name
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span></pre></div>
@@ -1331,13 +1331,13 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>🕑 调用并解包可选值:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-en">Pet</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">mimi</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 
-if <span class="pl-k">let</span> cat <span class="pl-c1">=</span> c <span class="pl-kos">{</span>
+<span class="pl-k">if</span> <span class="pl-k">let</span> cat <span class="pl-c1">=</span> c <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>cat<span class="pl-kos">.</span>name<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕒 可选值为空可直接判断:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">d</span> <span class="pl-c1">=</span> <span class="pl-en">Pet</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 
-if d <span class="pl-c1">==</span> <span class="pl-smi">nil</span> <span class="pl-kos">{</span>
+<span class="pl-k">if</span> d <span class="pl-c1">==</span> <span class="pl-smi">nil</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">error</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers-for-Enumerations" rel="nofollow">枚举类的可失败构造函数 (Failable Initializers for Enumerations)</a></h3>
@@ -1345,7 +1345,7 @@ if d <span class="pl-c1">==</span> <span class="pl-smi">nil</span> <span class="
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">enum</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
     <span class="pl-k">case</span> cat<span class="pl-kos">,</span> dog<span class="pl-kos">,</span> rabbit
     <span class="pl-v">init</span><span class="pl-c1">?</span><span class="pl-kos">(</span>type<span class="pl-kos">:</span> <span class="pl-smi">Character</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        switch type <span class="pl-kos">{</span>
+        <span class="pl-k">switch</span> type <span class="pl-kos">{</span>
         <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">:</span>
             <span class="pl-smi">self</span> <span class="pl-c1">=</span> <span class="pl-kos">.</span>cat
         <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">d</span><span class="pl-s">"</span><span class="pl-kos">:</span>
@@ -1359,7 +1359,7 @@ if d <span class="pl-c1">==</span> <span class="pl-smi">nil</span> <span class="
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 调用示例:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">p</span> <span class="pl-c1">=</span> <span class="pl-en">Pet</span><span class="pl-kos">(</span>type<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">)</span>
-if p <span class="pl-c1">!=</span> <span class="pl-smi">nil</span> <span class="pl-kos">{</span>
+<span class="pl-k">if</span> p <span class="pl-c1">!=</span> <span class="pl-smi">nil</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">cat</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers-for-Enumerations-with-Raw-Values" rel="nofollow">带原始值的枚举类的可失败构造函数 (Failable Initializers for Enumerations with Raw Values)</a></h3>
@@ -1370,7 +1370,7 @@ if p <span class="pl-c1">!=</span> <span class="pl-smi">nil</span> <span class="
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 调用示例:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">p</span> <span class="pl-c1">=</span> <span class="pl-en">Pet</span><span class="pl-kos">(</span>rawValue<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">)</span>
-if p <span class="pl-c1">!=</span> <span class="pl-smi">nil</span> <span class="pl-kos">{</span>
+<span class="pl-k">if</span> p <span class="pl-c1">!=</span> <span class="pl-smi">nil</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">cat</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Propagation-of-Initialization-Failure" rel="nofollow">初始化失败的传播 (Propagation of Initialization Failure)</a></h3>
@@ -1379,7 +1379,7 @@ if p <span class="pl-c1">!=</span> <span class="pl-smi">nil</span> <span class="
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
     <span class="pl-k">let</span> <span class="pl-s1"><span class="pl-c1">name</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span>
     <span class="pl-v">init</span><span class="pl-c1">?</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        if name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span><span class="pl-k">return</span> <span class="pl-smi">nil</span><span class="pl-kos">}</span>
+        <span class="pl-k">if</span> name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span><span class="pl-k">return</span> <span class="pl-smi">nil</span><span class="pl-kos">}</span>
         <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> name
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span></pre></div>
@@ -1387,14 +1387,14 @@ if p <span class="pl-c1">!=</span> <span class="pl-smi">nil</span> <span class="
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-smi">Cat</span><span class="pl-kos">:</span> <span class="pl-smi">Pet</span> <span class="pl-kos">{</span>
     <span class="pl-k">let</span> <span class="pl-s1"><span class="pl-c1">age</span></span><span class="pl-kos">:</span> <span class="pl-smi">Int</span>
     <span class="pl-v">init</span><span class="pl-c1">?</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">,</span> age<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        if age <span class="pl-c1">&lt;</span> <span class="pl-c1">2</span> <span class="pl-kos">{</span> <span class="pl-k">return</span> <span class="pl-smi">nil</span> <span class="pl-kos">}</span>
+        <span class="pl-k">if</span> age <span class="pl-c1">&lt;</span> <span class="pl-c1">2</span> <span class="pl-kos">{</span> <span class="pl-k">return</span> <span class="pl-smi">nil</span> <span class="pl-kos">}</span>
         <span class="pl-smi">self</span><span class="pl-kos">.</span>age <span class="pl-c1">=</span> age
         super<span class="pl-kos">.</span><span class="pl-en">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> name<span class="pl-kos">)</span>
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span></pre></div>
 <p>因为子类的构造函数是可失败的, 其才能够调用基类的可失败构造函数, 并且不需要加 <code class="notranslate">?</code></p>
 <p>🕒 调用示例:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">if <span class="pl-k">let</span> c <span class="pl-c1">=</span> <span class="pl-en">Cat</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">mimi</span><span class="pl-s">"</span><span class="pl-kos">,</span> age<span class="pl-kos">:</span> <span class="pl-c1">10</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">if</span> <span class="pl-k">let</span> c <span class="pl-c1">=</span> <span class="pl-en">Cat</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">mimi</span><span class="pl-s">"</span><span class="pl-kos">,</span> age<span class="pl-kos">:</span> <span class="pl-c1">10</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>c<span class="pl-kos">.</span>name<span class="pl-kos">,</span> c<span class="pl-kos">.</span>age<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Overriding-a-Failable-Initializer" rel="nofollow">重写可失败的构造函数 (Overriding a Failable Initializer)</a></h3>
@@ -1404,7 +1404,7 @@ if p <span class="pl-c1">!=</span> <span class="pl-smi">nil</span> <span class="
     <span class="pl-k">var</span> <span class="pl-s1"><span class="pl-c1">name</span></span><span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-c1"><span class="pl-c1">?</span></span>
     <span class="pl-v">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span><span class="pl-kos">}</span>
     <span class="pl-v">init</span><span class="pl-c1">?</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-        if name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span> <span class="pl-k">return</span> <span class="pl-smi">nil</span> <span class="pl-kos">}</span>
+        <span class="pl-k">if</span> name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span> <span class="pl-k">return</span> <span class="pl-smi">nil</span> <span class="pl-kos">}</span>
         <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> name
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span></pre></div>
@@ -1416,7 +1416,7 @@ if p <span class="pl-c1">!=</span> <span class="pl-smi">nil</span> <span class="
     <span class="pl-kos">}</span>
     <span class="pl-k"><span class="pl-k">override</span></span> <span class="pl-v">init</span><span class="pl-kos">(</span>name<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
         super<span class="pl-kos">.</span><span class="pl-en">init</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
-        if name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span>
+        <span class="pl-k">if</span> name<span class="pl-kos">.</span>isEmpty <span class="pl-kos">{</span>
             <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">[Unknown]</span><span class="pl-s">"</span>
         <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
             <span class="pl-smi">self</span><span class="pl-kos">.</span>name <span class="pl-c1">=</span> name

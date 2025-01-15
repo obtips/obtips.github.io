@@ -428,7 +428,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-swift"><pre class="notranslate">d <span class="pl-c1">=</span> <span class="pl-kos">.</span>east</pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/enumerations#Matching-Enumeration-Values-with-a-Switch-Statement" rel="nofollow">在 switch 中使用枚举值 (Matching Enumeration Values with a Switch Statement)</a></h2>
 <hr>
-<div class="highlight highlight-source-swift"><pre class="notranslate">switch d <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">switch</span> d <span class="pl-kos">{</span>
 <span class="pl-k">case</span> <span class="pl-kos">.</span>north<span class="pl-kos">:</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">north</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-k">case</span> <span class="pl-kos">.</span>south<span class="pl-kos">:</span>
@@ -448,7 +448,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-smi">Beverage</span><span class="pl-kos">.</span>allCases<span class="pl-kos">.</span>count
 <span class="pl-en">print</span><span class="pl-kos">(</span>n<span class="pl-kos">)</span></pre></div>
 <p>🕑 遍历:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in <span class="pl-smi">Beverage</span><span class="pl-kos">.</span>allCases <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> <span class="pl-smi">Beverage</span><span class="pl-kos">.</span>allCases <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/enumerations#Associated-Values" rel="nofollow">关联值 (Associated Values)</a></h2>
@@ -462,7 +462,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">code</span> <span class="pl-c1">=</span> <span class="pl-smi">Barcode</span><span class="pl-kos">.</span><span class="pl-en">upc</span><span class="pl-kos">(</span><span class="pl-c1">8</span><span class="pl-kos">,</span> <span class="pl-c1">85909</span><span class="pl-kos">,</span> <span class="pl-c1">51226</span><span class="pl-kos">,</span> <span class="pl-c1">3</span><span class="pl-kos">)</span>
 code <span class="pl-c1">=</span> <span class="pl-kos">.</span>qrCode<span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">ABCDEFGHIJKLMNOP</span><span class="pl-s">"</span><span class="pl-kos">)</span></pre></div>
 <p>在 <code class="notranslate">switch</code> 中提取枚举值的类型值:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">switch code <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">switch</span> code <span class="pl-kos">{</span>
 <span class="pl-k">case</span> <span class="pl-kos">.</span>upc<span class="pl-kos">(</span><span class="pl-s1"><span class="pl-k">let</span> a</span><span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-k">let</span> b</span><span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-k">let</span> c</span><span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-k">let</span> d</span><span class="pl-kos">)</span><span class="pl-kos">:</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">UPC: </span><span class="pl-kos">\(</span>a<span class="pl-kos">)</span><span class="pl-s">, </span><span class="pl-kos">\(</span>b<span class="pl-kos">)</span><span class="pl-s">, </span><span class="pl-kos">\(</span>c<span class="pl-kos">)</span><span class="pl-s">, </span><span class="pl-kos">\(</span>d<span class="pl-kos">)</span><span class="pl-s">.</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-k">case</span> <span class="pl-kos">.</span>qrCode<span class="pl-kos">(</span><span class="pl-s1"><span class="pl-k">let</span> a</span><span class="pl-kos">)</span><span class="pl-kos">:</span>
@@ -512,7 +512,7 @@ code <span class="pl-c1">=</span> <span class="pl-kos">.</span>qrCode<span class
 <span class="pl-k">let</span> <span class="pl-s1">product</span> <span class="pl-c1">=</span> <span class="pl-smi">Expression</span><span class="pl-kos">.</span><span class="pl-en">multi</span><span class="pl-kos">(</span>sum<span class="pl-kos">,</span> <span class="pl-smi">Expression</span><span class="pl-kos">.</span><span class="pl-en">num</span><span class="pl-kos">(</span><span class="pl-c1">2</span><span class="pl-kos">)</span><span class="pl-kos">)</span></pre></div>
 <p>运用它们:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> evaluate<span class="pl-kos">(</span>_ e<span class="pl-kos">:</span> <span class="pl-smi">Expression</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Int</span> <span class="pl-kos">{</span>
-    switch e <span class="pl-kos">{</span>
+    <span class="pl-k">switch</span> e <span class="pl-kos">{</span>
     <span class="pl-k">case</span> <span class="pl-k">let</span> <span class="pl-kos">.</span>num<span class="pl-kos">(</span>v<span class="pl-kos">)</span><span class="pl-kos">:</span>
         <span class="pl-k">return</span> v
     <span class="pl-k">case</span> <span class="pl-k">let</span> <span class="pl-kos">.</span>add<span class="pl-kos">(</span>left<span class="pl-kos">,</span> right<span class="pl-kos">)</span><span class="pl-kos">:</span>

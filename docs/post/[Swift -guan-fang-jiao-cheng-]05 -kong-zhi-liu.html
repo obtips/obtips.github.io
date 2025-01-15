@@ -896,28 +896,28 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <hr>
 <p>🕐 数组:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-c1">1</span><span class="pl-kos">,</span> <span class="pl-c1">2</span><span class="pl-kos">,</span> <span class="pl-c1">3</span><span class="pl-kos">,</span> <span class="pl-c1">4</span><span class="pl-kos">,</span> <span class="pl-c1">5</span><span class="pl-kos">,</span> <span class="pl-c1">6</span><span class="pl-kos">]</span>
-for <span class="pl-s1">i</span> in a <span class="pl-kos">{</span>
+<span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> a <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 字典:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">d</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">20</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">38</span><span class="pl-kos">]</span>
-for <span class="pl-kos"><span class="pl-s1">(k<span class="pl-kos">,</span> v<span class="pl-kos">)</span></span></span> in d <span class="pl-kos">{</span>
+<span class="pl-k">for</span> <span class="pl-kos"><span class="pl-s1">(k<span class="pl-kos">,</span> v<span class="pl-kos">)</span></span></span> <span class="pl-k">in</span> d <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>k<span class="pl-kos">,</span> v<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕒 区间运算:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in <span class="pl-c1">1</span><span class="pl-c1">...</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-c1">...</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
 
-for <span class="pl-s1">i</span> in <span class="pl-c1">1</span><span class="pl-c1">..&lt;</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
+<span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-c1">..&lt;</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕓 等差列:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in <span class="pl-en">stride</span><span class="pl-kos">(</span>from<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> to<span class="pl-kos">:</span> <span class="pl-c1">20</span><span class="pl-kos">,</span> by<span class="pl-kos">:</span> <span class="pl-c1">2</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> //不含 20
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> <span class="pl-en">stride</span><span class="pl-kos">(</span>from<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> to<span class="pl-kos">:</span> <span class="pl-c1">20</span><span class="pl-kos">,</span> by<span class="pl-kos">:</span> <span class="pl-c1">2</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> //不含 20
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span>
 
-for <span class="pl-s1">i</span> in <span class="pl-en">stride</span><span class="pl-kos">(</span>from<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> through<span class="pl-kos">:</span> <span class="pl-c1">20</span><span class="pl-kos">,</span> by<span class="pl-kos">:</span> <span class="pl-c1">2</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> // 含 20
+<span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> <span class="pl-en">stride</span><span class="pl-kos">(</span>from<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">,</span> through<span class="pl-kos">:</span> <span class="pl-c1">20</span><span class="pl-kos">,</span> by<span class="pl-kos">:</span> <span class="pl-c1">2</span><span class="pl-kos">)</span> <span class="pl-kos">{</span> // 含 20
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#While-Loops" rel="nofollow">While 循环 (While Loops)</a></h2>
@@ -930,23 +930,23 @@ for <span class="pl-s1">i</span> in <span class="pl-en">stride</span><span class
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span>
 <span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-c1">10</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#While" rel="nofollow">While</a></h3>
-<div class="highlight highlight-source-swift"><pre class="notranslate">while a <span class="pl-c1">&lt;</span> b <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">while</span> a <span class="pl-c1">&lt;</span> b <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">)</span>
     a <span class="pl-c1">+=</span> <span class="pl-c1">1</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#Repeat-While" rel="nofollow">Repeat-While</a></h3>
-<div class="highlight highlight-source-swift"><pre class="notranslate">repeat <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">repeat</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>a<span class="pl-kos">)</span>
     a <span class="pl-c1">+=</span> <span class="pl-c1">1</span>
-<span class="pl-kos">}</span> while a <span class="pl-c1">&lt;</span> b</pre></div>
+<span class="pl-kos">}</span> <span class="pl-k">while</span> a <span class="pl-c1">&lt;</span> b</pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#Conditional-Statements" rel="nofollow">条件语句 (Conditional Statements)</a></h2>
 <hr>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#If" rel="nofollow">If</a></h3>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">95</span>
 
-if n <span class="pl-c1">&lt;</span> <span class="pl-c1">80</span> <span class="pl-kos">{</span>
+<span class="pl-k">if</span> n <span class="pl-c1">&lt;</span> <span class="pl-c1">80</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">)</span>
-<span class="pl-kos">}</span> <span class="pl-k">else</span> if n <span class="pl-c1">&lt;</span> <span class="pl-c1">90</span> <span class="pl-kos">{</span>
+<span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-k">if</span> n <span class="pl-c1">&lt;</span> <span class="pl-c1">90</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span>
@@ -954,13 +954,13 @@ if n <span class="pl-c1">&lt;</span> <span class="pl-c1">80</span> <span class="
 <p>🕐 用于赋值语句:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-c1">70</span>
 
-<span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-c1"><span class="pl-c1">?</span></span> <span class="pl-c1">=</span> if n <span class="pl-c1">&lt;</span> <span class="pl-c1">80</span> <span class="pl-kos">{</span>
+<span class="pl-k">let</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-c1"><span class="pl-c1">?</span></span> <span class="pl-c1">=</span> <span class="pl-k">if</span> n <span class="pl-c1">&lt;</span> <span class="pl-c1">80</span> <span class="pl-kos">{</span>
     <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span>
 <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
     <span class="pl-smi">nil</span>
 <span class="pl-kos">}</span></pre></div>
 <p>另一种等价形式 (因为用到了可选类型, 因而要提供类型信息):</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> if n <span class="pl-c1">&lt;</span> <span class="pl-c1">80</span> <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-k">if</span> n <span class="pl-c1">&lt;</span> <span class="pl-c1">80</span> <span class="pl-kos">{</span>
     <span class="pl-s">"</span><span class="pl-s">root</span><span class="pl-s">"</span>
 <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
     <span class="pl-smi">nil</span> <span class="pl-k">as</span> <span class="pl-smi">String</span><span class="pl-c1"><span class="pl-c1">?</span></span>
@@ -974,7 +974,7 @@ if n <span class="pl-c1">&lt;</span> <span class="pl-c1">80</span> <span class="
 <p>🕐 必须要考虑所有 case, 否则要提供 default:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">ch</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">z</span><span class="pl-s">"</span>
 
-switch ch <span class="pl-kos">{</span>
+<span class="pl-k">switch</span> ch <span class="pl-kos">{</span>
 <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">case 1</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">z</span><span class="pl-s">"</span><span class="pl-kos">:</span>
@@ -985,7 +985,7 @@ switch ch <span class="pl-kos">{</span>
 <p>🕑 多 case 组合:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">ch</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">z</span><span class="pl-s">"</span>
 
-switch ch <span class="pl-kos">{</span>
+<span class="pl-k">switch</span> ch <span class="pl-kos">{</span>
 <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">,</span><span class="pl-s">"</span><span class="pl-s">A</span><span class="pl-s">"</span><span class="pl-kos">:</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">case 1</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">z</span><span class="pl-s">"</span><span class="pl-kos">:</span>
@@ -996,7 +996,7 @@ switch ch <span class="pl-kos">{</span>
 <p>🕒 用于赋值:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">ch</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">z</span><span class="pl-s">"</span>
 
-<span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> switch ch <span class="pl-kos">{</span>
+<span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-k">switch</span> ch <span class="pl-kos">{</span>
 <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span>
     <span class="pl-s">"</span><span class="pl-s">case 1</span><span class="pl-s">"</span>
 <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">z</span><span class="pl-s">"</span><span class="pl-kos">:</span>
@@ -1009,7 +1009,7 @@ switch ch <span class="pl-kos">{</span>
 <h4><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#Interval-Matching" rel="nofollow">区间匹配 (Interval Matching)</a></h4>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">num</span> <span class="pl-c1">=</span> <span class="pl-c1">18</span>
 
-switch num <span class="pl-kos">{</span>
+<span class="pl-k">switch</span> num <span class="pl-kos">{</span>
     <span class="pl-k">case</span> <span class="pl-c1">0</span><span class="pl-kos">:</span>
         <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">0</span><span class="pl-s">"</span><span class="pl-kos">)</span>
     <span class="pl-k">case</span> <span class="pl-c1">1</span><span class="pl-c1">..&lt;</span><span class="pl-c1">5</span><span class="pl-kos">:</span>
@@ -1022,7 +1022,7 @@ switch num <span class="pl-kos">{</span>
 <h4><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#Tuples" rel="nofollow">元组匹配 (Tuples)</a></h4>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">p</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-c1">1</span><span class="pl-kos">,</span> <span class="pl-c1">1</span><span class="pl-kos">)</span>
 
-switch p <span class="pl-kos">{</span>
+<span class="pl-k">switch</span> p <span class="pl-kos">{</span>
 <span class="pl-k">case</span> <span class="pl-kos">(</span><span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">)</span><span class="pl-kos">:</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-k">case</span> <span class="pl-kos">(</span>_<span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">)</span><span class="pl-kos">:</span>
@@ -1037,7 +1037,7 @@ switch p <span class="pl-kos">{</span>
 <h4><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#Value-Bindings" rel="nofollow">值绑定 (Value Bindings)</a></h4>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">p</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-c1">2</span><span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">)</span>
 
-switch p <span class="pl-kos">{</span>
+<span class="pl-k">switch</span> p <span class="pl-kos">{</span>
 <span class="pl-k">case</span> <span class="pl-kos">(</span><span class="pl-s1"><span class="pl-k">let</span> x</span><span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">)</span><span class="pl-kos">:</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>x<span class="pl-kos">)</span>
 <span class="pl-k">case</span> <span class="pl-kos">(</span><span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-k">let</span> y</span><span class="pl-kos">)</span><span class="pl-kos">:</span>
@@ -1048,7 +1048,7 @@ switch p <span class="pl-kos">{</span>
 <h4><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#Where" rel="nofollow">Where</a></h4>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">p</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-c1">1</span><span class="pl-kos">,</span> <span class="pl-c1">-</span><span class="pl-c1">1</span><span class="pl-kos">)</span>
 
-switch p <span class="pl-kos">{</span>
+<span class="pl-k">switch</span> p <span class="pl-kos">{</span>
 <span class="pl-k">case</span> <span class="pl-k">let</span> <span class="pl-kos">(</span>x<span class="pl-kos">,</span> y<span class="pl-kos">)</span> <span class="pl-k">where</span> x <span class="pl-c1">==</span> y<span class="pl-kos">:</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-k">case</span> <span class="pl-k">let</span> <span class="pl-kos">(</span>x<span class="pl-kos">,</span> y<span class="pl-kos">)</span> <span class="pl-k">where</span> x <span class="pl-c1">==</span> <span class="pl-c1">-</span>y<span class="pl-kos">:</span>
@@ -1060,7 +1060,7 @@ switch p <span class="pl-kos">{</span>
 <p>🕐 非赋值情况:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">ch</span><span class="pl-kos">:</span> <span class="pl-smi">Character</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">e</span><span class="pl-s">"</span>
 
-switch ch <span class="pl-kos">{</span>
+<span class="pl-k">switch</span> ch <span class="pl-kos">{</span>
 <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">e</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">i</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">o</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">u</span><span class="pl-s">"</span><span class="pl-kos">:</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">d</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">f</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">g</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">h</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">j</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">k</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">l</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">m</span><span class="pl-s">"</span><span class="pl-kos">,</span>
@@ -1072,7 +1072,7 @@ switch ch <span class="pl-kos">{</span>
 <p>🕑 赋值情况:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">p</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-c1">9</span><span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">)</span>
 
-switch p <span class="pl-kos">{</span>
+<span class="pl-k">switch</span> p <span class="pl-kos">{</span>
 <span class="pl-k">case</span> <span class="pl-kos">(</span><span class="pl-s1"><span class="pl-k">let</span> n</span><span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">)</span><span class="pl-kos">,</span> <span class="pl-kos">(</span><span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-s1"><span class="pl-k">let</span> n</span><span class="pl-kos">)</span><span class="pl-kos">:</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>n<span class="pl-kos">)</span>
 <span class="pl-k">default</span><span class="pl-kos">:</span>
@@ -1082,9 +1082,9 @@ switch p <span class="pl-kos">{</span>
 <hr>
 <p>转移控制权</p>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#Continue" rel="nofollow">Continue</a></h3>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in <span class="pl-c1">1</span><span class="pl-c1">...</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
-    if i <span class="pl-c1">&lt;</span> <span class="pl-c1">3</span> <span class="pl-kos">{</span>
-        continue
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-c1">...</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
+    <span class="pl-k">if</span> i <span class="pl-c1">&lt;</span> <span class="pl-c1">3</span> <span class="pl-kos">{</span>
+        <span class="pl-k">continue</span>
     <span class="pl-kos">}</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
@@ -1095,21 +1095,21 @@ switch p <span class="pl-kos">{</span>
 <p>常用来忽略某个 case 的执行</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">num</span> <span class="pl-c1">=</span> <span class="pl-c1">18</span>
 
-switch num <span class="pl-kos">{</span>
+<span class="pl-k">switch</span> num <span class="pl-kos">{</span>
     <span class="pl-k">case</span> <span class="pl-c1">0</span><span class="pl-kos">:</span>
-        break
+        <span class="pl-k">break</span>
     <span class="pl-k">case</span> <span class="pl-c1">1</span><span class="pl-c1">..&lt;</span><span class="pl-c1">5</span><span class="pl-kos">:</span>
         <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">&lt;5</span><span class="pl-s">"</span><span class="pl-kos">)</span>
     <span class="pl-k">case</span> <span class="pl-c1">5</span><span class="pl-c1">..&lt;</span><span class="pl-c1">10</span><span class="pl-kos">:</span>
         <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">&lt;10</span><span class="pl-s">"</span><span class="pl-kos">)</span>
     <span class="pl-k">default</span><span class="pl-kos">:</span>
-        break
+        <span class="pl-k">break</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow/#Fallthrough" rel="nofollow">自动向下匹配 (Fallthrough)</a></h3>
 <p>默认一旦 case 匹配就终止执行, 使用 <code class="notranslate">fallthrough</code> 自动向下匹配:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">num</span> <span class="pl-c1">=</span> <span class="pl-c1">5</span>
 
-switch num <span class="pl-kos">{</span>
+<span class="pl-k">switch</span> num <span class="pl-kos">{</span>
 <span class="pl-k">case</span> <span class="pl-c1">1</span><span class="pl-kos">,</span> <span class="pl-c1">3</span><span class="pl-kos">,</span> <span class="pl-c1">5</span><span class="pl-kos">:</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">case a</span><span class="pl-s">"</span><span class="pl-kos">)</span>
     <span class="pl-k">fallthrough</span>
@@ -1124,21 +1124,21 @@ switch num <span class="pl-kos">{</span>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">fruits</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">A</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">A</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">B</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">A</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">B</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">C</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">A</span><span class="pl-s">"</span><span class="pl-kos">]</span>
 <span class="pl-k">var</span> <span class="pl-s1">count</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span>
 
-aLoop: while true <span class="pl-kos">{</span>
-    bLoop: for <span class="pl-s1">f</span> in fruits <span class="pl-kos">{</span>
-        switch f <span class="pl-kos">{</span>
+<span class="pl-ent">aLoop:</span> <span class="pl-k">while</span> <span class="pl-c1">true</span> <span class="pl-kos">{</span>
+    <span class="pl-ent">bLoop:</span> <span class="pl-k">for</span> <span class="pl-s1">f</span> <span class="pl-k">in</span> fruits <span class="pl-kos">{</span>
+        <span class="pl-k">switch</span> f <span class="pl-kos">{</span>
             <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">A</span><span class="pl-s">"</span><span class="pl-kos">:</span>
                 count <span class="pl-c1">+=</span> <span class="pl-c1">1</span>
                 <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">So far, Found </span><span class="pl-kos">\(</span>count<span class="pl-kos">)</span><span class="pl-s"> A </span><span class="pl-s">"</span><span class="pl-kos">)</span>
-                continue bLoop
+                <span class="pl-k">continue</span> bLoop
             <span class="pl-k">case</span> <span class="pl-s">"</span><span class="pl-s">B</span><span class="pl-s">"</span><span class="pl-kos">:</span>
                 <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Found B</span><span class="pl-s">"</span><span class="pl-kos">)</span>
             <span class="pl-k">default</span><span class="pl-kos">:</span>
-                break
+                <span class="pl-k">break</span>
         <span class="pl-kos">}</span>
-        if f <span class="pl-c1">==</span> <span class="pl-s">"</span><span class="pl-s">C</span><span class="pl-s">"</span> <span class="pl-kos">{</span>
+        <span class="pl-k">if</span> f <span class="pl-c1">==</span> <span class="pl-s">"</span><span class="pl-s">C</span><span class="pl-s">"</span> <span class="pl-kos">{</span>
             <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Got C, work done.</span><span class="pl-s">"</span><span class="pl-kos">)</span>
-            break aLoop
+            <span class="pl-k">break</span> aLoop
         <span class="pl-kos">}</span>
     <span class="pl-kos">}</span>
 <span class="pl-kos">}</span></pre></div>
@@ -1146,13 +1146,13 @@ aLoop: while true <span class="pl-kos">{</span>
 <hr>
 <p><code class="notranslate">guard</code> 中条件为真时往下执行, 否则执行 <code class="notranslate">else</code>, else 中必须做好控制转移:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> greet<span class="pl-kos">(</span>person<span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-smi">String</span><span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">]</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
-    guard <span class="pl-k">let</span> name <span class="pl-c1">=</span> <span class="pl-en">person</span><span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">name</span><span class="pl-s">"</span><span class="pl-kos">]</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
+    <span class="pl-k">guard</span> <span class="pl-k">let</span> name <span class="pl-c1">=</span> <span class="pl-en">person</span><span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">name</span><span class="pl-s">"</span><span class="pl-kos">]</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
         <span class="pl-k">return</span>
     <span class="pl-kos">}</span>
 
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Hello </span><span class="pl-kos">\(</span>name<span class="pl-kos">)</span><span class="pl-s">!</span><span class="pl-s">"</span><span class="pl-kos">)</span> // 条件语句中的变量会保留
 
-    guard <span class="pl-k">let</span> location <span class="pl-c1">=</span> <span class="pl-en">person</span><span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">location</span><span class="pl-s">"</span><span class="pl-kos">]</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
+    <span class="pl-k">guard</span> <span class="pl-k">let</span> location <span class="pl-c1">=</span> <span class="pl-en">person</span><span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">location</span><span class="pl-s">"</span><span class="pl-kos">]</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
         <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">I hope the weather is nice near you.</span><span class="pl-s">"</span><span class="pl-kos">)</span>
         <span class="pl-k">return</span>
     <span class="pl-kos">}</span>
@@ -1168,7 +1168,7 @@ aLoop: while true <span class="pl-kos">{</span>
 <p>在逻辑块退出之前, 按照逆序执行之前的所有被推迟的行动:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">score</span> <span class="pl-c1">=</span> <span class="pl-c1">1</span>
 
-if score <span class="pl-c1">&lt;</span> <span class="pl-c1">10</span> <span class="pl-kos">{</span>
+<span class="pl-k">if</span> score <span class="pl-c1">&lt;</span> <span class="pl-c1">10</span> <span class="pl-kos">{</span>
     <span class="pl-k">defer</span> <span class="pl-kos">{</span>
         <span class="pl-en">print</span><span class="pl-kos">(</span>score<span class="pl-kos">)</span>
     <span class="pl-kos">}</span>
@@ -1182,7 +1182,7 @@ if score <span class="pl-c1">&lt;</span> <span class="pl-c1">10</span> <span cla
 <hr>
 <p>即检查 API 的版本兼容性. 这里先了解就行, 日后用到再作深入了解</p>
 <p>🕐 用于条件语句:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">if #available<span class="pl-kos">(</span>iOS <span class="pl-c1">10</span><span class="pl-kos">,</span> macOS <span class="pl-c1">10</span><span class="pl-kos">.</span><span class="pl-c1">12</span><span class="pl-kos">,</span> <span class="pl-c1">*</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">if</span> #available<span class="pl-kos">(</span>iOS <span class="pl-c1">10</span><span class="pl-kos">,</span> macOS <span class="pl-c1">10</span><span class="pl-kos">.</span><span class="pl-c1">12</span><span class="pl-kos">,</span> <span class="pl-c1">*</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
     // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS
 <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
     // Fall back to earlier iOS and macOS APIs
@@ -1195,20 +1195,20 @@ if score <span class="pl-c1">&lt;</span> <span class="pl-c1">10</span> <span cla
 
 
 <span class="pl-en">func</span> chooseBestColor<span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">String</span> <span class="pl-kos">{</span>
-    guard #available<span class="pl-kos">(</span>macOS <span class="pl-c1">10</span><span class="pl-kos">.</span><span class="pl-c1">12</span><span class="pl-kos">,</span> <span class="pl-c1">*</span><span class="pl-kos">)</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
+    <span class="pl-k">guard</span> #available<span class="pl-kos">(</span>macOS <span class="pl-c1">10</span><span class="pl-kos">.</span><span class="pl-c1">12</span><span class="pl-kos">,</span> <span class="pl-c1">*</span><span class="pl-kos">)</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
        <span class="pl-k">return</span> <span class="pl-s">"</span><span class="pl-s">gray</span><span class="pl-s">"</span>
     <span class="pl-kos">}</span>
     <span class="pl-k">let</span> <span class="pl-s1">colors</span> <span class="pl-c1">=</span> <span class="pl-en">ColorPreference</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
     <span class="pl-k">return</span> colors<span class="pl-kos">.</span>bestColor
 <span class="pl-kos">}</span></pre></div>
 <p>🕒 使用 <code class="notranslate">unavailable</code> 判断不可用, 以下两种是等价的</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">if #available<span class="pl-kos">(</span>iOS <span class="pl-c1">10</span><span class="pl-kos">,</span> <span class="pl-c1">*</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">if</span> #available<span class="pl-kos">(</span>iOS <span class="pl-c1">10</span><span class="pl-kos">,</span> <span class="pl-c1">*</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
 	<span class="pl-c1">...</span>
 <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
     // Fallback code
 <span class="pl-kos">}</span></pre></div>
 <p>等价于:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">if #unavailable<span class="pl-kos">(</span>iOS <span class="pl-c1">10</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">if</span> #unavailable<span class="pl-kos">(</span>iOS <span class="pl-c1">10</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
     // Fallback code
 <span class="pl-kos">}</span></pre></div>
 </div>

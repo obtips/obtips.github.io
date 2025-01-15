@@ -727,17 +727,17 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-k">let</span> <span class="pl-s1">s</span> <span class="pl-c1">=</span> a<span class="pl-kos">.</span><span class="pl-en">map</span> <span class="pl-kos">{</span> <span class="pl-kos">(</span>n<span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">String</span> <span class="pl-k">in</span>
     <span class="pl-k">var</span> <span class="pl-s1">n</span> <span class="pl-c1">=</span> n
     <span class="pl-k">var</span> <span class="pl-s1">output</span> <span class="pl-c1">=</span> <span class="pl-s">"</span><span class="pl-s">"</span>
-    repeat <span class="pl-kos">{</span>
+    <span class="pl-k">repeat</span> <span class="pl-kos">{</span>
         output <span class="pl-c1">=</span> <span class="pl-en">d</span><span class="pl-kos">[</span>n <span class="pl-c1">%</span> <span class="pl-c1">10</span><span class="pl-kos">]</span>! <span class="pl-c1">+</span> output
         n <span class="pl-c1">/=</span> <span class="pl-c1">10</span>
-    <span class="pl-kos">}</span> while n <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span>
+    <span class="pl-kos">}</span> <span class="pl-k">while</span> n <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span>
     <span class="pl-k">return</span> output
 <span class="pl-kos">}</span></pre></div>
 <h3>示例 3</h3>
 <p>当有多个闭包参数时, 通过尾闭包传递第一个参数时名称可以省略, 后面的要标出:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">func</span> loadFile<span class="pl-kos">(</span>from server<span class="pl-kos">:</span> <span class="pl-smi">String</span><span class="pl-kos">,</span> upload<span class="pl-kos">:</span> <span class="pl-kos">(</span><span class="pl-smi">String</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Void</span><span class="pl-kos">,</span> onFailure<span class="pl-kos">:</span> <span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Void</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Downloaded file from </span><span class="pl-kos">\(</span>server<span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
-    if server<span class="pl-kos">.</span>count <span class="pl-c1">&lt;=</span> <span class="pl-c1">10</span> <span class="pl-kos">{</span>
+    <span class="pl-k">if</span> server<span class="pl-kos">.</span>count <span class="pl-c1">&lt;=</span> <span class="pl-c1">10</span> <span class="pl-kos">{</span>
         <span class="pl-en">upload</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Uploaded </span><span class="pl-kos">\(</span>server<span class="pl-kos">.</span>count<span class="pl-kos">)</span><span class="pl-s"> bytes.</span><span class="pl-s">"</span><span class="pl-kos">)</span>
     <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
         <span class="pl-en">onFailure</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
@@ -843,7 +843,7 @@ myClass<span class="pl-kos">.</span><span class="pl-en">doThing</span><span clas
 <span class="pl-en">collect</span><span class="pl-kos">(</span>a<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-kos">(</span>at<span class="pl-kos">:</span> <span class="pl-c1">0</span><span class="pl-kos">)</span><span class="pl-kos">)</span>
 <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Collected </span><span class="pl-kos">\(</span>outer<span class="pl-kos">.</span>count<span class="pl-kos">)</span><span class="pl-s"> closures.</span><span class="pl-s">"</span><span class="pl-kos">)</span></pre></div>
 <p>调用闭包:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">c</span> in outer <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">c</span> <span class="pl-k">in</span> outer <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">Now serving </span><span class="pl-kos">\(</span><span class="pl-en">c</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 </div>

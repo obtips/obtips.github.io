@@ -215,7 +215,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <span class="pl-v">init</span><span class="pl-kos">(</span>rows<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">,</span> columns<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
         <span class="pl-smi">self</span><span class="pl-kos">.</span>rows <span class="pl-c1">=</span> rows
         <span class="pl-smi">self</span><span class="pl-kos">.</span>columns <span class="pl-c1">=</span> columns
-        grid <span class="pl-c1">=</span> <span class="pl-en">Array</span><span class="pl-kos">(</span>repeating<span class="pl-kos">:</span> 0.0<span class="pl-kos">,</span> count<span class="pl-kos">:</span> rows <span class="pl-c1">*</span> columns<span class="pl-kos">)</span>
+        grid <span class="pl-c1">=</span> <span class="pl-en">Array</span><span class="pl-kos">(</span>repeating<span class="pl-kos">:</span> <span class="pl-c1">0.0</span><span class="pl-kos">,</span> count<span class="pl-kos">:</span> rows <span class="pl-c1">*</span> columns<span class="pl-kos">)</span>
     <span class="pl-kos">}</span>
     <span class="pl-en">func</span> indexIsValid<span class="pl-kos">(</span>row<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">,</span> column<span class="pl-kos">:</span> <span class="pl-smi">Int</span><span class="pl-kos">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Bool</span> <span class="pl-kos">{</span>
         <span class="pl-k">return</span> row <span class="pl-c1">&gt;=</span> <span class="pl-c1">0</span> &amp;&amp; row <span class="pl-c1">&lt;</span> rows &amp;&amp; column <span class="pl-c1">&gt;=</span> <span class="pl-c1">0</span> &amp;&amp; column <span class="pl-c1">&lt;</span> columns
@@ -233,8 +233,8 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-kos">}</span>
 
 <span class="pl-k">var</span> <span class="pl-s1">matrix</span> <span class="pl-c1">=</span> <span class="pl-en">Matrix</span><span class="pl-kos">(</span>rows<span class="pl-kos">:</span> <span class="pl-c1">2</span><span class="pl-kos">,</span> columns<span class="pl-kos">:</span> <span class="pl-c1">2</span><span class="pl-kos">)</span>
-<span class="pl-en">matrix</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-c1">1</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> 1.5
-<span class="pl-en">matrix</span><span class="pl-kos">[</span><span class="pl-c1">1</span><span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> 3.2
+<span class="pl-en">matrix</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">,</span> <span class="pl-c1">1</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-c1">1.5</span>
+<span class="pl-en">matrix</span><span class="pl-kos">[</span><span class="pl-c1">1</span><span class="pl-kos">,</span> <span class="pl-c1">0</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-c1">3.2</span>
 
 <span class="pl-k">let</span> <span class="pl-s1">someValue</span> <span class="pl-c1">=</span> <span class="pl-en">matrix</span><span class="pl-kos">[</span><span class="pl-c1">2</span><span class="pl-kos">,</span> <span class="pl-c1">2</span><span class="pl-kos">]</span> // 报错</pre></div>
 </div>

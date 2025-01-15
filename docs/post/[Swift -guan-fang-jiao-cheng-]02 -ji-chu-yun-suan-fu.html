@@ -436,7 +436,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-c1">1</span> <span class="pl-c1">+</span> <span class="pl-c1">2</span>
 <span class="pl-c1">5</span> <span class="pl-c1">-</span> <span class="pl-c1">3</span>
 <span class="pl-c1">2</span> <span class="pl-c1">*</span> <span class="pl-c1">3</span>
-10.0 <span class="pl-c1">/</span> 2.5 </pre></div>
+<span class="pl-c1">10.0</span> <span class="pl-c1">/</span> <span class="pl-c1">2.5</span> </pre></div>
 <p>🕑 字符串拼接:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-s">"</span><span class="pl-s">hello, </span><span class="pl-s">"</span> <span class="pl-c1">+</span> <span class="pl-s">"</span><span class="pl-s">world</span><span class="pl-s">"</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Remainder-Operator" rel="nofollow">取余运算符 (Remainder Operator)</a></h3>
@@ -471,8 +471,8 @@ n <span class="pl-c1">+=</span> <span class="pl-c1">2</span></pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Ternary-Conditional-Operator" rel="nofollow">三元条件运算符 (Ternary Conditional Operator)</a></h2>
 <hr>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">2</span>
-<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> true
-<span class="pl-k">let</span> <span class="pl-s1">y</span> <span class="pl-c1">=</span> x <span class="pl-c1">+</span> <span class="pl-kos">(</span>b <span class="pl-c1">?</span> <span class="pl-c1">10</span>: <span class="pl-c1">20</span><span class="pl-kos">)</span></pre></div>
+<span class="pl-k">let</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-c1">true</span>
+<span class="pl-k">let</span> <span class="pl-s1">y</span> <span class="pl-c1">=</span> x <span class="pl-c1">+</span> <span class="pl-kos">(</span>b <span class="pl-c1">?</span> <span class="pl-c1">10</span><span class="pl-k">:</span> <span class="pl-c1">20</span><span class="pl-kos">)</span></pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Nil-Coalescing-Operator" rel="nofollow">空值合并运算符 (Nil-Coalescing Operator)</a></h2>
 <hr>
 <p>即 <code class="notranslate">??</code>: <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Providing-a-Fallback-Value" rel="nofollow">01 基础部分: 提供备选值 (Providing a Fallback Value)</a></p>
@@ -484,28 +484,28 @@ n <span class="pl-c1">+=</span> <span class="pl-c1">2</span></pre></div>
 <p>获取区间内的离散数值</p>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Closed-Range-Operator" rel="nofollow">闭区间运算符 (Closed Range Operator)</a></h3>
 <p>左闭右闭:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in <span class="pl-c1">1</span><span class="pl-c1">...</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-c1">...</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Half-Open-Range-Operator" rel="nofollow">半开区间运算符 (Half-Open Range Operator)</a></h3>
 <p>左闭右开:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in <span class="pl-c1">1</span><span class="pl-c1">..&lt;</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-c1">..&lt;</span><span class="pl-c1">5</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#One-Sided-Ranges" rel="nofollow">单侧区间 (One-Sided Ranges)</a></h3>
 <p>🕐 右穷尽:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">m</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">d</span><span class="pl-s">"</span><span class="pl-kos">]</span>
-for <span class="pl-s1">i</span> in <span class="pl-en">m</span><span class="pl-kos">[</span><span class="pl-c1">2</span><span class="pl-c1">...</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
+<span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> <span class="pl-en">m</span><span class="pl-kos">[</span><span class="pl-c1">2</span><span class="pl-c1">...</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 左穷尽:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">m</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">d</span><span class="pl-s">"</span><span class="pl-kos">]</span>
-for <span class="pl-s1">i</span> in <span class="pl-en">m</span><span class="pl-kos">[</span><span class="pl-c1">...</span><span class="pl-c1">2</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
+<span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> <span class="pl-en">m</span><span class="pl-kos">[</span><span class="pl-c1">...</span><span class="pl-c1">2</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕒 左穷尽右开:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">m</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">d</span><span class="pl-s">"</span><span class="pl-kos">]</span>
-for <span class="pl-s1">i</span> in <span class="pl-en">m</span><span class="pl-kos">[</span><span class="pl-c1">..&lt;</span><span class="pl-c1">2</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
+<span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> <span class="pl-en">m</span><span class="pl-kos">[</span><span class="pl-c1">..&lt;</span><span class="pl-c1">2</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>i<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕓 判断数字是否在区间中:</p>
@@ -514,22 +514,22 @@ for <span class="pl-s1">i</span> in <span class="pl-en">m</span><span class="pl-
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-Operators" rel="nofollow">逻辑运算符 (Logical Operators)</a></h2>
 <hr>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-NOT-Operator" rel="nofollow">非运算符 (Logical NOT Operator)</a></h3>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">f</span> <span class="pl-c1">=</span> false
-if !f <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">f</span> <span class="pl-c1">=</span> <span class="pl-c1">false</span>
+<span class="pl-k">if</span> !f <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">true</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-AND-Operator" rel="nofollow">并且运算符 (Logical AND Operator)</a></h3>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">t</span> <span class="pl-c1">=</span> true
-<span class="pl-k">let</span> <span class="pl-s1">f</span> <span class="pl-c1">=</span> false
-if t &amp;&amp; f <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">t</span> <span class="pl-c1">=</span> <span class="pl-c1">true</span>
+<span class="pl-k">let</span> <span class="pl-s1">f</span> <span class="pl-c1">=</span> <span class="pl-c1">false</span>
+<span class="pl-k">if</span> t &amp;&amp; f <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">true</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">false</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Logical-OR-Operator" rel="nofollow">或运算符 (Logical OR Operator)</a></h3>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">t</span> <span class="pl-c1">=</span> true
-<span class="pl-k">let</span> <span class="pl-s1">f</span> <span class="pl-c1">=</span> false
-if t || f <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">t</span> <span class="pl-c1">=</span> <span class="pl-c1">true</span>
+<span class="pl-k">let</span> <span class="pl-s1">f</span> <span class="pl-c1">=</span> <span class="pl-c1">false</span>
+<span class="pl-k">if</span> t || f <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">true</span><span class="pl-s">"</span><span class="pl-kos">)</span>
 <span class="pl-kos">}</span> <span class="pl-k">else</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span><span class="pl-s">"</span><span class="pl-s">false</span><span class="pl-s">"</span><span class="pl-kos">)</span>

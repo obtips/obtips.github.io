@@ -674,10 +674,10 @@ a<span class="pl-kos">.</span><span class="pl-en">append</span><span class="pl-k
 a <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-kos">]</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-with-a-Default-Value" rel="nofollow">创建有默认值的数组 (Creating an Array with a Default Value)</a></h3>
 <p>具有 3 个相同值的数组:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-en">Array</span><span class="pl-kos">(</span>repeating<span class="pl-kos">:</span> 0.0<span class="pl-kos">,</span> count<span class="pl-kos">:</span> <span class="pl-c1">3</span><span class="pl-kos">)</span></pre></div>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-en">Array</span><span class="pl-kos">(</span>repeating<span class="pl-kos">:</span> <span class="pl-c1">0.0</span><span class="pl-kos">,</span> count<span class="pl-kos">:</span> <span class="pl-c1">3</span><span class="pl-kos">)</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-by-Adding-Two-Arrays-Together" rel="nofollow">合并两个数组 (Creating an Array by Adding Two Arrays Together)</a></h3>
-<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-en">Array</span><span class="pl-kos">(</span>repeating<span class="pl-kos">:</span> 0.0<span class="pl-kos">,</span> count<span class="pl-kos">:</span> <span class="pl-c1">3</span><span class="pl-kos">)</span>
-<span class="pl-k">var</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-en">Array</span><span class="pl-kos">(</span>repeating<span class="pl-kos">:</span> 2.5<span class="pl-kos">,</span> count<span class="pl-kos">:</span> <span class="pl-c1">4</span><span class="pl-kos">)</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span> <span class="pl-c1">=</span> <span class="pl-en">Array</span><span class="pl-kos">(</span>repeating<span class="pl-kos">:</span> <span class="pl-c1">0.0</span><span class="pl-kos">,</span> count<span class="pl-kos">:</span> <span class="pl-c1">3</span><span class="pl-kos">)</span>
+<span class="pl-k">var</span> <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-en">Array</span><span class="pl-kos">(</span>repeating<span class="pl-kos">:</span> <span class="pl-c1">2.5</span><span class="pl-kos">,</span> count<span class="pl-kos">:</span> <span class="pl-c1">4</span><span class="pl-kos">)</span>
 <span class="pl-k">var</span> <span class="pl-s1">c</span> <span class="pl-c1">=</span> a <span class="pl-c1">+</span> b</pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Creating-an-Array-with-an-Array-Literal" rel="nofollow">通过数组字面量创建数组 (Creating an Array with an Array Literal)</a></h3>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">a</span><span class="pl-kos">:</span> <span class="pl-kos">[</span><span class="pl-smi">String</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">Eggs</span><span class="pl-s">"</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">Milk</span><span class="pl-s">"</span><span class="pl-kos">]</span></pre></div>
@@ -700,10 +700,10 @@ a<span class="pl-kos">.</span><span class="pl-en">remove</span><span class="pl-k
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">let</span> <span class="pl-s1">p</span> <span class="pl-c1">=</span> a<span class="pl-kos">.</span><span class="pl-en">removeLast</span><span class="pl-kos">(</span><span class="pl-kos">)</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-an-Array" rel="nofollow">遍历数组 (Iterating Over an Array)</a></h3>
 <p>🕐 遍历数组中的元素:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">v</span> in array <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">v</span> <span class="pl-k">in</span> array <span class="pl-kos">{</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 遍历数组的索引和元素:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-kos"><span class="pl-s1">(i<span class="pl-kos">,</span> v<span class="pl-kos">)</span></span></span> in array<span class="pl-kos">.</span><span class="pl-en">enumerated</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-kos"><span class="pl-s1">(i<span class="pl-kos">,</span> v<span class="pl-kos">)</span></span></span> <span class="pl-k">in</span> array<span class="pl-kos">.</span><span class="pl-en">enumerated</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
 <span class="pl-kos">}</span></pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Sets" rel="nofollow">集合 (Sets)</a></h2>
 <hr>
@@ -734,10 +734,10 @@ s <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-kos"
 </code></pre>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-a-Set" rel="nofollow">遍历集合 (Iterating Over a Set)</a></h3>
 <p>🕐 遍历集合元素:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in s <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> s <span class="pl-kos">{</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 排序后遍历:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">i</span> in s<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-k">in</span> s<span class="pl-kos">.</span><span class="pl-en">sorted</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
 <span class="pl-kos">}</span></pre></div>
 <h2><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Performing-Set-Operations" rel="nofollow">执行集合操作 (Performing Set Operations)</a></h2>
 <hr>
@@ -777,31 +777,31 @@ b<span class="pl-kos">.</span><span class="pl-en">isDisjoint</span><span class="
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">d</span><span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">c</span><span class="pl-s">"</span><span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-c1">19</span></pre></div>
 <p>🕓 更新并返回旧 value (可选类型):</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span>  <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span>
-if <span class="pl-k">let</span> v <span class="pl-c1">=</span> d<span class="pl-kos">.</span><span class="pl-en">updateValue</span><span class="pl-kos">(</span><span class="pl-c1">19</span><span class="pl-kos">,</span> forKey<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+<span class="pl-k">if</span> <span class="pl-k">let</span> v <span class="pl-c1">=</span> d<span class="pl-kos">.</span><span class="pl-en">updateValue</span><span class="pl-kos">(</span><span class="pl-c1">19</span><span class="pl-kos">,</span> forKey<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>v<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕔 获取 value (可选类型):</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span>  <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span>
-if <span class="pl-k">let</span> v <span class="pl-c1">=</span> <span class="pl-en">d</span><span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
+<span class="pl-k">if</span> <span class="pl-k">let</span> v <span class="pl-c1">=</span> <span class="pl-en">d</span><span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">]</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>v<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕕 通过赋值方式删除元素:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-en">dict</span><span class="pl-kos">[</span>key<span class="pl-kos">]</span> <span class="pl-c1">=</span> <span class="pl-smi">nil</span></pre></div>
 <p>🕖 通过 key 删除并返回对应的 value (可选类型):</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span>  <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span>
-if <span class="pl-k">let</span> v <span class="pl-c1">=</span> d<span class="pl-kos">.</span><span class="pl-en">removeValue</span><span class="pl-kos">(</span>forKey<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+<span class="pl-k">if</span> <span class="pl-k">let</span> v <span class="pl-c1">=</span> d<span class="pl-kos">.</span><span class="pl-en">removeValue</span><span class="pl-kos">(</span>forKey<span class="pl-kos">:</span> <span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
     <span class="pl-en">print</span><span class="pl-kos">(</span>v<span class="pl-kos">)</span>
 <span class="pl-kos">}</span></pre></div>
 <h3><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Iterating-Over-a-Dictionary" rel="nofollow">遍历字典 (Iterating Over a Dictionary)</a></h3>
 <p>🕐 遍历 key 和 value:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span>  <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span>
-for <span class="pl-kos"><span class="pl-s1">(k<span class="pl-kos">,</span> v<span class="pl-kos">)</span></span></span> in d <span class="pl-kos">{</span>
+<span class="pl-k">for</span> <span class="pl-kos"><span class="pl-s1">(k<span class="pl-kos">,</span> v<span class="pl-kos">)</span></span></span> <span class="pl-k">in</span> d <span class="pl-kos">{</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕑 遍历 key :</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">k</span> in d<span class="pl-kos">.</span>keys <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">k</span> <span class="pl-k">in</span> d<span class="pl-kos">.</span>keys <span class="pl-kos">{</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕒 遍历 value:</p>
-<div class="highlight highlight-source-swift"><pre class="notranslate">for <span class="pl-s1">v</span> in d<span class="pl-kos">.</span>values <span class="pl-kos">{</span>
+<div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">v</span> <span class="pl-k">in</span> d<span class="pl-kos">.</span>values <span class="pl-kos">{</span>
 <span class="pl-kos">}</span></pre></div>
 <p>🕓 将 key 或 value 转换为数组:</p>
 <div class="highlight highlight-source-swift"><pre class="notranslate"><span class="pl-k">var</span> <span class="pl-s1">d</span>  <span class="pl-c1">=</span> <span class="pl-kos">[</span><span class="pl-s">"</span><span class="pl-s">a</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">18</span><span class="pl-kos">,</span> <span class="pl-s">"</span><span class="pl-s">b</span><span class="pl-s">"</span><span class="pl-kos">:</span> <span class="pl-c1">28</span><span class="pl-kos">]</span>
